@@ -1,42 +1,39 @@
 const express = require('express');
 
+const UsersService = require('../services/users.service');
+
 const router = express.Router();
+const service = new UsersService();
 
 router.get('/', (req, res) => {
-  res.send('Users')
+  const users = service.find();
+  res.json(users);
 });
 
 router.post('/', (req, res) => {
   const { body } = req;
-  res.status(201).json({
-    message: 'created',
-    data: body
-  });
+  const newUser = service.create(body);
+  res.status(201).json(newUser);
 });
 
 router.get('/:userId', (req, res) => {
-  const userId = req.params;
-  res.send(`User ${userId.userId}`)
+  const { userId } = req.params;
+  const user = service.findOne(userId);
+  res.json(user);
 });
 
 router.patch('/:userId', (req, res) => {
   const { body } = req;
   const { userId } = req.params;
+  const user = service.update(userId, body);
 
-  res.json({
-    message: 'updated',
-    userId,
-    data: body
-  });
+  res.json(user);
 });
 
 router.delete('/:userId', (req, res) => {
   const { userId } = req.params;
-
-  res.json({
-    message: 'deleted',
-    userId,
-  });
+  const user = service.delete(userId);
+  res.json(user);
 });
 
 router.get('/:userId/jobs', (req, res) => {
