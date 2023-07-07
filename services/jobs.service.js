@@ -16,11 +16,11 @@ class JobsService {
   }
 
   find(userId) {
-    return this.jobs.map((job) => job.userId === userId? job: null);
+    return this.jobs.filter(job => job.userId === userId);
   }
 
   findOne(userId, jobId) {
-    const jobs = this.jobs.map((job) => job.userId === userId? job: null);
+    const jobs = this.jobs.filter(job => job.userId === userId);
     return jobs.find((job) => job.id === jobId);
   }
 
