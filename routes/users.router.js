@@ -2,10 +2,12 @@ const express = require('express');
 
 const UsersService = require('../services/users.service');
 const JobsService = require('../services/jobs.service');
+const ProjectsService = require('../services/projects.service');
 
 const router = express.Router();
 const usersService = new UsersService();
 const jobsService = new JobsService();
+const projectsService = new ProjectsService();
 
 router.get('/', (req, res) => {
   const users = usersService.find();
@@ -27,26 +29,26 @@ router.get('/:userId', (req, res) => {
 router.patch('/:userId', (req, res) => {
   const { body } = req;
   const { userId } = req.params;
-  const user = usersService.update(userId, body);
-  res.json(user);
+  const updatedUser = usersService.update(userId, body);
+  res.json(updatedUser);
 });
 
 router.delete('/:userId', (req, res) => {
   const { userId } = req.params;
-  const user = usersService.delete(userId);
-  res.json(user);
+  const deletedUser = usersService.delete(userId);
+  res.json(deletedUser);
 });
 
 router.get('/:userId/jobs', (req, res) => {
   const { userId } = req.params;
   const jobs = jobsService.find(userId);
-  res.send(jobs)
+  res.json(jobs)
 });
 
 router.get('/:userId/jobs/:jobId', (req, res) => {
   const { userId, jobId } = req.params;
   const jobs = jobsService.findOne(userId, jobId);
-  res.send(jobs)
+  res.json(jobs)
 });
 
 router.post('/:userId/jobs', (req, res) => {
@@ -71,36 +73,35 @@ router.delete('/:userId/jobs/:jobId', (req, res) => {
 });
 
 router.get('/:userId/projects', (req, res) => {
-  const userId = req.params;
-  res.send(`User ${userId.userId} Projects`)
+  const { userId } = req.params;
+  const projects = projectsService.find(userId);
+  res.json(projects);
+});
+
+router.get('/:userId/projects/:projectId', (req, res) => {
+  const { userId, projectId } = req.params;
+  const projects = projectsService.findOne(userId, projectId);
+  res.json(projects);
 });
 
 router.post('/:userId/projects', (req, res) => {
   const { body } = req;
-  res.status(201).json({
-    message: 'created',
-    data: body
-  });
+  const { userId } = req.params;
+  const newProject = projectsService.create(userId, body);
+  res.status(201).json(newProject);
 });
 
 router.patch('/:userId/projects/:projectId', (req, res) => {
   const { body } = req;
   const { projectId } = req.params;
-
-  res.json({
-    message: 'updated',
-    projectId,
-    data: body
-  });
+  const updatedProject = projectsService.update(projectId, body);
+  res.json(updatedProject);
 });
 
 router.delete('/:userId/projects/:projectId', (req, res) => {
   const { projectId } = req.params;
-
-  res.json({
-    message: 'deleted',
-    projectId,
-  });
+  const deletedProject = projectsService.delete(projectId);
+  res.json(deletedProject);
 });
 
 module.exports = router;
