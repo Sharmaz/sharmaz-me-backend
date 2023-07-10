@@ -1,5 +1,7 @@
 const  { v4 } = require('uuid');
 
+const sequelize = require('../libs/sequelize');
+
 class UsersService {
   constructor() {
     this.users = [];
@@ -14,8 +16,10 @@ class UsersService {
     return newUser;
   }
 
-  find() {
-    return this.users;
+  async find() {
+    const query = 'SELECT * FROM users';
+    const [data] = await sequelize.query(query);
+    return data;
   }
 
   findOne(userId) {
