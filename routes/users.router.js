@@ -9,8 +9,8 @@ const usersService = new UsersService();
 const jobsService = new JobsService();
 const projectsService = new ProjectsService();
 
-router.get('/', (req, res) => {
-  const users = usersService.find();
+router.get('/', async (req, res) => {
+  const users = await usersService.find();
   res.json(users);
 });
 
