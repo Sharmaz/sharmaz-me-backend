@@ -14,28 +14,28 @@ router.get('/', async (req, res) => {
   res.json(users);
 });
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   const { body } = req;
-  const newUser = usersService.create(body);
+  const newUser = await usersService.create(body);
   res.status(201).json(newUser);
 });
 
-router.get('/:userId', (req, res) => {
+router.get('/:userId', async (req, res) => {
   const { userId } = req.params;
-  const user = usersService.findOne(userId);
+  const user = await usersService.findOne(userId);
   res.json(user);
 });
 
-router.patch('/:userId', (req, res) => {
+router.patch('/:userId', async (req, res) => {
   const { body } = req;
   const { userId } = req.params;
-  const updatedUser = usersService.update(userId, body);
+  const updatedUser = await usersService.update(userId, body);
   res.json(updatedUser);
 });
 
-router.delete('/:userId', (req, res) => {
+router.delete('/:userId', async (req, res) => {
   const { userId } = req.params;
-  const deletedUser = usersService.delete(userId);
+  const deletedUser = await usersService.delete(userId);
   res.json(deletedUser);
 });
 
