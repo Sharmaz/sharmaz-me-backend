@@ -1,51 +1,46 @@
 const  { v4 } = require('uuid');
 
-const sequelize = require('../libs/sequelize');
+const { models } = require('../libs/sequelize');
+
 
 class UsersService {
   constructor() {
     this.users = [];
   }
 
-  create(data) {
-    const newUser = {
+  async create(data) {
+
+    const newUser = await models.User.create({
       id: v4(),
-      ...data
-    }
-    this.users.push(newUser);
+      ...data,
+      createdAt: new Date(),
+    })
     return newUser;
   }
 
   async find() {
-    const query = 'SELECT * FROM users';
-    const [data] = await sequelize.query(query);
-    return data;
+    const users = await models.User.findAll({
+      attributes: ['id', 'email'],
+    });
+    return users;
   }
 
-  findOne(userId) {
-    return this.users.find((user) => user.id === userId);
+  async findOne(userId) {
+    const user = await models.User.findByPk(userId, {
+      attributes: ['id', 'email'],
+    });
+    return user;
   }
 
-  update(userId, changes) {
-    const userIndex = this.users.findIndex(user => user.id === userId);
-    if (userIndex === -1) {
-      throw new Error('User not found');
-    }
-    const user = this.users[userIndex];
-    this.users[userIndex] = {
-      ...user,
-      ...changes
-    };
-
-    return this.users[userIndex];
+  async update(userId, changes) {
+    const user = await models.User.findByPk(userId);
+    await user.update(changes);
+    return { userId, changes };
   }
 
-  delete(userId) {
-    const userIndex = this.users.findIndex(user => user.id === userId);
-    if (userIndex === -1) {
-      throw new Error('User not found');
-    }
-    this.users.splice(userIndex, 1);
+  async delete(userId) {
+    const user = await models.User.findByPk(userId);
+    await user.destroy();
     return { userId };
   }
 }
