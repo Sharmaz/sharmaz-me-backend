@@ -13,8 +13,8 @@ const ProfileSchema = {
   },
   userId: {
     allowNull: false,
-    primaryKey: true,
     type: DataTypes.UUID,
+    unique: true,
     field: 'user_id',
     references: {
       model: USER_TABLE,
@@ -56,7 +56,10 @@ const ProfileSchema = {
 
 class Profile extends Model {
   static associate(models) {
-    this.belongsTo(models.User, {as: 'user'});
+    this.belongsTo(models.User, {
+      as: 'user',
+      foreignKey: 'user_id'
+    });
   }
 
   static config(sequelize) {
