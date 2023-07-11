@@ -15,7 +15,14 @@
     "cov:summary-preset": "mkdir .nyc_output && cp coverage/unit/coverage-final.json .nyc_output/unit.json && cp coverage/integration/coverage-final.json .nyc_output/integration.json",
     "cov:report": "nyc report --reporter html --reporter lcov --report-dir ./coverage/summary",
     "lint": "eslint .",
-    "lint-fix": "eslint --fix ./*.js"
+    "lint-fix": "eslint --fix ./*.js",
+    "migrations:generate": "sequelize-cli migration:generate --name",
+    "migrations:run": "sequelize-cli db:migrate",
+    "migrations:revert": "sequelize-cli db:migrate:undo",
+    "migrations:seed:generate": "sequelize-cli seed:generate --name",
+    "migrations:run:seed": "sequelize-cli db:seed:all",
+    "migrations:seed:revert": "sequelize-cli db:seed:undo",
+    "migrations:seed:delete": "sequelize-cli db:seed:undo:all"
   },
   "repository": {
     "type": "git",
@@ -37,7 +44,8 @@
     "nodemon": "^2.0.22",
     "npm-run-all": "^4.1.5",
     "nyc": "^15.1.0",
-    "prettier": "^2.8.8"
+    "prettier": "^2.8.8",
+    "sequelize-cli": "^6.6.1"
   },
   "dependencies": {
     "dotenv": "^16.3.1",
