@@ -48,7 +48,8 @@ router.get('/:userId/profiles', async (req, res) => {
 
 router.post('/:userId/profiles', async (req, res) => {
   const { body } = req;
-  const newProfile = await profilesService.create(body);
+  const { userId } = req.params;
+  const newProfile = await profilesService.create(body, userId);
   res.status(201).json(newProfile);
 });
 

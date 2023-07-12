@@ -4,14 +4,12 @@ const { models } = require('../libs/sequelize');
 
 
 class ProfilesService {
-  constructor() {
-    this.profiles = [];
-  }
 
-  async create(data) {
+  async create(data, userId) {
 
     const newProfile = await models.Profile.create({
       id: v4(),
+      userId,
       ...data,
     })
     return newProfile;
