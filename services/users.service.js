@@ -2,11 +2,7 @@ const  { v4 } = require('uuid');
 
 const { models } = require('../libs/sequelize');
 
-
 class UsersService {
-  constructor() {
-    this.users = [];
-  }
 
   async create(data) {
 
@@ -21,6 +17,7 @@ class UsersService {
   async find() {
     const users = await models.User.findAll({
       attributes: ['id', 'email'],
+      include: ['profile'],
     });
     return users;
   }
@@ -28,6 +25,7 @@ class UsersService {
   async findOne(userId) {
     const user = await models.User.findByPk(userId, {
       attributes: ['id', 'email'],
+      include: ['profile'],
     });
     return user;
   }
