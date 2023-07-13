@@ -28,15 +28,15 @@ const JobSchema = {
   },
   dateStarted: {
     allowNull: true,
-    type: DataTypes.DATE,
+    type: DataTypes.DATEONLY,
     field: 'date_started',
-    defaultValue: DataTypes.DATEONLY,
+    defaultValue: DataTypes.NOW,
   },
   dateEnded: {
     allowNull: true,
-    type: DataTypes.DATE,
+    type: DataTypes.DATEONLY,
     field: 'date_ended',
-    defaultValue: DataTypes.DATEONLY,
+    defaultValue: DataTypes.NOW,
   },
   description: {
     allowNull: true,

@@ -72,36 +72,35 @@ router.delete('/:userId/profiles/:profileId', async (req, res) => {
   res.json(deletedProfile);
 });
 
-router.get('/:userId/jobs', (req, res) => {
+router.get('/:userId/jobs', async (req, res) => {
   const { userId } = req.params;
-  const jobs = jobsService.find(userId);
+  const jobs = await jobsService.find(userId);
   res.json(jobs)
 });
 
-router.get('/:userId/jobs/:jobId', (req, res) => {
-  const { userId, jobId } = req.params;
-  const jobs = jobsService.findOne(userId, jobId);
-  res.json(jobs)
+router.get('/:userId/jobs/:jobId', async (req, res) => {
+  const { jobId } = req.params;
+  const job = await jobsService.findOne(jobId);
+  res.json(job)
 });
 
-router.post('/:userId/jobs', (req, res) => {
+router.post('/:userId/jobs', async (req, res) => {
   const { userId } = req.params;
   const { body } = req;
-  const newJob = jobsService.create(userId, body);
+  const newJob = await jobsService.create(userId, body);
   res.status(201).json(newJob);
 });
 
-router.patch('/:userId/jobs/:jobId', (req, res) => {
+router.patch('/:userId/jobs/:jobId', async (req, res) => {
   const { body } = req;
   const { jobId } = req.params;
-  const updatedJob = jobsService.update(jobId, body);
+  const updatedJob = await jobsService.update(jobId, body);
   res.json(updatedJob);
 });
 
-router.delete('/:userId/jobs/:jobId', (req, res) => {
+router.delete('/:userId/jobs/:jobId', async (req, res) => {
   const { jobId } = req.params;
-
-  const deletedJob = jobsService.delete(jobId);
+  const deletedJob = await jobsService.delete(jobId);
   res.json(deletedJob);
 });
 
