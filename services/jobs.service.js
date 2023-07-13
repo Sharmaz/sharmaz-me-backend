@@ -1,52 +1,41 @@
 const  { v4 } = require('uuid');
 
-class JobsService {
-  constructor() {
-    this.jobs = [];
-  }
+const { models } = require('../libs/sequelize');
 
-  create(userId, data) {
-    const newJob = {
+class JobsService {
+
+  async create(userId, data) {
+    const newJob = await models.Job.create({
       id: v4(),
       userId,
       ...data
-    }
-    this.jobs.push(newJob);
+    });
     return newJob;
   }
 
-  find(userId) {
-    return this.jobs.filter(job => job.userId === userId);
+  async find(userId) {
+    console.log(models.Job);
+    const jobs = await models.Job.findAll({
+      where: { userId }
+    });
+    return jobs;
   }
 
-  findOne(userId, jobId) {
-    const jobs = this.jobs.filter(job => job.userId === userId);
-    return jobs.find((job) => job.id === jobId);
+  async findOne(jobId) {
+    const job = await models.Job.findByPk(jobId);
+    return job;
   }
 
-  update(jobId, changes) {
-    const jobIndex = this.jobs.findIndex((job) => job.id === jobId);
-    
-    if (jobIndex === -1) {
-      throw new Error('Job not found');
-    }
-    const job = this.jobs[jobIndex];
-    this.jobs[jobIndex] = {
-      ...job,
-      ...changes
-    };
+  async update(jobId, changes) {
+    const job = await models.Job.findByPk(jobId);
+    await job.update(changes);
 
-    return this.jobs[jobIndex];
+    return { jobId, changes };
   }
 
-  delete(jobId) {
-    const jobIndex = this.jobs.findIndex((job) => job.id === jobId);
-  
-    if (jobIndex === -1) {
-      throw new Error('Job not found');
-    }
-
-    this.jobs.splice(jobIndex, 1);
+  async delete(jobId) {
+    const job = await models.Job.findByPk(jobId);
+    await job.destroy();
     return { jobId };
   }
 }
