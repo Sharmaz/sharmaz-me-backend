@@ -32,6 +32,10 @@ class User extends Model {
       as: 'profile',
       foreignKey: 'userId',
     });
+    this.hasMany(models.Job, {
+      as: 'jobs',
+      foreignKey: 'userId',
+    });
   }
 
   static config(sequelize) {
