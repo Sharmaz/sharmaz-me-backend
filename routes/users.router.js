@@ -104,35 +104,35 @@ router.delete('/:userId/jobs/:jobId', async (req, res) => {
   res.json(deletedJob);
 });
 
-router.get('/:userId/projects', (req, res) => {
+router.get('/:userId/projects', async (req, res) => {
   const { userId } = req.params;
-  const projects = projectsService.find(userId);
+  const projects = await projectsService.find(userId);
   res.json(projects);
 });
 
-router.get('/:userId/projects/:projectId', (req, res) => {
-  const { userId, projectId } = req.params;
-  const projects = projectsService.findOne(userId, projectId);
+router.get('/:userId/projects/:projectId', async (req, res) => {
+  const { projectId } = req.params;
+  const projects = await projectsService.findOne(projectId);
   res.json(projects);
 });
 
-router.post('/:userId/projects', (req, res) => {
+router.post('/:userId/projects', async (req, res) => {
   const { body } = req;
   const { userId } = req.params;
-  const newProject = projectsService.create(userId, body);
+  const newProject = await projectsService.create(userId, body);
   res.status(201).json(newProject);
 });
 
-router.patch('/:userId/projects/:projectId', (req, res) => {
+router.patch('/:userId/projects/:projectId', async (req, res) => {
   const { body } = req;
   const { projectId } = req.params;
-  const updatedProject = projectsService.update(projectId, body);
+  const updatedProject = await projectsService.update(projectId, body);
   res.json(updatedProject);
 });
 
-router.delete('/:userId/projects/:projectId', (req, res) => {
+router.delete('/:userId/projects/:projectId', async (req, res) => {
   const { projectId } = req.params;
-  const deletedProject = projectsService.delete(projectId);
+  const deletedProject = await projectsService.delete(projectId);
   res.json(deletedProject);
 });
 

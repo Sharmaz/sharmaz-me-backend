@@ -14,7 +14,6 @@ class JobsService {
   }
 
   async find(userId) {
-    console.log(models.Job);
     const jobs = await models.Job.findAll({
       where: { userId }
     });

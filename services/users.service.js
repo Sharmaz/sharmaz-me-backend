@@ -24,7 +24,7 @@ class UsersService {
   async findOne(userId) {
     const user = await models.User.findByPk(userId, {
       attributes: ['id', 'email'],
-      include: ['profile', 'jobs'],
+      include: ['profile', 'jobs', 'projects'],
     });
     return user;
   }
