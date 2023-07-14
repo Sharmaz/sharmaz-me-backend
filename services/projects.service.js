@@ -1,52 +1,39 @@
 const  { v4 } = require('uuid');
 
-class ProjectsService {
-  constructor() {
-    this.projects = [];
-  }
+const { models } = require('../libs/sequelize');
 
-  create(userId, data) {
-    const newProject = {
+class ProjectsService {
+
+  async create(userId, data) {
+    const newProject = await models.Project.create({
       id: v4(),
       userId,
       ...data
-    }
-    this.projects.push(newProject);
+    });
     return newProject;
   }
 
-  find(userId) {
-    return this.projects.filter(project => project.userId === userId);
+  async find(userId) {
+    const projects = await models.Project.findAll({
+      where: { userId }
+    });
+    return projects;
   }
 
-  findOne(userId, projectId) {
-    const projects = this.projects.filter(project => project.userId === userId);
-    return projects.find((project) => project.id === projectId);
+  async findOne(projectId) {
+    const project = await models.Project.findByPk(projectId);
+    return project;
   }
 
-  update(projectId, changes) {
-    const projectIndex = this.projects.findIndex((project) => project.id === projectId);
-    
-    if (projectIndex === -1) {
-      throw new Error('Project not found');
-    }
-    const project = this.projects[projectIndex];
-    this.projects[projectIndex] = {
-      ...project,
-      ...changes
-    };
-
-    return this.projects[projectIndex];
+  async update(projectId, changes) {
+    const project = await this.findOne(projectId);
+    await project.update(changes);
+    return { projectId, changes };
   }
 
-  delete(projectId) {
-    const projectIndex = this.projects.findIndex((project) => project.id === projectId);
-  
-    if (projectIndex === -1) {
-      throw new Error('Project not found');
-    }
-
-    this.projects.splice(projectIndex, 1);
+  async delete(projectId) {
+    const project = await this.findOne(projectId);
+    await project.destroy();
     return { projectId };
   }
 }
