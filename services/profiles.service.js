@@ -2,7 +2,6 @@ const  { v4 } = require('uuid');
 
 const { models } = require('../libs/sequelize');
 
-
 class ProfilesService {
 
   async create(data, userId) {
@@ -15,8 +14,10 @@ class ProfilesService {
     return newProfile;
   }
 
-  async find() {
-    const profiles = await models.Profile.findAll();
+  async find(userId) {
+    const profiles = await models.Profile.findAll({
+      where: { userId }
+    });
     return profiles;
   }
 
