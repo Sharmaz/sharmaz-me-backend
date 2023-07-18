@@ -73,30 +73,11 @@ router.get('/:userId/projects', async (req, res) => {
   res.json(projects);
 });
 
-router.get('/:userId/projects/:projectId', async (req, res) => {
-  const { projectId } = req.params;
-  const projects = await projectsService.findOne(projectId);
-  res.json(projects);
-});
-
 router.post('/:userId/projects', async (req, res) => {
   const { body } = req;
   const { userId } = req.params;
   const newProject = await projectsService.create(userId, body);
   res.status(201).json(newProject);
-});
-
-router.patch('/:userId/projects/:projectId', async (req, res) => {
-  const { body } = req;
-  const { projectId } = req.params;
-  const updatedProject = await projectsService.update(projectId, body);
-  res.json(updatedProject);
-});
-
-router.delete('/:userId/projects/:projectId', async (req, res) => {
-  const { projectId } = req.params;
-  const deletedProject = await projectsService.delete(projectId);
-  res.json(deletedProject);
 });
 
 module.exports = router;

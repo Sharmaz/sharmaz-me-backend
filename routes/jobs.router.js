@@ -1,7 +1,6 @@
 const express = require('express');
 const JobsService = require('../services/jobs.service');
 
-
 const router = express.Router();
 const jobsService = new JobsService();
 

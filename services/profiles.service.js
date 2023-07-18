@@ -2,7 +2,6 @@ const  { v4 } = require('uuid');
 
 const { models } = require('../libs/sequelize');
 
-
 class ProfilesService {
 
   async create(data, userId) {
