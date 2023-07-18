@@ -11,34 +11,54 @@ const jobsService = new JobsService();
 const projectsService = new ProjectsService();
 const profilesService = new ProfilesService();
 
-router.get('/', async (req, res) => {
-  const users = await usersService.find();
-  res.json(users);
+router.get('/', async (req, res, next) => {
+  try {
+    const users = await usersService.find();
+    res.json(users);
+  } catch(error) {
+    next(error);
+  }
 });
 
-router.post('/', async (req, res) => {
-  const { body } = req;
-  const newUser = await usersService.create(body);
-  res.status(201).json(newUser);
+router.post('/', async (req, res, next) => {
+  try {
+    const { body } = req;
+    const newUser = await usersService.create(body);
+    res.status(201).json(newUser);
+  } catch(error) {
+    next(error);
+  }
 });
 
-router.get('/:userId', async (req, res) => {
-  const { userId } = req.params;
-  const user = await usersService.findOne(userId);
-  res.json(user);
+router.get('/:userId', async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const user = await usersService.findOne(userId);
+    res.json(user);
+  } catch(error) {
+    next(error);
+  }
 });
 
-router.patch('/:userId', async (req, res) => {
-  const { body } = req;
-  const { userId } = req.params;
-  const updatedUser = await usersService.update(userId, body);
-  res.json(updatedUser);
+router.patch('/:userId', async (req, res, next) => {
+  try {
+    const { body } = req;
+    const { userId } = req.params;
+    const updatedUser = await usersService.update(userId, body);
+    res.json(updatedUser);
+  } catch(error) {
+    next(error);
+  }
 });
 
-router.delete('/:userId', async (req, res) => {
-  const { userId } = req.params;
-  const deletedUser = await usersService.delete(userId);
-  res.json(deletedUser);
+router.delete('/:userId', async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    await usersService.delete(userId);
+    res.status(204).json();
+  } catch(error) {
+    next(error);
+  }
 });
 
 router.get('/:userId/profiles', async (req, res) => {

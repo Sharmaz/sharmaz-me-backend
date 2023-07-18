@@ -1,4 +1,5 @@
 const  { v4 } = require('uuid');
+const boom = require('@hapi/boom');
 
 const { models } = require('../libs/sequelize');
 
@@ -10,7 +11,8 @@ class UsersService {
       id: v4(),
       ...data,
       createdAt: new Date(),
-    })
+    });
+    delete newUser.dataValues.password;
     return newUser;
   }
 
@@ -18,27 +20,32 @@ class UsersService {
     const users = await models.User.findAll({
       attributes: ['id', 'email'],
     });
+    if(!users) {
+      throw boom.notFound('Users not found');
+    }
     return users;
   }
 
   async findOne(userId) {
     const user = await models.User.findByPk(userId, {
-      attributes: ['id', 'email'],
       include: ['profile', 'jobs', 'projects'],
     });
+    if (!user) {
+      throw boom.notFound('User not found');
+    }
+    delete user.dataValues.password;
     return user;
   }
 
   async update(userId, changes) {
-    const user = await models.User.findByPk(userId);
+    const user = await this.findOne(userId);
     await user.update(changes);
     return { userId, changes };
   }
 
   async delete(userId) {
-    const user = await models.User.findByPk(userId);
+    const user = await this.findOne(userId);
     await user.destroy();
-    return { userId };
   }
 }
 
