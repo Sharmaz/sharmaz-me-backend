@@ -42,7 +42,8 @@ router.delete('/:userId', async (req, res) => {
 });
 
 router.get('/:userId/profiles', async (req, res) => {
-  const profiles = await profilesService.find();
+  const { userId } = req.params;
+  const profiles = await profilesService.find(userId);
   res.json(profiles);
 });
 
@@ -51,25 +52,6 @@ router.post('/:userId/profiles', async (req, res) => {
   const { userId } = req.params;
   const newProfile = await profilesService.create(body, userId);
   res.status(201).json(newProfile);
-});
-
-router.get('/:userId/profiles/:profileId', async (req, res) => {
-  const { profileId } = req.params;
-  const profile = await profilesService.findOne(profileId);
-  res.json(profile);
-});
-
-router.patch('/:userId/profiles/:profileId', async (req, res) => {
-  const { body } = req;
-  const { profileId } = req.params;
-  const updatedProfile = await profilesService.update(profileId, body);
-  res.json(updatedProfile);
-});
-
-router.delete('/:userId/profiles/:profileId', async (req, res) => {
-  const { profileId } = req.params;
-  const deletedProfile = await profilesService.delete(profileId);
-  res.json(deletedProfile);
 });
 
 router.get('/:userId/jobs', async (req, res) => {

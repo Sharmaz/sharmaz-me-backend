@@ -15,8 +15,10 @@ class ProfilesService {
     return newProfile;
   }
 
-  async find() {
-    const profiles = await models.Profile.findAll();
+  async find(userId) {
+    const profiles = await models.Profile.findAll({
+      where: { userId }
+    });
     return profiles;
   }
 
