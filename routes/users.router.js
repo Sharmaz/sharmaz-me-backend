@@ -61,17 +61,25 @@ router.delete('/:userId', async (req, res, next) => {
   }
 });
 
-router.get('/:userId/profiles', async (req, res) => {
-  const { userId } = req.params;
-  const profiles = await profilesService.find(userId);
-  res.json(profiles);
+router.get('/:userId/profiles', async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const profiles = await profilesService.find(userId);
+    res.json(profiles);
+  } catch(error) {
+    next(error);
+  }
 });
 
-router.post('/:userId/profiles', async (req, res) => {
-  const { body } = req;
-  const { userId } = req.params;
-  const newProfile = await profilesService.create(body, userId);
-  res.status(201).json(newProfile);
+router.post('/:userId/profiles', async (req, res, next) => {
+  try {
+    const { body } = req;
+    const { userId } = req.params;
+    const newProfile = await profilesService.create(body, userId);
+    res.status(201).json(newProfile);
+  } catch(error) {
+    next(error);
+  }
 });
 
 router.get('/:userId/jobs', async (req, res) => {
