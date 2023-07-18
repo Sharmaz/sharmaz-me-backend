@@ -60,30 +60,11 @@ router.get('/:userId/jobs', async (req, res) => {
   res.json(jobs)
 });
 
-router.get('/:userId/jobs/:jobId', async (req, res) => {
-  const { jobId } = req.params;
-  const job = await jobsService.findOne(jobId);
-  res.json(job)
-});
-
 router.post('/:userId/jobs', async (req, res) => {
   const { userId } = req.params;
   const { body } = req;
   const newJob = await jobsService.create(userId, body);
   res.status(201).json(newJob);
-});
-
-router.patch('/:userId/jobs/:jobId', async (req, res) => {
-  const { body } = req;
-  const { jobId } = req.params;
-  const updatedJob = await jobsService.update(jobId, body);
-  res.json(updatedJob);
-});
-
-router.delete('/:userId/jobs/:jobId', async (req, res) => {
-  const { jobId } = req.params;
-  const deletedJob = await jobsService.delete(jobId);
-  res.json(deletedJob);
 });
 
 router.get('/:userId/projects', async (req, res) => {
