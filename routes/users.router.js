@@ -82,17 +82,25 @@ router.post('/:userId/profiles', async (req, res, next) => {
   }
 });
 
-router.get('/:userId/jobs', async (req, res) => {
-  const { userId } = req.params;
-  const jobs = await jobsService.find(userId);
-  res.json(jobs)
+router.get('/:userId/jobs', async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const jobs = await jobsService.find(userId);
+    res.json(jobs)
+  } catch(error) {
+    next(error);
+  }
 });
 
-router.post('/:userId/jobs', async (req, res) => {
-  const { userId } = req.params;
-  const { body } = req;
-  const newJob = await jobsService.create(userId, body);
-  res.status(201).json(newJob);
+router.post('/:userId/jobs', async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const { body } = req;
+    const newJob = await jobsService.create(userId, body);
+    res.status(201).json(newJob);
+  } catch(error) {
+    next(error);
+  }
 });
 
 router.get('/:userId/projects', async (req, res) => {
