@@ -7,7 +7,8 @@ const ProfilesService = require('../services/profiles.service');
 const validatorHandler = require('../middlewares/validator.handler');
 const { createUserSchema, updateUserSchema, getUserSchema } = require('../schemas/user.schema');
 const { createProfileSchema } = require('../schemas/profile.schema');
-const { createJobSchema } = require('../schemas/jobs.schema');
+const { createJobSchema } = require('../schemas/job.schema');
+const { createProjectSchema } = require('../schemas/project.schema');
 
 const router = express.Router();
 const usersService = new UsersService();
@@ -134,25 +135,32 @@ router.post('/:id/jobs',
   }
 );
 
-router.get('/:userId/projects', async (req, res, next) => {
-  try {
-    const { userId } = req.params;
-    const projects = await projectsService.find(userId);
-    res.json(projects);
-  } catch(error) {
-    next(error);
+router.get('/:id/projects',
+  validatorHandler(getUserSchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const projects = await projectsService.find(id);
+      res.json(projects);
+    } catch(error) {
+      next(error);
+    }
   }
-});
+);
 
-router.post('/:userId/projects', async (req, res, next) => {
-  try {
-    const { body } = req;
-    const { userId } = req.params;
-    const newProject = await projectsService.create(userId, body);
-    res.status(201).json(newProject);
-  } catch(error) {
-    next(error);
+router.post('/:id/projects',
+  validatorHandler(getUserSchema, 'params'),
+  validatorHandler(createProjectSchema, 'body'),
+  async (req, res, next) => {
+    try {
+      const { body } = req;
+      const { id } = req.params;
+      const newProject = await projectsService.create(id, body);
+      res.status(201).json(newProject);
+    } catch(error) {
+      next(error);
+    }
   }
-});
+);
 
 module.exports = router;
