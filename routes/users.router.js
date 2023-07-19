@@ -6,6 +6,7 @@ const ProjectsService = require('../services/projects.service');
 const ProfilesService = require('../services/profiles.service');
 const validatorHandler = require('../middlewares/validator.handler');
 const { createUserSchema, updateUserSchema, getUserSchema } = require('../schemas/user.schema');
+const { createProfileSchema } = require('../schemas/profile.schema');
 
 const router = express.Router();
 const usersService = new UsersService();
@@ -76,26 +77,33 @@ router.delete('/:id',
   }
 );
 
-router.get('/:userId/profiles', async (req, res, next) => {
-  try {
-    const { userId } = req.params;
-    const profiles = await profilesService.find(userId);
-    res.json(profiles);
-  } catch(error) {
-    next(error);
+router.get('/:id/profiles',
+  validatorHandler(getUserSchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const profiles = await profilesService.find(id);
+      res.json(profiles);
+    } catch(error) {
+      next(error);
+    }
   }
-});
+);
 
-router.post('/:userId/profiles', async (req, res, next) => {
-  try {
-    const { body } = req;
-    const { userId } = req.params;
-    const newProfile = await profilesService.create(body, userId);
-    res.status(201).json(newProfile);
-  } catch(error) {
-    next(error);
+router.post('/:id/profiles',
+  validatorHandler(getUserSchema, 'params'),
+  validatorHandler(createProfileSchema, 'body'),
+  async (req, res, next) => {
+    try {
+      const { body } = req;
+      const { id } = req.params;
+      const newProfile = await profilesService.create(body, id);
+      res.status(201).json(newProfile);
+    } catch(error) {
+      next(error);
+    }
   }
-});
+);
 
 router.get('/:userId/jobs', async (req, res, next) => {
   try {

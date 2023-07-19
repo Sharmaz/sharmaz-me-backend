@@ -1,38 +1,50 @@
 const express = require('express');
 const ProfilesService = require('../services/profiles.service');
+const validatorHandler = require('../middlewares/validator.handler');
+const { updateProfileSchema, getProfileSchema } = require('../schemas/profile.schema');
 
 const router = express.Router();
 const profilesService = new ProfilesService();
 
-router.get('/:profileId', async (req, res, next) => {
-  try {
-    const { profileId } = req.params;
-    const profile = await profilesService.findOne(profileId);
-    res.json(profile);
-  } catch(error) {
-    next(error);
+router.get('/:id',
+  validatorHandler(getProfileSchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const profile = await profilesService.findOne(id);
+      res.json(profile);
+    } catch(error) {
+      next(error);
+    }
   }
-});
+);
 
-router.patch('/:profileId', async (req, res, next) => {
-  try {
-    const { body } = req;
-    const { profileId } = req.params;
-    const updatedProfile = await profilesService.update(profileId, body);
-    res.json(updatedProfile);
-  } catch(error) {
-    next(error);
+router.patch('/:id',
+  validatorHandler(getProfileSchema, 'params'),
+  validatorHandler(updateProfileSchema, 'body'),
+  async (req, res, next) => {
+    try {
+      const { body } = req;
+      const { id } = req.params;
+      const updatedProfile = await profilesService.update(id, body);
+      res.json(updatedProfile);
+    } catch(error) {
+      next(error);
+    }
   }
-});
+);
 
-router.delete('/:profileId', async (req, res, next) => {
-  try {
-    const { profileId } = req.params;
-    await profilesService.delete(profileId);
-    res.status(204).json();
-  } catch(error) {
-    next(error);
+router.delete('/:id',
+  validatorHandler(getProfileSchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      await profilesService.delete(id);
+      res.status(204).json();
+    } catch(error) {
+      next(error);
+    }
   }
-});
+);
 
 module.exports = router;
