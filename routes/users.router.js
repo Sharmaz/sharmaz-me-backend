@@ -103,17 +103,25 @@ router.post('/:userId/jobs', async (req, res, next) => {
   }
 });
 
-router.get('/:userId/projects', async (req, res) => {
-  const { userId } = req.params;
-  const projects = await projectsService.find(userId);
-  res.json(projects);
+router.get('/:userId/projects', async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const projects = await projectsService.find(userId);
+    res.json(projects);
+  } catch(error) {
+    next(error);
+  }
 });
 
-router.post('/:userId/projects', async (req, res) => {
-  const { body } = req;
-  const { userId } = req.params;
-  const newProject = await projectsService.create(userId, body);
-  res.status(201).json(newProject);
+router.post('/:userId/projects', async (req, res, next) => {
+  try {
+    const { body } = req;
+    const { userId } = req.params;
+    const newProject = await projectsService.create(userId, body);
+    res.status(201).json(newProject);
+  } catch(error) {
+    next(error);
+  }
 });
 
 module.exports = router;

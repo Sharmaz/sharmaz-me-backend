@@ -1,4 +1,5 @@
 const  { v4 } = require('uuid');
+const boom = require('@hapi/boom');
 
 const { models } = require('../libs/sequelize');
 
@@ -17,11 +18,17 @@ class ProjectsService {
     const projects = await models.Project.findAll({
       where: { userId }
     });
+    if (!projects || projects.length < 1) {
+      throw boom.notFound('Projects not found');
+    }
     return projects;
   }
 
   async findOne(projectId) {
     const project = await models.Project.findByPk(projectId);
+    if (!project) {
+      throw boom.notFound('Project not found');
+    }
     return project;
   }
 
@@ -34,7 +41,6 @@ class ProjectsService {
   async delete(projectId) {
     const project = await this.findOne(projectId);
     await project.destroy();
-    return { projectId };
   }
 }
 
