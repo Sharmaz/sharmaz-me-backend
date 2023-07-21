@@ -28,6 +28,13 @@ class UsersService {
     return users;
   }
 
+  async findByEmail(email) {
+    const user = await models.User.findOne({
+      where: { email },
+    });
+    return user;
+  }
+
   async findOne(userId) {
     const user = await models.User.findByPk(userId, {
       include: ['profile', 'jobs', 'projects'],
