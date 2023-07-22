@@ -35,5 +35,6 @@ app.use(logErrors);
 app.use(boomErrorHandler);
 
 app.listen(port, () => {
+  // eslint-disable-next-line no-console
   console.log(`Server running at port ${port}`);
 });
