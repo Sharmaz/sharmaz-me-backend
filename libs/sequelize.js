@@ -8,6 +8,7 @@ const URI = `postgres://${USER}:${PASSWORD}@${config.dbHost}:${config.dbPort}/${
 
 const sequelize = new Sequelize(URI, {
   dialect: 'postgres',
+  // eslint-disable-next-line no-console
   logging: console.log,
 });
 

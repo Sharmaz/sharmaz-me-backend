@@ -1,4 +1,5 @@
 const express = require('express');
+const passport = require('passport');
 
 const UsersService = require('../services/users.service');
 const JobsService = require('../services/jobs.service');
@@ -16,14 +17,17 @@ const jobsService = new JobsService();
 const projectsService = new ProjectsService();
 const profilesService = new ProfilesService();
 
-router.get('/', async (req, res, next) => {
-  try {
-    const users = await usersService.find();
-    res.json(users);
-  } catch(error) {
-    next(error);
+router.get('/',
+passport.authenticate('jwt', { session: false }),
+  async (req, res, next) => {
+    try {
+      const users = await usersService.find();
+      res.json(users);
+    } catch(error) {
+      next(error);
+    }
   }
-});
+);
 
 router.post('/',
   validatorHandler(createUserSchema, 'body'),
