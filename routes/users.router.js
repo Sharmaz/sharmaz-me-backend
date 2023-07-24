@@ -6,6 +6,7 @@ const JobsService = require('../services/jobs.service');
 const ProjectsService = require('../services/projects.service');
 const ProfilesService = require('../services/profiles.service');
 const validatorHandler = require('../middlewares/validator.handler');
+const { checkRoles } = require('../middlewares/auth.handler');
 const { createUserSchema, updateUserSchema, getUserSchema } = require('../schemas/user.schema');
 const { createProfileSchema } = require('../schemas/profile.schema');
 const { createJobSchema } = require('../schemas/job.schema');
@@ -18,7 +19,8 @@ const projectsService = new ProjectsService();
 const profilesService = new ProfilesService();
 
 router.get('/',
-passport.authenticate('jwt', { session: false }),
+  passport.authenticate('jwt', { session: false }),
+  checkRoles('admin'),
   async (req, res, next) => {
     try {
       const users = await usersService.find();
