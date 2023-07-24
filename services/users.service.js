@@ -20,7 +20,7 @@ class UsersService {
 
   async find() {
     const users = await models.User.findAll({
-      attributes: ['id', 'email'],
+      attributes: ['id', 'email', 'role'],
     });
     if(!users) {
       throw boom.notFound('Users not found');
