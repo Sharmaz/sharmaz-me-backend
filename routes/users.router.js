@@ -6,7 +6,7 @@ const JobsService = require('../services/jobs.service');
 const ProjectsService = require('../services/projects.service');
 const ProfilesService = require('../services/profiles.service');
 const validatorHandler = require('../middlewares/validator.handler');
-const { checkRoles } = require('../middlewares/auth.handler');
+const { checkRoles, checkApiKey, checkUserIds } = require('../middlewares/auth.handler');
 const { createUserSchema, updateUserSchema, getUserSchema } = require('../schemas/user.schema');
 const { createProfileSchema } = require('../schemas/profile.schema');
 const { createJobSchema } = require('../schemas/job.schema');
@@ -32,6 +32,8 @@ router.get('/',
 );
 
 router.post('/',
+  passport.authenticate('jwt', { session: false }),
+  checkRoles('admin'),
   validatorHandler(createUserSchema, 'body'),
   async (req, res, next) => {
     try {
@@ -45,6 +47,7 @@ router.post('/',
 );
 
 router.get('/:id',
+  checkApiKey,
   validatorHandler(getUserSchema, 'params'),
   async (req, res, next) => {
     try {
@@ -58,6 +61,9 @@ router.get('/:id',
 );
 
 router.patch('/:id',
+  passport.authenticate('jwt', { session: false }),
+  checkRoles('admin', 'user'),
+  checkUserIds,
   validatorHandler(getUserSchema, 'params'),
   validatorHandler(updateUserSchema, 'body'),
   async (req, res, next) => {
@@ -73,6 +79,9 @@ router.patch('/:id',
 );
 
 router.delete('/:id',
+  passport.authenticate('jwt', { session: false }),
+  checkRoles('admin', 'user'),
+  checkUserIds,
   validatorHandler(getUserSchema, 'params'),
   async (req, res, next) => {
     try {

@@ -21,4 +21,14 @@ function checkRoles(...roles) {
   }
 }
 
-module.exports = { checkApiKey, checkRoles };
+function checkUserIds(req, res, next) {
+  const { user } = req;
+  const { id } = req.params;
+  if (user.sub === id || user.role !== 'user') {
+    next();
+  } else {
+    next(boom.unauthorized());
+  }
+}
+
+module.exports = { checkApiKey, checkRoles, checkUserIds };
