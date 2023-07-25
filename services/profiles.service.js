@@ -26,22 +26,25 @@ class ProfilesService {
     return profile;
   }
 
-  async findOne(profileId) {
+  async findOne(profileId, user) {
     const profile = await models.Profile.findByPk(profileId);
     if(!profile) {
       throw boom.notFound('Profile not found');
     }
+    if (profile.userId !== user.sub) {
+      throw boom.unauthorized();
+    }
     return profile;
   }
 
-  async update(profileId, changes) {
-    const profile = await this.findOne(profileId);
+  async update(profileId, changes, user) {
+    const profile = await this.findOne(profileId, user);
     await profile.update(changes);
     return { profileId, changes };
   }
 
-  async delete(profileId) {
-    const profile = await this.findOne(profileId);
+  async delete(profileId, user) {
+    const profile = await this.findOne(profileId, user);
     await profile.destroy();
   }
 }

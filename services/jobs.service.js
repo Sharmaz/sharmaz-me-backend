@@ -24,22 +24,25 @@ class JobsService {
     return jobs;
   }
 
-  async findOne(jobId) {
+  async findOne(jobId, user) {
     const job = await models.Job.findByPk(jobId);
     if (!job) {
       throw boom.notFound('Job not found');
     }
+    if (job.userId !== user.sub) {
+      throw boom.unauthorized();
+    }
     return job;
   }
 
-  async update(jobId, changes) {
-    const job = await this.findOne(jobId);
+  async update(jobId, changes, user) {
+    const job = await this.findOne(jobId, user);
     await job.update(changes);
     return { jobId, changes };
   }
 
-  async delete(jobId) {
-    const job = await this.findOne(jobId);
+  async delete(jobId, user) {
+    const job = await this.findOne(jobId, user);
     await job.destroy();
   }
 }
