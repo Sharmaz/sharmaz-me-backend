@@ -2,15 +2,12 @@ const express = require('express');
 const passport = require('passport');
 
 const UsersService = require('../services/users.service');
-const ProjectsService = require('../services/projects.service');
 const validatorHandler = require('../middlewares/validator.handler');
 const { checkRoles, checkApiKey, checkUserIds } = require('../middlewares/auth.handler');
 const { createUserSchema, updateUserSchema, getUserSchema } = require('../schemas/user.schema');
-const { createProjectSchema } = require('../schemas/project.schema');
 
 const router = express.Router();
 const usersService = new UsersService();
-const projectsService = new ProjectsService();
 
 router.get('/',
   passport.authenticate('jwt', { session: false }),
@@ -82,34 +79,6 @@ router.delete('/:id',
       const { id } = req.params;
       await usersService.delete(id);
       res.status(204).json();
-    } catch(error) {
-      next(error);
-    }
-  }
-);
-
-router.get('/:id/projects',
-  validatorHandler(getUserSchema, 'params'),
-  async (req, res, next) => {
-    try {
-      const { id } = req.params;
-      const projects = await projectsService.find(id);
-      res.json(projects);
-    } catch(error) {
-      next(error);
-    }
-  }
-);
-
-router.post('/:id/projects',
-  validatorHandler(getUserSchema, 'params'),
-  validatorHandler(createProjectSchema, 'body'),
-  async (req, res, next) => {
-    try {
-      const { body } = req;
-      const { id } = req.params;
-      const newProject = await projectsService.create(id, body);
-      res.status(201).json(newProject);
     } catch(error) {
       next(error);
     }

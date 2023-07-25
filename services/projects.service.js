@@ -24,22 +24,25 @@ class ProjectsService {
     return projects;
   }
 
-  async findOne(projectId) {
+  async findOne(projectId, user) {
     const project = await models.Project.findByPk(projectId);
     if (!project) {
       throw boom.notFound('Project not found');
     }
+    if (project.userId !== user.sub) {
+      throw boom.unauthorized();
+    }
     return project;
   }
 
-  async update(projectId, changes) {
-    const project = await this.findOne(projectId);
+  async update(projectId, changes, user) {
+    const project = await this.findOne(projectId, user);
     await project.update(changes);
     return { projectId, changes };
   }
 
-  async delete(projectId) {
-    const project = await this.findOne(projectId);
+  async delete(projectId, user) {
+    const project = await this.findOne(projectId, user);
     await project.destroy();
   }
 }
