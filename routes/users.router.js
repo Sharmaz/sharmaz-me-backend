@@ -2,17 +2,14 @@ const express = require('express');
 const passport = require('passport');
 
 const UsersService = require('../services/users.service');
-const JobsService = require('../services/jobs.service');
 const ProjectsService = require('../services/projects.service');
 const validatorHandler = require('../middlewares/validator.handler');
 const { checkRoles, checkApiKey, checkUserIds } = require('../middlewares/auth.handler');
 const { createUserSchema, updateUserSchema, getUserSchema } = require('../schemas/user.schema');
-const { createJobSchema } = require('../schemas/job.schema');
 const { createProjectSchema } = require('../schemas/project.schema');
 
 const router = express.Router();
 const usersService = new UsersService();
-const jobsService = new JobsService();
 const projectsService = new ProjectsService();
 
 router.get('/',
@@ -85,34 +82,6 @@ router.delete('/:id',
       const { id } = req.params;
       await usersService.delete(id);
       res.status(204).json();
-    } catch(error) {
-      next(error);
-    }
-  }
-);
-
-router.get('/:id/jobs',
-  validatorHandler(getUserSchema, 'params'),
-  async (req, res, next) => {
-    try {
-      const { id } = req.params;
-      const jobs = await jobsService.find(id);
-      res.json(jobs)
-    } catch(error) {
-      next(error);
-    }
-  }
-);
-
-router.post('/:id/jobs',
-  validatorHandler(getUserSchema, 'params'),
-  validatorHandler(createJobSchema, 'body'),
-  async (req, res, next) => {
-    try {
-      const { id } = req.params;
-      const { body } = req;
-      const newJob = await jobsService.create(id, body);
-      res.status(201).json(newJob);
     } catch(error) {
       next(error);
     }
