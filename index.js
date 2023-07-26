@@ -1,5 +1,7 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
+const { engine } = require('express-handlebars');
 const config = require('./config/config');
 const routerApi = require('./routes');
 const { logErrors, boomErrorHandler } = require('./middlewares/error.handler');
@@ -21,18 +23,26 @@ const options = {
   }
 }
 
+const publicPath = path.join(__dirname, './views');
+
 app.use(cors(options));
 
 require('./utils/auth');
-
-app.get('/', (req, res) => {
-  res.send('Hello World');
-});
 
 routerApi(app);
 
 app.use(logErrors);
 app.use(boomErrorHandler);
+
+app.engine('.hbs', engine({extname: 'hbs'}));
+app.set('view engine', '.hbs');
+app.set('views', './views');
+
+app.use('/', express.static(publicPath));
+
+app.get('/', (req, res) => {
+  res.render('home');
+});
 
 app.listen(port, () => {
   // eslint-disable-next-line no-console
