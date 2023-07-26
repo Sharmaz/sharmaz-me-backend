@@ -3,7 +3,7 @@ const cors = require('cors');
 const path = require('path');
 const { engine } = require('express-handlebars');
 const config = require('./config/config');
-const routerApi = require('./routes');
+const { routerApi, routerViews } = require('./routes');
 const { logErrors, boomErrorHandler } = require('./middlewares/error.handler');
 
 const app = express();
@@ -30,6 +30,7 @@ app.use(cors(options));
 require('./utils/auth');
 
 routerApi(app);
+routerViews(app);
 
 app.use(logErrors);
 app.use(boomErrorHandler);
@@ -39,10 +40,6 @@ app.set('view engine', '.hbs');
 app.set('views', './views');
 
 app.use('/', express.static(publicPath));
-
-app.get('/', (req, res) => {
-  res.render('home');
-});
 
 app.listen(port, () => {
   // eslint-disable-next-line no-console

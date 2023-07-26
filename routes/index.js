@@ -6,6 +6,8 @@ const jobsRouter = require('./jobs.router');
 const projectsRouter = require('./projects.router');
 const authRouter = require('./auth.router');
 
+const viewsRouter = require('./views.router');
+
 function routerApi(app) {
   const router = express.Router();
 
@@ -17,4 +19,8 @@ function routerApi(app) {
   router.use('/auth', authRouter);
 }
 
-module.exports = routerApi;
+function routerViews(app) {
+  app.use('/', viewsRouter);
+}
+
+module.exports = { routerApi, routerViews };
