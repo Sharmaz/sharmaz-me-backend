@@ -28,23 +28,23 @@ const options = {
   }
 }
 
+app.engine('.hbs', engine({extname: 'hbs'}));
+app.set('view engine', '.hbs');
+app.set('views', './views');
+
 const publicPath = path.join(__dirname, './views');
 
 app.use(cors(options));
 
 require('./utils/auth');
 
+app.use('/', express.static(publicPath));
+
 routerApi(app);
 routerViews(app);
 
 app.use(logErrors);
 app.use(boomErrorHandler);
-
-app.engine('.hbs', engine({extname: 'hbs'}));
-app.set('view engine', '.hbs');
-app.set('views', './views');
-
-app.use('/', express.static(publicPath));
 
 app.listen(port, () => {
   // eslint-disable-next-line no-console

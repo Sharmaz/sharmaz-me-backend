@@ -1,6 +1,27 @@
+/* Variables */
+:root {
+  --main-bg-color: #07071C;
+  --primary: #282C34;
+  --text-slate-300: #CCCCCC;
+  --heliotrope: #E963FD;
+  --dark-orchid: #8233C5;
+  --metallic-blue: #274B74;
+  --organge-peel: #FDA000;
+  --vivid-cerise: #D3208B;
+  --light-cobalt: #879AF2;
+}
+
+/* Globals */
 body {
-  background-color: #07071C;
-  color: #CACACA;
+  background-color: var(--main-bg-color);
+  color: var(--text-slate-300);
+  font-family: 'Ubuntu', sans-serif;
+}
+
+/* Helpers */
+.card {
+  width: 100vw;
+  height: 100vh;
 }
 .flex {
   display: flex;
@@ -17,6 +38,14 @@ body {
 .align-center {
   align-items: center;
 }
+.m-0 {
+  margin: 0;
+}
+.mt-20 {
+  margin-top: 20px;
+}
+
+/* Login Page */
 .input-text {
   width: 50%;
   height: 40px;
@@ -28,6 +57,7 @@ body {
   width: 50%;
 }
 .button {
+  background-color: var(--metallic-blue);
   border: 0;
   color: whitesmoke;
   cursor: pointer;
@@ -35,24 +65,14 @@ body {
   height: 40px;
   width: 180px;
 }
-.purple {
-  background-color: #8233C5;
-}
-.dark-blue {
-  background-color: #274B74;
-}
-.card {
-  width: 100vw;
-  height: 100vh;
-}
 .login-form {
   border-radius: 20px;
-  background-color: #879AF2;
+  background-color: var(--light-cobalt);
   width: 800px;
   height: 400px;
 }
 .login-header {
-  background-color: #274B74;
+  background-color: var(--metallic-blue);
   border-radius: 19px 19px 0 0;
   height: 60px;
   margin: 0;
@@ -65,9 +85,12 @@ body {
   width: 90%;
   margin: 20px;
 }
-.mt-20 {
-  margin-top: 20px;
-}
-.red {
-  color: red;
+
+/* 404 Not Found Page */
+.not-found-card {
+  background-color: var(--metallic-blue);
+  border-radius: 20px;
+  font-size: 40px;
+  height: 60%;
+  width: 60%;
 }
