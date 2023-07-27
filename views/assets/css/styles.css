@@ -1,3 +1,73 @@
+body {
+  background-color: #07071C;
+  color: #CACACA;
+}
+.flex {
+  display: flex;
+}
+.wrap {
+  flex-wrap: wrap;
+}
+.justify-center {
+  justify-content: center;
+}
+.between {
+  justify-content: space-between;
+}
+.align-center {
+  align-items: center;
+}
+.input-text {
+  width: 50%;
+  height: 40px;
+  font-size: 18px;
+}
+.input-label {
+  font-size: 24px;
+  color: whitesmoke;
+  width: 50%;
+}
+.button {
+  border: 0;
+  color: whitesmoke;
+  cursor: pointer;
+  font-size: 24px;
+  height: 40px;
+  width: 180px;
+}
+.purple {
+  background-color: #8233C5;
+}
+.dark-blue {
+  background-color: #274B74;
+}
+.card {
+  width: 100vw;
+  height: 100vh;
+}
+.login-form {
+  border-radius: 20px;
+  background-color: #879AF2;
+  width: 800px;
+  height: 400px;
+}
+.login-header {
+  background-color: #274B74;
+  border-radius: 19px 19px 0 0;
+  height: 60px;
+  margin: 0;
+  padding-left: 20px;
+}
+.login-form-content {
+  padding-top: 40px;
+}
+.login-email, .login-password {
+  width: 90%;
+  margin: 20px;
+}
+.mt-20 {
+  margin-top: 20px;
+}
 .red {
   color: red;
 }

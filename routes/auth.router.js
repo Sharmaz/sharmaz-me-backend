@@ -16,10 +16,17 @@ router.post('/login',
         role: user.role,
       };
       const token = jwt.sign(payload, config.jwtSecret);
-      res.json({
-        user,
-        token,
-      });
+      res
+        .cookie('access_token', token,
+          { httpOnly: true,
+            sameSite: true,
+            maxAge : (1000 * 60 * 60 *24),
+          }
+        )
+        .json({
+          user,
+          token,
+        });
     } catch(error) {
       next(error);
     }
