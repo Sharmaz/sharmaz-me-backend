@@ -1,4 +1,6 @@
 const boom = require('@hapi/boom');
+const jwt = require('jsonwebtoken');
+
 const config = require('../config/config');
 
 function checkApiKey(req, res, next) {
@@ -31,4 +33,25 @@ function checkUserIds(req, res, next) {
   }
 }
 
-module.exports = { checkApiKey, checkRoles, checkUserIds };
+function checkIsCookie(req, res, next) {
+  const accessToken = req.cookies.access_token;
+  if (accessToken) {
+    res.redirect('/');
+  }
+  next();
+}
+
+function checkCookieAuth(req, res, next) {
+  const accessToken = req.cookies.access_token;
+
+  jwt.verify(accessToken, config.jwtSecret, async (err, data) => {
+    if(err) {
+      res.redirect('/login');
+    } else if (data) {
+      req.user = data;
+      next();
+    }
+  });
+}
+
+module.exports = { checkApiKey, checkRoles, checkUserIds, checkIsCookie, checkCookieAuth };

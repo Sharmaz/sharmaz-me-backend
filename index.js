@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const { engine } = require('express-handlebars');
 const config = require('./config/config');
 const { routerApi, routerViews } = require('./routes');
@@ -10,6 +12,9 @@ const app = express();
 const port = 3000;
 
 app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 const whitelist = config.allowedList;
 
