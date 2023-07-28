@@ -129,6 +129,19 @@ body {
 
 .menu-list li:hover {
   background-color: var(--dark-orchid);
+  cursor: pointer;
+}
+
+.menu-list li.active {
+  background-color: var(--dark-orchid);
 }
 
 /* Admin */
+
+.admin-content {
+  display: none;
+}
+
+.admin-content.active {
+  display: block;
+}
