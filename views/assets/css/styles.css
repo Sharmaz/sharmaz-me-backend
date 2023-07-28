@@ -46,11 +46,20 @@ body {
 .align-self-center {
   align-self: center;
 }
+.ft-38 {
+  font-size: 38px;
+}
 .ft-28 {
   font-size: 28px;
 }
+.ft-18 {
+  font-size: 18px;
+}
 .m-0 {
   margin: 0;
+}
+.ml-40 {
+  margin-left: 40px;
 }
 .my-20 {
   margin: 20px;
@@ -61,8 +70,9 @@ body {
 .p-0 {
   padding: 0;
 }
-
-/* Login Page */
+.w-100 {
+  width: 100%;
+}
 .input-text {
   width: 50%;
   height: 40px;
@@ -82,6 +92,14 @@ body {
   height: 40px;
   width: 180px;
 }
+.relative {
+  position: relative;
+}
+.absolute {
+  position: absolute;
+}
+
+/* Login Page */
 .login-form {
   border-radius: 20px;
   background-color: var(--light-cobalt);
@@ -121,27 +139,32 @@ body {
 .menu-list {
   list-style-type: none;
 }
-
 .menu-list li {
   padding: 20px;
   margin: 0;
 }
-
 .menu-list li:hover {
   background-color: var(--dark-orchid);
   cursor: pointer;
 }
-
 .menu-list li.active {
   background-color: var(--dark-orchid);
 }
 
 /* Admin */
-
 .admin-content {
   display: none;
+  width: 900px;
 }
-
 .admin-content.active {
   display: block;
+}
+
+/* Admin Account*/
+.admin-titles {
+  align-items: baseline;
+}
+.save-button {
+  top: 0;
+  right: 0;
 }
