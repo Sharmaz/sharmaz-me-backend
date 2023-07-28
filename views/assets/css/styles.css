@@ -16,6 +16,8 @@ body {
   background-color: var(--main-bg-color);
   color: var(--text-slate-300);
   font-family: 'Ubuntu', sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 /* Helpers */
@@ -25,6 +27,9 @@ body {
 }
 .flex {
   display: flex;
+}
+.flex-col {
+  flex-direction: column;
 }
 .wrap {
   flex-wrap: wrap;
@@ -38,11 +43,23 @@ body {
 .align-center {
   align-items: center;
 }
+.align-self-center {
+  align-self: center;
+}
+.ft-28 {
+  font-size: 28px;
+}
 .m-0 {
   margin: 0;
 }
+.my-20 {
+  margin: 20px;
+}
 .mt-20 {
   margin-top: 20px;
+}
+.p-0 {
+  padding: 0;
 }
 
 /* Login Page */
@@ -94,3 +111,24 @@ body {
   height: 60%;
   width: 60%;
 }
+
+/* Menu */
+.menu {
+  background-color: var(--metallic-blue);
+  height: 100vh;
+  width: 300px;
+}
+.menu-list {
+  list-style-type: none;
+}
+
+.menu-list li {
+  padding: 20px;
+  margin: 0;
+}
+
+.menu-list li:hover {
+  background-color: var(--dark-orchid);
+}
+
+/* Admin */
