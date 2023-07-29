@@ -19,6 +19,20 @@ body {
   margin: 0;
   padding: 0;
 }
+table {
+  background-color: var(--metallic-blue);
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+tr:nth-child(even) {
+  background-color: var(--light-cobalt);
+}
 
 /* Helpers */
 .card {
@@ -95,6 +109,11 @@ body {
   height: 40px;
   width: 180px;
 }
+.small-button {
+  font-size: 16px;
+  height: 40px;
+  width: 60px;
+}
 .relative {
   position: relative;
 }
@@ -170,4 +189,10 @@ body {
 .save-button {
   top: 0;
   right: 0;
+}
+.edit-button {
+  background-color: var(--organge-peel);
+}
+.delete-button {
+  background-color: var(--vivid-cerise);
 }
