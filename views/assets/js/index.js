@@ -1,3 +1,9 @@
+/** Utils */
+function getTokenFromCookie(cookie) {
+  const token = cookie.split('=');
+  return token[1];
+}
+
 /** Log In */
 
 const loginButton = document.querySelector('.login-button');
@@ -42,5 +48,33 @@ if (tabList) {
       tab.classList.add('active');
       adminElements[index].classList.add('active');
     });
+  });
+}
+
+/** Account Update */
+const accountForm = document.getElementById('update-account');
+const accountButton = document.getElementById('account-button');
+
+if (accountForm && accountButton) {
+  accountButton.addEventListener('click', async (event) => {
+    event.preventDefault();
+    const formData = {
+      email: accountForm.email.value,
+    }
+    const userId = accountForm.dataset.user;
+    const documentCookie = document.cookie;
+    const accessToken = getTokenFromCookie(documentCookie);
+
+    await fetch(`http://localhost:3000/api/v1/users/${userId}`, {
+      method: 'PATCH',
+      mode: 'cors',
+      credentials: 'same-origin',
+      body: JSON.stringify(formData),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `bearer ${accessToken}`,
+      }
+    });
+    window.location.href = '/';
   });
 }
