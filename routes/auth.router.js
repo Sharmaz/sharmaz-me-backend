@@ -18,7 +18,7 @@ router.post('/login',
       const token = jwt.sign(payload, config.jwtSecret);
       res
         .cookie('access_token', token,
-          { httpOnly: true,
+          {
             sameSite: true,
             maxAge : (1000 * 60 * 60 *24),
           }

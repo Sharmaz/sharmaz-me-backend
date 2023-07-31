@@ -1,13 +1,13 @@
 <div class="admin-content active ml-40 w-100">
   <div class="admin-titles flex">
     <h1 class="admin-title ft-38">Account</h1>
-    <h2 class="admin-role ml-40 ft-18">Admin</h2>
+    <h2 class="admin-role ml-40 ft-18">{{user.role}}</h2>
   </div>
-  <form class="relative" action="">
+  <form class="relative" action="update-account" id="update-account" data-user="{{user.id}}">
     <div class="account-email flex flex-col">
       <label class="input-label" for="email">Email</label>
-      <input class="input-text mt-20" type="email" name="email" id="email" value="your@email.com">
+      <input class="input-text mt-20" type="email" name="email" id="email" value="{{user.email}}">
     </div>
-    <button class="save-button button absolute">Save</button>
+    <button id="account-button" class="save-button button absolute">Save</button>
   </form>
 </div>
