@@ -1,12 +1,27 @@
 const express = require('express');
 const { checkIsCookie, checkCookieAuth } = require('../middlewares/auth.handler');
+const UsersService = require('../services/users.service');
 
 const router = express.Router();
+const usersService = new UsersService();
 
 router.get('/',
   checkCookieAuth,
-  (req, res) => {
-    res.render('pages/index', { page: { title: 'Admin Panel' }});
+  async (req, res, next) => {
+    try {
+      const { sub } = req.user;
+      const userRaw = await usersService.findOne(sub);
+      const userString = JSON.stringify(userRaw);
+      const user = JSON.parse(userString);
+
+      res.render('pages/index', {
+        page: { title: 'Admin Panel' },
+        user,
+      });
+    }
+    catch(error) {
+      next(error);
+    }
   }
 );
 
