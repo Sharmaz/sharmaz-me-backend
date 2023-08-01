@@ -127,6 +127,43 @@ if (editButtons) {
   });
 }
 
+/** Jobs Update */
+const updateJobButtons = document.querySelectorAll('.update-job-button');
+const updateJobForm = document.querySelectorAll('.edit-job-form');
+
+if (updateJobButtons) {
+  updateJobButtons.forEach((button, index) => {
+    button.addEventListener('click', async (event) => {
+      event.preventDefault();
+      const details = [...updateJobForm[index].querySelectorAll('.job-detail')];
+      const detailList = details.map((detail) => detail.value);
+      const formData = {
+        name: updateJobForm[index].name.value,
+        dateStarted: updateJobForm[index].date_started.value,
+        dateEnded: updateJobForm[index].date_ended.value,
+        description: updateJobForm[index].description.value,
+        role: updateJobForm[index].job_role.value,
+        details: detailList,
+      };
+      const jobId = updateJobForm[index].dataset.job;
+      const documentCookie = document.cookie;
+      const accessToken = getTokenFromCookie(documentCookie);
+
+      await fetch(`http://localhost:3000/api/v1/jobs/${jobId}`, {
+        method: 'PATCH',
+        mode: 'cors',
+        credentials: 'same-origin',
+        body: JSON.stringify(formData),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `bearer ${accessToken}`,
+        },
+      });
+      window.location.href = '/';
+    });
+  });
+}
+
 /** Jobs Delete */
 const deleteButtons = document.querySelectorAll('.delete-job-button');
 if (deleteButtons) {
