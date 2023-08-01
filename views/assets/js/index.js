@@ -37,14 +37,12 @@ if (tabList) {
   const adminElements = document.querySelectorAll('.admin-content');
   tabList.forEach((tab, index) => {
     tab.addEventListener('click', () => {
-      if (tabList[index] !== index) {
-        tabList.forEach((tabListElement) => {
-          tabListElement.classList.remove('active');
-        });
-        adminElements.forEach((adminEl) => {
-          adminEl.classList.remove('active');
-        });
-      }
+      tabList.forEach((tabListElement) => {
+        tabListElement.classList.remove('active');
+      });
+      adminElements.forEach((adminEl) => {
+        adminEl.classList.remove('active');
+      });
       tab.classList.add('active');
       adminElements[index].classList.add('active');
     });
@@ -111,5 +109,143 @@ if (profileForm && profileButton) {
       }
     });
     window.location.href = '/';
+  });
+}
+
+/** Jobs Add New Job Button */
+
+const addNewJobButton = document.getElementById('add-new-job');
+const createJobForm = document.getElementById('create-job-form');
+
+if (addNewJobButton) {
+  addNewJobButton.addEventListener('click', () => {
+    createJobForm.classList.remove('d-none');
+    addNewJobButton.classList.add('d-none');
+  });
+}
+
+/** Jobs Edit Button */
+
+const editButtons = document.querySelectorAll('.edit-job-button');
+const editJobForms = document.querySelectorAll('.edit-job-form');
+if (editButtons) {
+  editButtons.forEach((button, index) => {
+    button.addEventListener('click', () => {
+      editJobForms.forEach((form) => {
+        form.classList.add('d-none');
+      });
+      addNewJobButton.classList.add('d-none');
+      createJobForm.classList.add('d-none');
+      editJobForms[index].classList.remove('d-none');
+    });
+  });
+}
+
+/** Jobs Form add detail */
+
+const addDetailButtons = document.querySelectorAll('.add-job-detail');
+if (addDetailButtons) {
+  addDetailButtons.forEach((button) => {
+    button.addEventListener('click', (event) => {
+      event.preventDefault();
+      const detailField = document.createElement('input');
+      detailField.setAttribute('type', 'text');
+      detailField.setAttribute('name', 'detail');
+      detailField.setAttribute('class', 'input-text mt-20 job-detail');
+      button.insertAdjacentElement('beforebegin', detailField);
+    });
+  });
+}
+
+/** Jobs Create */
+
+const addJobButton = document.getElementById('create-job');
+if (addJobButton) {
+  addJobButton.addEventListener('click', async (event) => {
+    event.preventDefault();
+    const documentCookie = document.cookie;
+    const accessToken = getTokenFromCookie(documentCookie);
+    const details = [...createJobForm.querySelectorAll('.job-detail')];
+    const detailList = details.map((detail) => detail.value);
+    const formData = {
+      name: createJobForm.name.value,
+      dateStarted: createJobForm.date_started.value,
+      dateEnded: createJobForm.date_ended.value,
+      description: createJobForm.description.value,
+      role: createJobForm.job_role.value,
+      details: detailList,
+    };
+
+    await fetch(`http://localhost:3000/api/v1/jobs/`, {
+      method: 'POST',
+      mode: 'cors',
+      credentials: 'same-origin',
+      body: JSON.stringify(formData),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `bearer ${accessToken}`,
+      },
+    });
+    window.location.href = '/';
+  });
+}
+
+/** Jobs Update */
+const updateJobButtons = document.querySelectorAll('.update-job-button');
+const updateJobForm = document.querySelectorAll('.edit-job-form');
+
+if (updateJobButtons) {
+  updateJobButtons.forEach((button, index) => {
+    button.addEventListener('click', async (event) => {
+      event.preventDefault();
+      const details = [...updateJobForm[index].querySelectorAll('.job-detail')];
+      const detailList = details.map((detail) => detail.value);
+      const formData = {
+        name: updateJobForm[index].name.value,
+        dateStarted: updateJobForm[index].date_started.value,
+        dateEnded: updateJobForm[index].date_ended.value,
+        description: updateJobForm[index].description.value,
+        role: updateJobForm[index].job_role.value,
+        details: detailList,
+      };
+      const jobId = updateJobForm[index].dataset.job;
+      const documentCookie = document.cookie;
+      const accessToken = getTokenFromCookie(documentCookie);
+
+      await fetch(`http://localhost:3000/api/v1/jobs/${jobId}`, {
+        method: 'PATCH',
+        mode: 'cors',
+        credentials: 'same-origin',
+        body: JSON.stringify(formData),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `bearer ${accessToken}`,
+        },
+      });
+      window.location.href = '/';
+    });
+  });
+}
+
+/** Jobs Delete */
+const deleteButtons = document.querySelectorAll('.delete-job-button');
+if (deleteButtons) {
+  deleteButtons.forEach((button) => {
+    button.addEventListener('click', async () => {
+      const jobId = button.dataset.job;
+      const documentCookie = document.cookie;
+      const accessToken = getTokenFromCookie(documentCookie);
+
+      await fetch(`http://localhost:3000/api/v1/jobs/${jobId}`, {
+      method: 'DELETE',
+      mode: 'cors',
+      credentials: 'same-origin',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `bearer ${accessToken}`,
+      }
+    });
+      button.closest('tr') .remove();
+    });
   });
 }
