@@ -37,14 +37,12 @@ if (tabList) {
   const adminElements = document.querySelectorAll('.admin-content');
   tabList.forEach((tab, index) => {
     tab.addEventListener('click', () => {
-      if (tabList[index] !== index) {
-        tabList.forEach((tabListElement) => {
-          tabListElement.classList.remove('active');
-        });
-        adminElements.forEach((adminEl) => {
-          adminEl.classList.remove('active');
-        });
-      }
+      tabList.forEach((tabListElement) => {
+        tabListElement.classList.remove('active');
+      });
+      adminElements.forEach((adminEl) => {
+        adminEl.classList.remove('active');
+      });
       tab.classList.add('active');
       adminElements[index].classList.add('active');
     });
@@ -111,5 +109,20 @@ if (profileForm && profileButton) {
       }
     });
     window.location.href = '/';
+  });
+}
+
+/** Jobs Edit Button */
+
+const editButtons = document.querySelectorAll('.edit-job-button');
+const editJobForms = document.querySelectorAll('.edit-job-form');
+if (editButtons) {
+  editButtons.forEach((button, index) => {
+    button.addEventListener('click', () => {
+      editJobForms.forEach((form) => {
+        form.classList.add('d-none');
+      });
+      editJobForms[index].classList.remove('d-none');
+    });
   });
 }
