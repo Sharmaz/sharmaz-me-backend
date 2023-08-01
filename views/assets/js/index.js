@@ -127,6 +127,22 @@ if (editButtons) {
   });
 }
 
+/** Jobs Form add detail */
+
+const addDetailButtons = document.querySelectorAll('.add-job-detail');
+if (addDetailButtons) {
+  addDetailButtons.forEach((button) => {
+    button.addEventListener('click', (event) => {
+      event.preventDefault();
+      const detailField = document.createElement('input');
+      detailField.setAttribute('type', 'text');
+      detailField.setAttribute('name', 'detail');
+      detailField.setAttribute('class', 'input-text mt-20 job-detail');
+      button.insertAdjacentElement('beforebegin', detailField);
+    });
+  });
+}
+
 /** Jobs Update */
 const updateJobButtons = document.querySelectorAll('.update-job-button');
 const updateJobForm = document.querySelectorAll('.edit-job-form');
