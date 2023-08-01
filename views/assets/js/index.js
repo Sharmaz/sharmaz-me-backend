@@ -112,6 +112,18 @@ if (profileForm && profileButton) {
   });
 }
 
+/** Jobs Add New Job Button */
+
+const addNewJobButton = document.getElementById('add-new-job');
+const createJobForm = document.getElementById('create-job-form');
+
+if (addNewJobButton) {
+  addNewJobButton.addEventListener('click', () => {
+    createJobForm.classList.remove('d-none');
+    addNewJobButton.classList.add('d-none');
+  });
+}
+
 /** Jobs Edit Button */
 
 const editButtons = document.querySelectorAll('.edit-job-button');
@@ -122,6 +134,8 @@ if (editButtons) {
       editJobForms.forEach((form) => {
         form.classList.add('d-none');
       });
+      addNewJobButton.classList.add('d-none');
+      createJobForm.classList.add('d-none');
       editJobForms[index].classList.remove('d-none');
     });
   });
