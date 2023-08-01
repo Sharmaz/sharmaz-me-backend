@@ -157,6 +157,39 @@ if (addDetailButtons) {
   });
 }
 
+/** Jobs Create */
+
+const addJobButton = document.getElementById('create-job');
+if (addJobButton) {
+  addJobButton.addEventListener('click', async (event) => {
+    event.preventDefault();
+    const documentCookie = document.cookie;
+    const accessToken = getTokenFromCookie(documentCookie);
+    const details = [...createJobForm.querySelectorAll('.job-detail')];
+    const detailList = details.map((detail) => detail.value);
+    const formData = {
+      name: createJobForm.name.value,
+      dateStarted: createJobForm.date_started.value,
+      dateEnded: createJobForm.date_ended.value,
+      description: createJobForm.description.value,
+      role: createJobForm.job_role.value,
+      details: detailList,
+    };
+
+    await fetch(`http://localhost:3000/api/v1/jobs/`, {
+      method: 'POST',
+      mode: 'cors',
+      credentials: 'same-origin',
+      body: JSON.stringify(formData),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `bearer ${accessToken}`,
+      },
+    });
+    window.location.href = '/';
+  });
+}
+
 /** Jobs Update */
 const updateJobButtons = document.querySelectorAll('.update-job-button');
 const updateJobForm = document.querySelectorAll('.edit-job-form');
