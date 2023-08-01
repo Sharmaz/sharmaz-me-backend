@@ -15,7 +15,7 @@
         <td>{{job.role}}</td>
         <td>
           <button class="button small-button edit-button edit-job-button">Edit</button>
-          <button id="delete-job-button" class="button small-button delete-button delete-job-button">Delete</button>
+          <button class="button small-button delete-button delete-job-button" data-job="{{job.id}}">Delete</button>
         </td>
       </tr>
     {{/each}}

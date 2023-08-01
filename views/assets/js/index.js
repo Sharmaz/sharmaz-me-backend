@@ -126,3 +126,26 @@ if (editButtons) {
     });
   });
 }
+
+/** Jobs Delete */
+const deleteButtons = document.querySelectorAll('.delete-job-button');
+if (deleteButtons) {
+  deleteButtons.forEach((button) => {
+    button.addEventListener('click', async () => {
+      const jobId = button.dataset.job;
+      const documentCookie = document.cookie;
+      const accessToken = getTokenFromCookie(documentCookie);
+
+      await fetch(`http://localhost:3000/api/v1/jobs/${jobId}`, {
+      method: 'DELETE',
+      mode: 'cors',
+      credentials: 'same-origin',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `bearer ${accessToken}`,
+      }
+    });
+      button.closest('tr') .remove();
+    });
+  });
+}
