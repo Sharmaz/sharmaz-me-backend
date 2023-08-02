@@ -156,6 +156,28 @@ if (profileForm && profileButton) {
   });
 }
 
+/** Profile Delete */
+
+const profileDeleteButton = document.getElementById('delete-profile-button');
+if (profileDeleteButton) {
+  profileDeleteButton.addEventListener('click', async () => {
+    const profileId = profileDeleteButton.dataset.profile;
+    const documentCookie = document.cookie;
+    const accessToken = getTokenFromCookie(documentCookie);
+
+    await fetch(`http://localhost:3000/api/v1/profiles/${profileId}`, {
+    method: 'DELETE',
+    mode: 'cors',
+    credentials: 'same-origin',
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `bearer ${accessToken}`,
+    }
+  });
+    window.location.href = '/';
+  });
+}
+
 /** Jobs Add New Job Button */
 
 const addNewJobButton = document.getElementById('add-new-job');

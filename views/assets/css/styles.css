@@ -82,7 +82,7 @@ a {
   margin-left: 40px;
 }
 .my-20 {
-  margin: 20px;
+  margin: 20px 0;
 }
 .mt-20 {
   margin-top: 20px;
@@ -121,6 +121,9 @@ a {
 }
 .medium-button {
   width: 180px;
+}
+.red-button {
+  background-color: var(--vivid-cerise);
 }
 .relative {
   position: relative;
