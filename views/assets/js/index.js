@@ -265,3 +265,19 @@ if (editProjectButtons) {
     });
   });
 }
+
+/** Projects Forms add tag */
+
+const addTagButtons = document.querySelectorAll('.add-project-tag');
+if (addTagButtons) {
+  addTagButtons.forEach((button) => {
+    button.addEventListener('click', (event) => {
+      event.preventDefault();
+      const tagField = document.createElement('input');
+      tagField.setAttribute('type', 'text');
+      tagField.setAttribute('name', 'tag');
+      tagField.setAttribute('class', 'input-text mt-20');
+      button.insertAdjacentElement('beforebegin', tagField);
+    });
+  });
+}

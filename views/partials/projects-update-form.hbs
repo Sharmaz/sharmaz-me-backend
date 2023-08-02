@@ -1,20 +1,22 @@
-{{#if user.jobs }}
-  {{#each user.jobs as | job | }}
+{{#if user.projects }}
+  {{#each user.projects as | project | }}
     <form class="relative edit-project-form d-none" action="">
       <div class="flex flex-col">
         <label class="input-label" for="name">Project Name</label>
-        <input class="input-text mt-20" type="text" name="name" id="name" value="The Sharmaz">
+        <input class="input-text mt-20" type="text" name="name" id="name" value="{{project.name}}">
         <label class="input-label mt-20" for="project_description">Job Description</label>
-        <textarea class="mt-20 ft-18" name="project_description" id="project_description" cols="30" rows="10">A lot of text...</textarea>
+        <textarea class="mt-20 ft-18" name="project_description" id="project_description" cols="30" rows="10">{{project.description}}</textarea>
         <label class="input-label mt-20" for="github_link">Github Link</label>
-        <input class="input-text mt-20" type="text" name="github_link" id="github_link" value="https://github.com">
+        <input class="input-text mt-20" type="text" name="github_link" id="github_link" value="{{project.githubLink}}">
         <label class="input-label mt-20" for="demo_link">Demo Link</label>
-        <input class="input-text mt-20" type="text" name="demo_link" id="demo_link" value="https://ivanrobles.pro">
+        <input class="input-text mt-20" type="text" name="demo_link" id="demo_link" value="{{project.demoLink}}">
         <label class="input-label mt-20" for="tags">Project Tags</label>
-        <input class="input-text mt-20" type="text" name="tag1" id="tag1" value="">
-        <input class="input-text mt-20" type="text" name="tag2" id="tag2" value="">
-        <input class="input-text mt-20" type="text" name="tag3" id="tag3" value="">
-        <button class="button mt-20">add tag</button>
+        {{#if project.tags }}
+          {{#each project.tags as | tag | }}
+            <input class="input-text mt-20" type="text" name="tag" value="{{tag}}">
+          {{/each }}
+        {{/if }}
+        <button class="button mt-20 add-project-tag">add tag</button>
       </div>
       <button class="save-button button absolute">Save</button>
     </form>
