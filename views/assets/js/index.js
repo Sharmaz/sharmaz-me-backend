@@ -249,3 +249,141 @@ if (deleteButtons) {
     });
   });
 }
+
+/** Projects Add New Project Button */
+
+const addNewProjectButton = document.getElementById('add-new-project');
+const createProjectForm = document.getElementById('create-project-form');
+
+if (addNewProjectButton) {
+  addNewProjectButton.addEventListener('click', () => {
+    createProjectForm.classList.remove('d-none');
+    addNewProjectButton.classList.add('d-none');
+  });
+}
+
+/** Projects Edit Button */
+
+const editProjectButtons = document.querySelectorAll('.edit-project-button');
+const editProjectForms = document.querySelectorAll('.edit-project-form');
+if (editProjectButtons) {
+  editProjectButtons.forEach((button, index) => {
+    button.addEventListener('click', () => {
+      editProjectForms.forEach((form) => {
+        form.classList.add('d-none');
+      });
+      addNewProjectButton.classList.add('d-none');
+      createProjectForm.classList.add('d-none');
+      editProjectForms[index].classList.remove('d-none');
+    });
+  });
+}
+
+/** Projects Forms add tag */
+
+const addTagButtons = document.querySelectorAll('.add-project-tag');
+if (addTagButtons) {
+  addTagButtons.forEach((button) => {
+    button.addEventListener('click', (event) => {
+      event.preventDefault();
+      const tagField = document.createElement('input');
+      tagField.setAttribute('type', 'text');
+      tagField.setAttribute('name', 'tag');
+      tagField.setAttribute('class', 'input-text mt-20 project-tag');
+      button.insertAdjacentElement('beforebegin', tagField);
+    });
+  });
+}
+
+/** Project Create */
+
+const addProjectButton = document.getElementById('create-project');
+if (addProjectButton) {
+  addProjectButton.addEventListener('click', async (event) => {
+    event.preventDefault();
+    const documentCookie = document.cookie;
+    const accessToken = getTokenFromCookie(documentCookie);
+    const tags = [...createProjectForm.querySelectorAll('.project-tag')];
+    const tagList = tags.map((tag) => tag.value);
+    const formData = {
+      name: createProjectForm.name.value,
+      description: createProjectForm.project_description.value,
+      githubLink: createProjectForm.github_link.value,
+      demoLink: createProjectForm.demo_link.value,
+      tags: tagList,
+    };
+
+    await fetch(`http://localhost:3000/api/v1/projects/`, {
+      method: 'POST',
+      mode: 'cors',
+      credentials: 'same-origin',
+      body: JSON.stringify(formData),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `bearer ${accessToken}`,
+      },
+    });
+    window.location.href = '/';
+  });
+}
+
+/** Projects Update */
+
+const updateProjectButtons = document.querySelectorAll('.update-project-button');
+const updateProjectForm = document.querySelectorAll('.edit-project-form');
+
+if (updateProjectButtons) {
+  updateProjectButtons.forEach((button, index) => {
+    button.addEventListener('click', async (event) => {
+      event.preventDefault();
+      const tags = [...updateProjectForm[index].querySelectorAll('.project-tag')];
+      const tagList = tags.map((tag) => tag.value);
+      const formData = {
+        name: updateProjectForm[index].name.value,
+        description: updateProjectForm[index].project_description.value,
+        githubLink: updateProjectForm[index].github_link.value,
+        demoLink: updateProjectForm[index].demo_link.value,
+        tags: tagList,
+      };
+      const projectId = updateProjectForm[index].dataset.project;
+      const documentCookie = document.cookie;
+      const accessToken = getTokenFromCookie(documentCookie);
+
+      await fetch(`http://localhost:3000/api/v1/projects/${projectId}`, {
+        method: 'PATCH',
+        mode: 'cors',
+        credentials: 'same-origin',
+        body: JSON.stringify(formData),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `bearer ${accessToken}`,
+        },
+      });
+      window.location.href = '/';
+    });
+  });
+}
+
+/** Projects Delete */
+
+const deleteProjectButtons = document.querySelectorAll('.delete-project-button');
+if (deleteProjectButtons) {
+  deleteProjectButtons.forEach((button) => {
+    button.addEventListener('click', async () => {
+      const projectId = button.dataset.project;
+      const documentCookie = document.cookie;
+      const accessToken = getTokenFromCookie(documentCookie);
+
+      await fetch(`http://localhost:3000/api/v1/projects/${projectId}`, {
+      method: 'DELETE',
+      mode: 'cors',
+      credentials: 'same-origin',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `bearer ${accessToken}`,
+      }
+    });
+      button.closest('tr') .remove();
+    });
+  });
+}

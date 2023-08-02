@@ -1,0 +1,16 @@
+<form id="create-project-form" class="relative d-none" action="">
+  <div class="flex flex-col">
+    <label class="input-label" for="name">Project Name</label>
+    <input class="input-text mt-20" type="text" name="name" id="name" value="Your awesome project">
+    <label class="input-label mt-20" for="project_description">Job Description</label>
+    <textarea class="mt-20 ft-18" name="project_description" id="project_description" cols="30" rows="10">Project awesome description goes here...</textarea>
+    <label class="input-label mt-20" for="github_link">Github Link</label>
+    <input class="input-text mt-20" type="text" name="github_link" id="github_link" value="https://awesome.github.com/your-project">
+    <label class="input-label mt-20" for="demo_link">Demo Link</label>
+    <input class="input-text mt-20" type="text" name="demo_link" id="demo_link" value="https://demo.com/your-project">
+    <label class="input-label mt-20" for="tags">Project Tags</label>
+    <input class="input-text mt-20 project-tag" type="text" name="tag" value="React">
+    <button class="button medium-button mt-20 add-project-tag">add tag</button>
+  </div>
+  <button id="create-project" class="save-button button absolute">Add Project</button>
+</form>
