@@ -113,12 +113,14 @@ a {
   cursor: pointer;
   font-size: 24px;
   height: 40px;
-  width: 180px;
+  padding: 0 20px;
 }
 .small-button {
   font-size: 16px;
-  height: 40px;
   width: 60px;
+}
+.medium-button {
+  width: 180px;
 }
 .relative {
   position: relative;

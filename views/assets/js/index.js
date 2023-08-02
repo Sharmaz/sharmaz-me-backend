@@ -250,6 +250,18 @@ if (deleteButtons) {
   });
 }
 
+/** Projects Add New Project Button */
+
+const addNewProjectButton = document.getElementById('add-new-project');
+const createProjectForm = document.getElementById('create-project-form');
+
+if (addNewProjectButton) {
+  addNewProjectButton.addEventListener('click', () => {
+    createProjectForm.classList.remove('d-none');
+    addNewProjectButton.classList.add('d-none');
+  });
+}
+
 /** Projects Edit Button */
 
 const editProjectButtons = document.querySelectorAll('.edit-project-button');
@@ -260,7 +272,8 @@ if (editProjectButtons) {
       editProjectForms.forEach((form) => {
         form.classList.add('d-none');
       });
-
+      addNewProjectButton.classList.add('d-none');
+      createProjectForm.classList.add('d-none');
       editProjectForms[index].classList.remove('d-none');
     });
   });
