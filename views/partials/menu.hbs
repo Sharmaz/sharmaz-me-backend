@@ -3,7 +3,11 @@
       <img src="/assets/images/logo.png" alt="logo" width="100" height="100">
     </div>
     <ul class="menu-list m-0 p-0 ft-28">
-      <li class="active" >Ivan Robles</li>
+      {{#if user.profile}}
+        <li class="active" >{{user.profile.name}}</li>
+      {{else}}
+        <li class="active" >User</li>
+      {{/if}}
       <li>Profile</li>
       <li>Jobs</li>
       <li>Projects</li>

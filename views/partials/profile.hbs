@@ -1,22 +1,9 @@
 <div class="admin-content ml-40 w-100 mb-40">
   <h1 class="admin-title ft-38">Profile</h1>
-  <form class="relative" action="update-profile" id="update-profile" data-profile="{{user.profile.id}}">
-    <div class="flex flex-col">
-      <label class="input-label" for="name">Name</label>
-      <input class="input-text mt-20" type="text" name="name" id="name" value="{{user.profile.name}}">
-      <label class="input-label mt-20" for="about">About</label>
-      <textarea class="mt-20 ft-18" name="about" id="" cols="30" rows="10">{{user.profile.about}}</textarea>
-      <label class="input-label mt-20" for="profile_pic_url">Profile Pic URL</label>
-      <input class="input-text mt-20" type="text" name="profile_pic_url" id="profile_pic_url" value="{{user.profile.profilePic}}">
-      <label class="input-label mt-20" for="blog_url">Blog URL</label>
-      <input class="input-text mt-20" type="text" name="blog_url" id="blog_url" value="{{user.profile.blog}}">
-      <label class="input-label mt-20" for="github_url">Github URL</label>
-      <input class="input-text mt-20" type="text" name="github_url" id="github_url" value="{{user.profile.github}}">
-      <label class="input-label mt-20" for="linkedin_url">LinkedIn URL</label>
-      <input class="input-text mt-20" type="text" name="linkedin_url" id="linkedin_url" value="{{user.profile.linkedIn}}">
-      <label class="input-label mt-20" for="twitter_url">Twitter URL</label>
-      <input class="input-text mt-20" type="text" name="twitter_url" id="twitter_url" value="{{user.profile.twitter}}">
-    </div>
-    <button id="profile-button" class="save-button button absolute">Save</button>
-  </form>
+  {{#if user.profile}}
+    {{> profile-update-form}}
+    {{else}}
+    <button id="create-profile-button" class="button absolute">Create Profile</button>
+  {{/if}}
+  {{> profile-create-form}}
 </div>

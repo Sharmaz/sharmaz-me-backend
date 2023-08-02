@@ -77,6 +77,50 @@ if (accountForm && accountButton) {
   });
 }
 
+/** Profile Create Button */
+
+const createProfileButton = document.getElementById('create-profile-button');
+const createProfileForm = document.getElementById('create-profile-form');
+
+if (createProfileButton) {
+  createProfileButton.addEventListener('click', () => {
+    createProfileForm.classList.remove('d-none');
+    createProfileButton.classList.add('d-none');
+  });
+}
+
+/** Profile Create */
+
+const addProfileButton = document.getElementById('profile-create-button');
+if (addProfileButton) {
+  addProfileButton.addEventListener('click', async (event) => {
+    event.preventDefault();
+    const documentCookie = document.cookie;
+    const accessToken = getTokenFromCookie(documentCookie);
+    const formData = {
+      name: createProfileForm.name.value,
+      profilePic: createProfileForm.profile_pic_url.value,
+      about: createProfileForm.about.value,
+      blog: createProfileForm.blog_url.value,
+      github: createProfileForm.github_url.value,
+      linkedIn: createProfileForm.linkedin_url.value,
+      twitter: createProfileForm.twitter_url.value,
+    };
+
+    await fetch(`http://localhost:3000/api/v1/profiles/`, {
+      method: 'POST',
+      mode: 'cors',
+      credentials: 'same-origin',
+      body: JSON.stringify(formData),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `bearer ${accessToken}`,
+      },
+    });
+    window.location.href = '/';
+  });
+}
+
 /** Profile Update */
 
 const profileForm = document.getElementById('update-profile');
@@ -108,6 +152,28 @@ if (profileForm && profileButton) {
         "Authorization": `bearer ${accessToken}`,
       }
     });
+    window.location.href = '/';
+  });
+}
+
+/** Profile Delete */
+
+const profileDeleteButton = document.getElementById('delete-profile-button');
+if (profileDeleteButton) {
+  profileDeleteButton.addEventListener('click', async () => {
+    const profileId = profileDeleteButton.dataset.profile;
+    const documentCookie = document.cookie;
+    const accessToken = getTokenFromCookie(documentCookie);
+
+    await fetch(`http://localhost:3000/api/v1/profiles/${profileId}`, {
+    method: 'DELETE',
+    mode: 'cors',
+    credentials: 'same-origin',
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `bearer ${accessToken}`,
+    }
+  });
     window.location.href = '/';
   });
 }
