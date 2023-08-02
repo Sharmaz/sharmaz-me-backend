@@ -89,6 +89,38 @@ if (createProfileButton) {
   });
 }
 
+/** Profile Create */
+
+const addProfileButton = document.getElementById('profile-create-button');
+if (addProfileButton) {
+  addProfileButton.addEventListener('click', async (event) => {
+    event.preventDefault();
+    const documentCookie = document.cookie;
+    const accessToken = getTokenFromCookie(documentCookie);
+    const formData = {
+      name: createProfileForm.name.value,
+      profilePic: createProfileForm.profile_pic_url.value,
+      about: createProfileForm.about.value,
+      blog: createProfileForm.blog_url.value,
+      github: createProfileForm.github_url.value,
+      linkedIn: createProfileForm.linkedin_url.value,
+      twitter: createProfileForm.twitter_url.value,
+    };
+
+    await fetch(`http://localhost:3000/api/v1/profiles/`, {
+      method: 'POST',
+      mode: 'cors',
+      credentials: 'same-origin',
+      body: JSON.stringify(formData),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `bearer ${accessToken}`,
+      },
+    });
+    window.location.href = '/';
+  });
+}
+
 /** Profile Update */
 
 const profileForm = document.getElementById('update-profile');
