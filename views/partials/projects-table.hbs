@@ -9,11 +9,11 @@
     <tr>
     {{#each user.projects as | project | }}
       <td>{{project.name}}</td>
-      <td>{{project.githubLink}}</td>
-      <td>{{project.demoLink}}</td>
+      <td class="cell-link"><a href="{{project.githubLink}}">{{project.githubLink}}</a></td>
+      <td class="cell-link"><a href="{{project.demoLink}}">{{project.demoLink}}</a></td>
       <td>
         <button class="button small-button edit-button edit-project-button">Edit</button>
-        <button class="button small-button delete-button">Delete</button>
+        <button class="button small-button delete-button delete-project-button" data-project="{{project.id}}">Delete</button>
       </td>
     </tr>
     {{/each}}

@@ -281,3 +281,27 @@ if (addTagButtons) {
     });
   });
 }
+
+/** Projects Delete */
+
+const deleteProjectButtons = document.querySelectorAll('.delete-project-button');
+if (deleteProjectButtons) {
+  deleteProjectButtons.forEach((button) => {
+    button.addEventListener('click', async () => {
+      const projectId = button.dataset.project;
+      const documentCookie = document.cookie;
+      const accessToken = getTokenFromCookie(documentCookie);
+
+      await fetch(`http://localhost:3000/api/v1/projects/${projectId}`, {
+      method: 'DELETE',
+      mode: 'cors',
+      credentials: 'same-origin',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `bearer ${accessToken}`,
+      }
+    });
+      button.closest('tr') .remove();
+    });
+  });
+}
