@@ -295,6 +295,38 @@ if (addTagButtons) {
   });
 }
 
+/** Project Create */
+
+const addProjectButton = document.getElementById('create-project');
+if (addProjectButton) {
+  addProjectButton.addEventListener('click', async (event) => {
+    event.preventDefault();
+    const documentCookie = document.cookie;
+    const accessToken = getTokenFromCookie(documentCookie);
+    const tags = [...createProjectForm.querySelectorAll('.project-tag')];
+    const tagList = tags.map((tag) => tag.value);
+    const formData = {
+      name: createProjectForm.name.value,
+      description: createProjectForm.project_description.value,
+      githubLink: createProjectForm.github_link.value,
+      demoLink: createProjectForm.demo_link.value,
+      tags: tagList,
+    };
+
+    await fetch(`http://localhost:3000/api/v1/projects/`, {
+      method: 'POST',
+      mode: 'cors',
+      credentials: 'same-origin',
+      body: JSON.stringify(formData),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `bearer ${accessToken}`,
+      },
+    });
+    window.location.href = '/';
+  });
+}
+
 /** Projects Update */
 
 const updateProjectButtons = document.querySelectorAll('.update-project-button');
