@@ -249,3 +249,19 @@ if (deleteButtons) {
     });
   });
 }
+
+/** Projects Edit Button */
+
+const editProjectButtons = document.querySelectorAll('.edit-project-button');
+const editProjectForms = document.querySelectorAll('.edit-project-form');
+if (editProjectButtons) {
+  editProjectButtons.forEach((button, index) => {
+    button.addEventListener('click', () => {
+      editProjectForms.forEach((form) => {
+        form.classList.add('d-none');
+      });
+
+      editProjectForms[index].classList.remove('d-none');
+    });
+  });
+}

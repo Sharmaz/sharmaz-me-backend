@@ -1,26 +1,21 @@
- <table class="mb-40">
-  <tr>
-    <th>Project</th>
-    <th>Github Link</th>
-    <th>Demo Link</th>
-    <th></th>
-  </tr>
-  <tr>
-    <td>Awesome VR</td>
-    <td>https://github.com/project</td>
-    <td>https://ivanrobles.pro</td>
-    <td>
-      <button class="button small-button edit-button">Edit</button>
-      <button class="button small-button delete-button">Delete</button>
-    </td>
-  </tr>
-  <tr>
-    <td>The Sharmaz</td>
-    <td>https://github.com/project</td>
-    <td>https://ivanrobles.pro</td>
-    <td>
-      <button class="button small-button edit-button">Edit</button>
-      <button class="button small-button delete-button">Delete</button>
-    </td>
-  </tr>
-</table>
+{{#if user.projects }}
+  <table class="mb-40">
+    <tr>
+      <th>Project</th>
+      <th>Github Link</th>
+      <th>Demo Link</th>
+      <th></th>
+    </tr>
+    <tr>
+    {{#each user.projects as | project | }}
+      <td>{{project.name}}</td>
+      <td>{{project.githubLink}}</td>
+      <td>{{project.demoLink}}</td>
+      <td>
+        <button class="button small-button edit-button edit-project-button">Edit</button>
+        <button class="button small-button delete-button">Delete</button>
+      </td>
+    </tr>
+    {{/each}}
+  </table>
+{{/if }}
