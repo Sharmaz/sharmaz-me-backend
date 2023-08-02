@@ -77,6 +77,18 @@ if (accountForm && accountButton) {
   });
 }
 
+/** Profile Create Button */
+
+const createProfileButton = document.getElementById('create-profile-button');
+const createProfileForm = document.getElementById('create-profile-form');
+
+if (createProfileButton) {
+  createProfileButton.addEventListener('click', () => {
+    createProfileForm.classList.remove('d-none');
+    createProfileButton.classList.add('d-none');
+  });
+}
+
 /** Profile Update */
 
 const profileForm = document.getElementById('update-profile');
