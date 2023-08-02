@@ -276,8 +276,45 @@ if (addTagButtons) {
       const tagField = document.createElement('input');
       tagField.setAttribute('type', 'text');
       tagField.setAttribute('name', 'tag');
-      tagField.setAttribute('class', 'input-text mt-20');
+      tagField.setAttribute('class', 'input-text mt-20 project-tag');
       button.insertAdjacentElement('beforebegin', tagField);
+    });
+  });
+}
+
+/** Projects Update */
+
+const updateProjectButtons = document.querySelectorAll('.update-project-button');
+const updateProjectForm = document.querySelectorAll('.edit-project-form');
+
+if (updateProjectButtons) {
+  updateProjectButtons.forEach((button, index) => {
+    button.addEventListener('click', async (event) => {
+      event.preventDefault();
+      const tags = [...updateProjectForm[index].querySelectorAll('.project-tag')];
+      const tagList = tags.map((tag) => tag.value);
+      const formData = {
+        name: updateProjectForm[index].name.value,
+        description: updateProjectForm[index].project_description.value,
+        githubLink: updateProjectForm[index].github_link.value,
+        demoLink: updateProjectForm[index].demo_link.value,
+        tags: tagList,
+      };
+      const projectId = updateProjectForm[index].dataset.project;
+      const documentCookie = document.cookie;
+      const accessToken = getTokenFromCookie(documentCookie);
+
+      await fetch(`http://localhost:3000/api/v1/projects/${projectId}`, {
+        method: 'PATCH',
+        mode: 'cors',
+        credentials: 'same-origin',
+        body: JSON.stringify(formData),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `bearer ${accessToken}`,
+        },
+      });
+      window.location.href = '/';
     });
   });
 }
