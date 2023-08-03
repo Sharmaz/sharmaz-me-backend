@@ -511,6 +511,38 @@ if (addUserButton) {
   });
 }
 
+/** Users Update */
+
+const updateUsersButtons = document.querySelectorAll('.update-user-button');
+const updateUserForm = document.querySelectorAll('.edit-user-form');
+
+if (updateUsersButtons) {
+  updateUsersButtons.forEach((button, index) => {
+    button.addEventListener('click', async (event) => {
+      event.preventDefault();
+      const userId = updateUserForm[index].dataset.user;
+      const documentCookie = document.cookie;
+      const accessToken = getTokenFromCookie(documentCookie);
+      const formData = {
+        email: updateUserForm[index].email.value,
+        role: updateUserForm[index].role.value,
+      };
+
+      await fetch(`http://localhost:3000/api/v1/users/${userId}`, {
+        method: 'PATCH',
+        mode: 'cors',
+        credentials: 'same-origin',
+        body: JSON.stringify(formData),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `bearer ${accessToken}`,
+        },
+      });
+      window.location.href = '/';
+    });
+  });
+}
+
 /** User Delete */
 
 const deleteUserButtons = document.querySelectorAll('.delete-user-button');
