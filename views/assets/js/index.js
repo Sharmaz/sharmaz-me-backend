@@ -493,3 +493,27 @@ if (addUserButton) {
     window.location.href = '/';
   });
 }
+
+/** User Delete */
+
+const deleteUserButtons = document.querySelectorAll('.delete-user-button');
+if (deleteUserButtons) {
+  deleteUserButtons.forEach((button) => {
+    button.addEventListener('click', async () => {
+      const userId = button.dataset.user;
+      const documentCookie = document.cookie;
+      const accessToken = getTokenFromCookie(documentCookie);
+
+      await fetch(`http://localhost:3000/api/v1/users/${userId}`, {
+      method: 'DELETE',
+      mode: 'cors',
+      credentials: 'same-origin',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `bearer ${accessToken}`,
+        }
+      });
+      button.closest('tr') .remove();
+    });
+  });
+}
