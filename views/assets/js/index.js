@@ -453,3 +453,15 @@ if (deleteProjectButtons) {
     });
   });
 }
+
+/** Users Add New User Button */
+
+const addNewUserButton = document.getElementById('add-new-user');
+const createUserForm = document.getElementById('create-user-form');
+
+if (addNewUserButton) {
+  addNewUserButton.addEventListener('click', () => {
+    createUserForm.classList.remove('d-none');
+    addNewUserButton.classList.add('d-none');
+  });
+}
