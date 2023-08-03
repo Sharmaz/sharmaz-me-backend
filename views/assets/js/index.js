@@ -466,6 +466,23 @@ if (addNewUserButton) {
   });
 }
 
+/** Users Edit Button */
+
+const editUserButtons = document.querySelectorAll('.edit-user-button');
+const editUserForms = document.querySelectorAll('.edit-user-form');
+if (editUserButtons) {
+  editUserButtons.forEach((button, index) => {
+    button.addEventListener('click', () => {
+      editUserForms.forEach((form) => {
+        form.classList.add('d-none');
+      });
+      addNewUserButton.classList.add('d-none');
+      createUserForm.classList.add('d-none');
+      editUserForms[index].classList.remove('d-none');
+    });
+  });
+}
+
 /** Users Create */
 
 const addUserButton = document.getElementById('user-create-button');
