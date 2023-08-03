@@ -17,6 +17,14 @@ router.get('/',
       res.render('pages/index', {
         page: { title: 'Admin Panel' },
         user,
+        helpers: {
+          isAdmin(role, options) {
+            if(role === 'admin') {
+              return options.fn(this);
+            }
+            return null;
+          },
+        },
       });
     }
     catch(error) {
