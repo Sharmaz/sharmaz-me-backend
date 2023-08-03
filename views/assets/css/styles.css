@@ -228,3 +228,6 @@ a {
 .users-role {
   width: 30%;
 }
+.select-role {
+  border: 0;
+}

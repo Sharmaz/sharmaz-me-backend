@@ -465,3 +465,31 @@ if (addNewUserButton) {
     addNewUserButton.classList.add('d-none');
   });
 }
+
+/** Users Create */
+
+const addUserButton = document.getElementById('user-create-button');
+if (addUserButton) {
+  addUserButton.addEventListener('click', async (event) => {
+    event.preventDefault();
+    const documentCookie = document.cookie;
+    const accessToken = getTokenFromCookie(documentCookie);
+    const formData = {
+      email: createUserForm.email.value,
+      password: createUserForm.password.value,
+      role: createUserForm.role.value,
+    };
+
+    await fetch(`http://localhost:3000/api/v1/users/`, {
+      method: 'POST',
+      mode: 'cors',
+      credentials: 'same-origin',
+      body: JSON.stringify(formData),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `bearer ${accessToken}`,
+      },
+    });
+    window.location.href = '/';
+  });
+}
