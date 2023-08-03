@@ -453,3 +453,116 @@ if (deleteProjectButtons) {
     });
   });
 }
+
+/** Users Add New User Button */
+
+const addNewUserButton = document.getElementById('add-new-user');
+const createUserForm = document.getElementById('create-user-form');
+
+if (addNewUserButton) {
+  addNewUserButton.addEventListener('click', () => {
+    createUserForm.classList.remove('d-none');
+    addNewUserButton.classList.add('d-none');
+  });
+}
+
+/** Users Edit Button */
+
+const editUserButtons = document.querySelectorAll('.edit-user-button');
+const editUserForms = document.querySelectorAll('.edit-user-form');
+if (editUserButtons) {
+  editUserButtons.forEach((button, index) => {
+    button.addEventListener('click', () => {
+      editUserForms.forEach((form) => {
+        form.classList.add('d-none');
+      });
+      addNewUserButton.classList.add('d-none');
+      createUserForm.classList.add('d-none');
+      editUserForms[index].classList.remove('d-none');
+    });
+  });
+}
+
+/** Users Create */
+
+const addUserButton = document.getElementById('user-create-button');
+if (addUserButton) {
+  addUserButton.addEventListener('click', async (event) => {
+    event.preventDefault();
+    const documentCookie = document.cookie;
+    const accessToken = getTokenFromCookie(documentCookie);
+    const formData = {
+      email: createUserForm.email.value,
+      password: createUserForm.password.value,
+      role: createUserForm.role.value,
+    };
+
+    await fetch(`http://localhost:3000/api/v1/users/`, {
+      method: 'POST',
+      mode: 'cors',
+      credentials: 'same-origin',
+      body: JSON.stringify(formData),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `bearer ${accessToken}`,
+      },
+    });
+    window.location.href = '/';
+  });
+}
+
+/** Users Update */
+
+const updateUsersButtons = document.querySelectorAll('.update-user-button');
+const updateUserForm = document.querySelectorAll('.edit-user-form');
+
+if (updateUsersButtons) {
+  updateUsersButtons.forEach((button, index) => {
+    button.addEventListener('click', async (event) => {
+      event.preventDefault();
+      const userId = updateUserForm[index].dataset.user;
+      const documentCookie = document.cookie;
+      const accessToken = getTokenFromCookie(documentCookie);
+      const formData = {
+        email: updateUserForm[index].email.value,
+        role: updateUserForm[index].role.value,
+      };
+
+      await fetch(`http://localhost:3000/api/v1/users/${userId}`, {
+        method: 'PATCH',
+        mode: 'cors',
+        credentials: 'same-origin',
+        body: JSON.stringify(formData),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `bearer ${accessToken}`,
+        },
+      });
+      window.location.href = '/';
+    });
+  });
+}
+
+/** User Delete */
+
+const deleteUserButtons = document.querySelectorAll('.delete-user-button');
+if (deleteUserButtons) {
+  deleteUserButtons.forEach((button) => {
+    button.addEventListener('click', async () => {
+      const userId = button.dataset.user;
+      const documentCookie = document.cookie;
+      const accessToken = getTokenFromCookie(documentCookie);
+
+      await fetch(`http://localhost:3000/api/v1/users/${userId}`, {
+      method: 'DELETE',
+      mode: 'cors',
+      credentials: 'same-origin',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `bearer ${accessToken}`,
+        }
+      });
+      button.closest('tr') .remove();
+    });
+  });
+}

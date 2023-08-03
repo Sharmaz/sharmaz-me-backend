@@ -117,7 +117,7 @@ a {
 }
 .small-button {
   font-size: 16px;
-  width: 60px;
+  min-width: 60px;
 }
 .medium-button {
   width: 180px;
@@ -218,4 +218,16 @@ a {
 }
 .delete-button {
   background-color: var(--vivid-cerise);
+}
+
+
+/* Users */
+.users-email {
+  width: 50%;
+}
+.users-role {
+  width: 30%;
+}
+.select-role {
+  border: 0;
 }

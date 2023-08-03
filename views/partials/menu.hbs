@@ -11,5 +11,8 @@
       <li>Profile</li>
       <li>Jobs</li>
       <li>Projects</li>
+      {{#isAdmin user.role}}
+        <li>Users</li>
+      {{/isAdmin}}
     </ul>
   </aside>

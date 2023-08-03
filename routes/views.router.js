@@ -13,10 +13,26 @@ router.get('/',
       const userRaw = await usersService.findOne(sub);
       const userString = JSON.stringify(userRaw);
       const user = JSON.parse(userString);
+      let users;
+
+      if (user.role === 'admin') {
+        const usersRaw = await usersService.find();
+        const usersString = JSON.stringify(usersRaw);
+        users = JSON.parse(usersString);
+      }
 
       res.render('pages/index', {
         page: { title: 'Admin Panel' },
         user,
+        users,
+        helpers: {
+          isAdmin(role, options) {
+            if(role === 'admin') {
+              return options.fn(this);
+            }
+            return null;
+          },
+        },
       });
     }
     catch(error) {

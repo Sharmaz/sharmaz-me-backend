@@ -1,0 +1,17 @@
+{{#if users}}
+  {{#each users as | user | }}
+    <form class="relative edit-user-form d-none" action="" data-user="{{user.id}}">
+      <div class="flex flex-col">
+        <label class="input-label mt-20" for="email">Email</label>
+        <input class="input-text mt-20" type="email" name="email" id="email" value="{{user.email}}">
+        <label class="input-label mt-20" for="role">Role</label>
+        <select class="input-text select-role mt-20" name="role" id="role">
+          <option value="{{user.role}}">Choose an option</option>
+          <option value="user">User</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+      <button class="button absolute top-0 right-0 update-user-button">Save</button>
+    </form>
+  {{/each}}
+{{/if}}
