@@ -48,7 +48,7 @@ const JobSchema = {
   },
   details: {
     allowNull: true,
-    type: DataTypes.ARRAY(DataTypes.TEXT),
+    type: DataTypes.JSON,
   },
 }
 

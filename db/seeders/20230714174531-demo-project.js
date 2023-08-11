@@ -9,12 +9,13 @@ module.exports = {
 	    description: "Ghost CMS Theme",
 	    "github_link": "https://github.com/",
       "demo_link": "https://ivanrobles.pro",
-	    tags: [
-		    "VR",
-        "Web",
-        "Javascript",
-        "A-frame"
-	    ]
+	    tags: JSON.stringify({
+        list: [
+          "VR",
+          "Web",
+          "Javascript",
+          "A-frame"
+	    ]}),
     }]);
   },
 
