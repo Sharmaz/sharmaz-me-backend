@@ -6,7 +6,9 @@ const dateStarted = Joi.date();
 const dateEnded = Joi.date();
 const description = Joi.string();
 const role = Joi.string();
-const details = Joi.array().items(Joi.string());
+const details = Joi.object({
+  list: Joi.array().items(Joi.string()),
+});
 
 const createJobSchema = Joi.object({
   name: name.required(),

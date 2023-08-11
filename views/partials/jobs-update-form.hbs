@@ -14,7 +14,7 @@
         <input class="input-text mt-20" type="text" name="job_role" id="job_role" value="{{job.role}}">
         <label class="input-label mt-20" for="details">Details</label>
         {{#if job.details }}
-          {{#each job.details as | detail | }}
+          {{#each job.details.list as | detail | }}
           <input class="input-text mt-20 job-detail" type="text" name="detail" value="{{detail}}">
           {{/each}}
         {{/if}}
