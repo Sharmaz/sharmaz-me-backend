@@ -239,7 +239,9 @@ if (addJobButton) {
       dateEnded: createJobForm.date_ended.value,
       description: createJobForm.description.value,
       role: createJobForm.job_role.value,
-      details: detailList,
+      details: {
+        list: detailList,
+      },
     };
 
     await fetch(`http://localhost:3000/api/v1/jobs/`, {
@@ -272,7 +274,9 @@ if (updateJobButtons) {
         dateEnded: updateJobForm[index].date_ended.value,
         description: updateJobForm[index].description.value,
         role: updateJobForm[index].job_role.value,
-        details: detailList,
+        details: {
+          list: detailList,
+        },
       };
       const jobId = updateJobForm[index].dataset.job;
       const documentCookie = document.cookie;
@@ -376,7 +380,9 @@ if (addProjectButton) {
       description: createProjectForm.project_description.value,
       githubLink: createProjectForm.github_link.value,
       demoLink: createProjectForm.demo_link.value,
-      tags: tagList,
+      tags: {
+        list: tagList,
+      },
     };
 
     await fetch(`http://localhost:3000/api/v1/projects/`, {
@@ -409,7 +415,9 @@ if (updateProjectButtons) {
         description: updateProjectForm[index].project_description.value,
         githubLink: updateProjectForm[index].github_link.value,
         demoLink: updateProjectForm[index].demo_link.value,
-        tags: tagList,
+        tags: {
+          list: tagList,
+        },
       };
       const projectId = updateProjectForm[index].dataset.project;
       const documentCookie = document.cookie;
