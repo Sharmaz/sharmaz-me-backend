@@ -5,7 +5,7 @@ function getTokenFromCookie(cookie) {
 }
 
 const isProd = document.querySelector('meta[name="environment"]').content;
-const baseUri = isProd === 'true' ? 'admin' : 'http://localhost:3000';
+const baseUri = isProd === 'true' ? 'https://admin.ivanrobles.pro' : 'http://localhost:3000';
 
 /** Log In */
 
