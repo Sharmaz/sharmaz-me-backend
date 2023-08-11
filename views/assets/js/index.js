@@ -4,6 +4,9 @@ function getTokenFromCookie(cookie) {
   return token[1];
 }
 
+const isProd = document.querySelector('meta[name="environment"]').content;
+const baseUri = isProd === 'true' ? 'admin' : 'http://localhost:3000';
+
 /** Log In */
 
 const loginButton = document.querySelector('.login-button');
@@ -18,7 +21,7 @@ if (loginButton) {
       password: loginForm.password.value,
     }
 
-    await fetch('http://localhost:3000/api/v1/auth/login', {
+    await fetch(`${baseUri}/api/v1/auth/login`, {
       method: 'POST',
       mode: 'cors',
       credentials: 'same-origin',
@@ -63,7 +66,7 @@ if (accountForm && accountButton) {
     const documentCookie = document.cookie;
     const accessToken = getTokenFromCookie(documentCookie);
 
-    await fetch(`http://localhost:3000/api/v1/users/${userId}`, {
+    await fetch(`${baseUri}/api/v1/users/${userId}`, {
       method: 'PATCH',
       mode: 'cors',
       credentials: 'same-origin',
@@ -107,7 +110,7 @@ if (addProfileButton) {
       twitter: createProfileForm.twitter_url.value,
     };
 
-    await fetch(`http://localhost:3000/api/v1/profiles/`, {
+    await fetch(`${baseUri}/api/v1/profiles/`, {
       method: 'POST',
       mode: 'cors',
       credentials: 'same-origin',
@@ -142,7 +145,7 @@ if (profileForm && profileButton) {
     const documentCookie = document.cookie;
     const accessToken = getTokenFromCookie(documentCookie);
 
-    await fetch(`http://localhost:3000/api/v1/profiles/${profileId}`, {
+    await fetch(`${baseUri}/api/v1/profiles/${profileId}`, {
       method: 'PATCH',
       mode: 'cors',
       credentials: 'same-origin',
@@ -165,7 +168,7 @@ if (profileDeleteButton) {
     const documentCookie = document.cookie;
     const accessToken = getTokenFromCookie(documentCookie);
 
-    await fetch(`http://localhost:3000/api/v1/profiles/${profileId}`, {
+    await fetch(`${baseUri}/api/v1/profiles/${profileId}`, {
     method: 'DELETE',
     mode: 'cors',
     credentials: 'same-origin',
@@ -244,7 +247,7 @@ if (addJobButton) {
       },
     };
 
-    await fetch(`http://localhost:3000/api/v1/jobs/`, {
+    await fetch(`${baseUri}/api/v1/jobs/`, {
       method: 'POST',
       mode: 'cors',
       credentials: 'same-origin',
@@ -282,7 +285,7 @@ if (updateJobButtons) {
       const documentCookie = document.cookie;
       const accessToken = getTokenFromCookie(documentCookie);
 
-      await fetch(`http://localhost:3000/api/v1/jobs/${jobId}`, {
+      await fetch(`${baseUri}/api/v1/jobs/${jobId}`, {
         method: 'PATCH',
         mode: 'cors',
         credentials: 'same-origin',
@@ -306,7 +309,7 @@ if (deleteButtons) {
       const documentCookie = document.cookie;
       const accessToken = getTokenFromCookie(documentCookie);
 
-      await fetch(`http://localhost:3000/api/v1/jobs/${jobId}`, {
+      await fetch(`${baseUri}/api/v1/jobs/${jobId}`, {
       method: 'DELETE',
       mode: 'cors',
       credentials: 'same-origin',
@@ -385,7 +388,7 @@ if (addProjectButton) {
       },
     };
 
-    await fetch(`http://localhost:3000/api/v1/projects/`, {
+    await fetch(`${baseUri}/api/v1/projects/`, {
       method: 'POST',
       mode: 'cors',
       credentials: 'same-origin',
@@ -423,7 +426,7 @@ if (updateProjectButtons) {
       const documentCookie = document.cookie;
       const accessToken = getTokenFromCookie(documentCookie);
 
-      await fetch(`http://localhost:3000/api/v1/projects/${projectId}`, {
+      await fetch(`${baseUri}/api/v1/projects/${projectId}`, {
         method: 'PATCH',
         mode: 'cors',
         credentials: 'same-origin',
@@ -448,7 +451,7 @@ if (deleteProjectButtons) {
       const documentCookie = document.cookie;
       const accessToken = getTokenFromCookie(documentCookie);
 
-      await fetch(`http://localhost:3000/api/v1/projects/${projectId}`, {
+      await fetch(`${baseUri}/api/v1/projects/${projectId}`, {
       method: 'DELETE',
       mode: 'cors',
       credentials: 'same-origin',
@@ -505,7 +508,7 @@ if (addUserButton) {
       role: createUserForm.role.value,
     };
 
-    await fetch(`http://localhost:3000/api/v1/users/`, {
+    await fetch(`${baseUri}/api/v1/users/`, {
       method: 'POST',
       mode: 'cors',
       credentials: 'same-origin',
@@ -536,7 +539,7 @@ if (updateUsersButtons) {
         role: updateUserForm[index].role.value,
       };
 
-      await fetch(`http://localhost:3000/api/v1/users/${userId}`, {
+      await fetch(`${baseUri}/api/v1/users/${userId}`, {
         method: 'PATCH',
         mode: 'cors',
         credentials: 'same-origin',
@@ -561,7 +564,7 @@ if (deleteUserButtons) {
       const documentCookie = document.cookie;
       const accessToken = getTokenFromCookie(documentCookie);
 
-      await fetch(`http://localhost:3000/api/v1/users/${userId}`, {
+      await fetch(`${baseUri}/api/v1/users/${userId}`, {
       method: 'DELETE',
       mode: 'cors',
       credentials: 'same-origin',

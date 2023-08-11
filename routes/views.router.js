@@ -1,4 +1,5 @@
 const express = require('express');
+const config = require('../config/config');
 const { checkIsCookie, checkCookieAuth } = require('../middlewares/auth.handler');
 const UsersService = require('../services/users.service');
 
@@ -25,6 +26,7 @@ router.get('/',
         page: { title: 'Admin Panel' },
         user,
         users,
+        isProd: config.isProd,
         helpers: {
           isAdmin(role, options) {
             if(role === 'admin') {
@@ -44,7 +46,10 @@ router.get('/',
 router.get('/login',
   checkIsCookie,
   (req, res) => {
-    res.render('pages/login', { page: { title: 'Log In' }});
+    res.render('pages/login', {
+      page: { title: 'Log In' },
+      isProd: config.isProd,
+    });
   }
 );
 
