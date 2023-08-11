@@ -4,14 +4,31 @@ const setupModels = require('../db/models');
 
 const USER = encodeURIComponent(config.dbUser);
 const PASSWORD = encodeURIComponent(config.dbPassword);
-const URI = `postgres://${USER}:${PASSWORD}@${config.dbHost}:${config.dbPort}/${config.dbName}`;
+const getURI = (dialect) => `${dialect}://${USER}:${PASSWORD}@${config.dbHost}:${config.dbPort}/${config.dbName}`;
 
-const sequelize = new Sequelize(URI, {
-  dialect: 'postgres',
-  // eslint-disable-next-line no-console
-  logging: console.log,
-});
+let sequelize;
 
-setupModels(sequelize);
+if (config.isProd) {
+  const dialect = 'mysql';
+  sequelize = new Sequelize(getURI(dialect), {
+    dialect,
+    dialectOptions: {
+      ssl: {
+        rejectUnauthorized: false,
+      },
+    },
+    logging: false,
+  });
+
+  setupModels(sequelize);
+} else {
+  const dialect = 'postgres';
+  sequelize = new Sequelize(getURI(dialect), {
+    dialect,
+    // eslint-disable-next-line no-console
+    logging: console.log,
+  });
+  setupModels(sequelize);
+}
 
 module.exports = sequelize;
