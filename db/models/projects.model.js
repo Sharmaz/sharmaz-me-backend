@@ -42,7 +42,7 @@ const ProjectSchema = {
   },
   tags: {
     allowNull: true,
-    type: DataTypes.ARRAY(DataTypes.STRING),
+    type: DataTypes.JSON,
   },
 }
 

@@ -11,11 +11,13 @@ module.exports = {
 	    "date_ended": "2021-10-01",
 	    description: "It is a payment method oriented to travel agencies.",
 	    role: "Software Engineer",
-	    details: [
-		    "Added features with react with context API as a state handler. I used Bootstrap and CSS for the styles.",
-		    "Adapting features. In another part of the project, I worked with ClojureScript and Reagent to use React in ClojureScript. This section was stylized with LESS.",
-		    "Bug fixing."
-	    ]
+	    details: JSON.stringify({
+        list: [
+          "Added features with react with context API as a state handler. I used Bootstrap and CSS for the styles.",
+          "Adapting features. In another part of the project, I worked with ClojureScript and Reagent to use React in ClojureScript. This section was stylized with LESS.",
+          "Bug fixing."
+	      ],
+      }),
     }]);
   },
 
