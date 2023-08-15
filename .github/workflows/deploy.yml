@@ -45,7 +45,7 @@ jobs:
               echo -e "NODE_ENV=${{secrets.NODE_ENV}}\nPORT=${{secrets.PORT}}
               DB_USER=${{secrets.DB_USER}}\nDB_PASSWORD=${{secrets.DB_PASSWORD}}\nDB_HOST=${{secrets.DB_HOST}}\nDB_NAME=${{secrets.DB_NAME}}\nDB_PORT=${{secrets.DB_PORT}}
               API_KEY=${{secrets.API_KEY}}\nJWT_SECRET=${{secrets.JWT_SECRET}}
-              DOMAIN_1=${{secrets.DOMAIN_1}}\nDOMAIN_2=${{secrets.DOMAIN_2}}\nDOMAIN_3=${{secrets.DOMAIN_3}}" >.env
+              DOMAIN_1=${{secrets.DOMAIN_1}}\nDOMAIN_2=${{secrets.DOMAIN_2}}\nDOMAIN_3=${{secrets.DOMAIN_3}}\nDOMAIN_4=${{secrets.DOMAIN_4}}" >.env
               npm run migrations:run
               npm run migrations:run:seed
               pm2 start index.js --name sharmaz-me
