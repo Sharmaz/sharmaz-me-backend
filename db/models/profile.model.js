@@ -51,7 +51,11 @@ const ProfileSchema = {
   twitter: {
     allowNull: true,
     type: DataTypes.STRING,
-  }
+  },
+  resume: {
+    allowNull: true,
+    type: DataTypes.STRING,
+  },
 }
 
 class Profile extends Model {
