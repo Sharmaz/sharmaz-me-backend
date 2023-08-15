@@ -8,6 +8,7 @@ const blog = Joi.string();
 const github = Joi.string();
 const linkedIn = Joi.string();
 const twitter = Joi.string();
+const resume = Joi.string();
 
 const createProfileSchema = Joi.object({
   name: name.required(),
@@ -17,6 +18,7 @@ const createProfileSchema = Joi.object({
   github,
   linkedIn,
   twitter,
+  resume,
 });
 
 const updateProfileSchema = Joi.object({
@@ -27,6 +29,7 @@ const updateProfileSchema = Joi.object({
   github,
   linkedIn,
   twitter,
+  resume,
 });
 
 const getProfileSchema = Joi.object({
