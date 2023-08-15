@@ -108,6 +108,7 @@ if (addProfileButton) {
       github: createProfileForm.github_url.value,
       linkedIn: createProfileForm.linkedin_url.value,
       twitter: createProfileForm.twitter_url.value,
+      resume: createProfileForm.resume_url.value,
     };
 
     await fetch(`${baseUri}/api/v1/profiles/`, {
@@ -140,6 +141,7 @@ if (profileForm && profileButton) {
       github: profileForm.github_url.value,
       linkedIn: profileForm.linkedin_url.value,
       twitter: profileForm.twitter_url.value,
+      resume: profileForm.resume_url.value,
     };
     const profileId = profileForm.dataset.profile;
     const documentCookie = document.cookie;
