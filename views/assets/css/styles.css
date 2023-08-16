@@ -196,6 +196,16 @@ a {
   background-color: var(--dark-orchid);
 }
 
+.menu a {
+  color: var(--text-slate-300);
+  padding: 20px;
+  margin: 0;
+  text-decoration: none;
+}
+.menu a:hover {
+  background-color: var(--vivid-cerise);
+}
+
 /* Admin */
 .admin-content {
   display: none;

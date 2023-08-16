@@ -53,6 +53,16 @@ router.get('/login',
   }
 );
 
+router.get('/logout',
+  checkCookieAuth,
+  (req, res) => {
+    res
+      .clearCookie('access_token')
+      .status(200)
+      .redirect('/');
+  }
+);
+
 router.get('*', (req, res) => {
   res.render('pages/404', { page: { title: '404 Not Found' }})
 });
