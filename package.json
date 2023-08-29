@@ -10,7 +10,7 @@
     "test:integration": "npm-run-all cov:clean cov:integration",
     "test:unit": "npm-run-all cov:clean cov:unit",
     "test:e2e": "NODE_ENV=e2e npm-run-all cov:clean cov:e2e",
-    "test:e2e:ci": "NODE_ENV=ci npm-run-all cov:clean jest --detectOpenHandles --forceExit --colors -c jest.config.e2e.js",
+    "test:e2e:ci": "NODE_ENV=ci npm-run-all cov:clean jest --forceExit --colors -c jest.config.e2e.js",
     "cov:clean": "rimraf .nyc_output && rimraf coverage",
     "cov:unit": "jest --forceExit --colors -c jest.config.unit.js",
     "cov:integration": "jest -runInBand --forceExit --colors -c jest.config.integration.js",
