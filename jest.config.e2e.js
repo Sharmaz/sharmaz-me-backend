@@ -3,7 +3,7 @@ const commonConfig = require('./jest.config');
 module.exports = {
   ...commonConfig,
   testMatch: [
-    '**/*.unit.test.{js,ts}'
+    '**/*.e2e.test.{js,ts}'
   ],
   collectCoverageFrom: [
     '**/db/**/*.js',
@@ -13,5 +13,5 @@ module.exports = {
     '**/services/**/*.js',
     '**/utils/**/*.js'
   ],
-  coverageDirectory: 'coverage/unit'
+  coverageDirectory: 'coverage/e2e'
 };
