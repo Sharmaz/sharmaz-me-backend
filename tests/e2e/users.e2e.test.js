@@ -10,7 +10,7 @@ let api;
 let server;
 let accessToken;
 
-beforeEach(async () => {
+beforeAll(async () => {
   app = createApp();
 
   server = app.listen(9000);
@@ -30,7 +30,7 @@ beforeEach(async () => {
   accessToken = loginResponse.body.token;
 });
 
-afterEach(() => {
+afterAll(() => {
   server.close();
 });
 
@@ -104,4 +104,20 @@ describe('get /users/{id}', () => {
     expect(statusCode).toBe(200);
     expect(body.email).toBe(user.email);
   });
+});
+
+describe('get /users', () => {
+  test('should return 401 unauthorized by bearer token', async() => {
+    const { statusCode } = await api.get('/api/v1/users/');
+    expect(statusCode).toBe(401);
+  });
+
+  test('sould return an users list', async() => {
+    const { statusCode, body } = await api.get('/api/v1/users/')
+      .set({
+        'Authorization': `Bearer ${accessToken}`
+      });
+    expect(statusCode).toBe(200);
+    expect(Array.isArray(body)).toBe(true);
+  })
 });

@@ -17,5 +17,14 @@ module.exports = {
         rejectUnauthorized: false,
       },
     },
+  },
+  ci: {
+    url: getURI('mysql'),
+    dialect: 'mysql',
+    dialectOptions: {
+      ssl: {
+        rejectUnauthorized: false,
+      },
+    },
   }
 };
