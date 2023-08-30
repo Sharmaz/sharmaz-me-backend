@@ -15,6 +15,8 @@ require('dotenv').config(options);
 const config = {
   env,
   isProd: process.env.NODE_ENV === 'production',
+  isEnd2End: process.env.NODE_ENV === 'e2e',
+  isCi: process.env.NODE_ENV === 'ci',
   port: process.env.PORT || 3000,
   dbUser: process.env.DB_USER,
   dbPassword: process.env.DB_PASSWORD,

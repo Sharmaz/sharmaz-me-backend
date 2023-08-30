@@ -14,7 +14,7 @@
     "cov:clean": "rimraf .nyc_output && rimraf coverage",
     "cov:unit": "jest --forceExit --colors -c jest.config.unit.js",
     "cov:integration": "jest -runInBand --forceExit --colors -c jest.config.integration.js",
-    "cov:e2e": "NODE_ENV=e2e jest --detectOpenHandles --forceExit --colors -c jest.config.e2e.js",
+    "cov:e2e": "NODE_ENV=e2e jest --detectOpenHandles --forceExit --colors -c jest.config.e2e.js --runInBand",
     "cov:summary-preset": "mkdir .nyc_output && cp coverage/unit/coverage-final.json .nyc_output/unit.json && cp coverage/integration/coverage-final.json .nyc_output/integration.json",
     "cov:report": "nyc report --reporter html --reporter lcov --report-dir ./coverage/summary",
     "lint": "eslint .",
