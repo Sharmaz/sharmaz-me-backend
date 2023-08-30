@@ -26,6 +26,8 @@ jobs:
         with:
           node-version: 16.x
       - run: npm ci
+      - run: npm run migrations:run
+      - run: npm run migrations:run:seed
       - run: npm run test:e2e:ci
         env:
           DB_USER: root

@@ -1,5 +1,7 @@
 const request = require('supertest');
 const { describe, expect } = require('@jest/globals');
+const { models } = require('../../libs/sequelize');
+const config = require('../../config/config');
 
 const createApp = require('../../app');
 
@@ -82,5 +84,24 @@ describe('post /users', () => {
 
     expect(statusCode).toBe(400);
     expect(body.message).toMatch(/password/);
+  });
+});
+
+describe('get /users/{id}', () => {
+  test('should return 401 unauthorized by api key', async() => {
+    const userId = '2bc34306-d83f-481a-b37d-b6967872ea36';
+    const user = await models.User.findByPk(userId);
+    const { statusCode } = await api.get(`/api/v1/users/${user.id}`)
+    expect(statusCode).toBe(401);
+  });
+  test('should return an user', async() => {
+    const userId = '2bc34306-d83f-481a-b37d-b6967872ea36';
+    const user = await models.User.findByPk(userId);
+    const { statusCode, body } = await api.get(`/api/v1/users/${user.id}`)
+      .set({
+        api: config.apiKey,
+      });
+    expect(statusCode).toBe(200);
+    expect(body.email).toBe(user.email);
   });
 });
