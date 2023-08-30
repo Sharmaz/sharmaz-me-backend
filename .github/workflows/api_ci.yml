@@ -26,11 +26,8 @@ jobs:
         with:
           node-version: 16.x
       - run: npm ci
-      - run: npm run migrations:run
-      - run: npm run migrations:run:seed
       - run: npm run test:e2e:ci
         env:
-          NODE_ENV: ci
           DB_USER: root
           DB_PASSWORD: Dd83@hSCjkmfT^NW
           DB_HOST: mysql-e2e

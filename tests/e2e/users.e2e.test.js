@@ -2,6 +2,7 @@ const request = require('supertest');
 const { describe, expect } = require('@jest/globals');
 const { models } = require('../../libs/sequelize');
 const config = require('../../config/config');
+const { upSeed, downSeed } = require('./utils/umzug');
 
 const createApp = require('../../app');
 
@@ -15,6 +16,7 @@ beforeAll(async () => {
 
   server = app.listen(9000);
   api = request(app);
+  await upSeed();
 
   const loginData = {
     email: 'example@example.com',
@@ -30,7 +32,8 @@ beforeAll(async () => {
   accessToken = loginResponse.body.token;
 });
 
-afterAll(() => {
+afterAll(async () => {
+  await downSeed();
   server.close();
 });
 
@@ -50,7 +53,6 @@ describe('post /users', () => {
     expect(statusCode).toBe(400);
     expect(body.message).toMatch(/role/);
   });
-
 
   test('should return 400 bad request invalid email', async () => {
     const data = {
@@ -84,6 +86,23 @@ describe('post /users', () => {
 
     expect(statusCode).toBe(400);
     expect(body.message).toMatch(/password/);
+  });
+
+  test('should return a new user', async () => {
+    const newUserData = {
+      email: 'ivan.robles@ivanrobles.pro',
+      password: 'myawesomepassword',
+      role: 'user',
+    };
+    const { statusCode, body } = await api.post('/api/v1/users/')
+      .send(newUserData)
+      .set({
+        'Authorization': `Bearer ${accessToken}`
+      });
+    const user = await models.User.findByPk(body.id);
+    expect(statusCode).toBe(201);
+    expect(user.role).toEqual(newUserData.role);
+    expect(user.email).toEqual(newUserData.email);
   });
 });
 
