@@ -1,7 +1,7 @@
 const { JOB_TABLE } = require('../models/jobs.model');
 
 module.exports = {
-  async up (queryInterface) {
+  async up ({ context: queryInterface }) {
 
     await queryInterface.bulkInsert(JOB_TABLE, [{
       id: "5a013188-af51-4570-bd9b-fe64f047d01a",
@@ -21,7 +21,7 @@ module.exports = {
     }]);
   },
 
-  async down (queryInterface) {
+  async down ({ context: queryInterface }) {
     await queryInterface.bulkDelete(JOB_TABLE, null, {});
   }
 };
