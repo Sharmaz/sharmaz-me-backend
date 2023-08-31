@@ -14,7 +14,7 @@ jobs:
       mysql-e2e:
         image: mysql:8.0.29
         env:
-          MYSQL_ROOT_PASSWORD: Dd83@hSCjkmfT^NW
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_DATABASE: e2e_test
         ports:
           - "3306:3306"
@@ -25,11 +25,13 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16.x
+      - run: mysql --host mysql-e2e --port 3306 -u root -e "SHOW DATABASES LIKE 'e2e_test';"
+      - run: mysql --host mysql-e2e --port 3306 -u root -e "CREATE DATABASE IF NOT EXISTS e2e_test;"
       - run: npm ci
       - run: npm run test:e2e:ci
         env:
           DB_USER: root
-          DB_PASSWORD: Dd83@hSCjkmfT^NW
+          DB_PASSWORD: ""
           DB_HOST: mysql-e2e
           DB_NAME: e2e_test
           DB_PORT: 3306
