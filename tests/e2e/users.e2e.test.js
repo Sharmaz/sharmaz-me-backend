@@ -44,7 +44,6 @@ describe('get /users', () => {
     const { statusCode } = await api.get('/api/v1/users/');
     expect(statusCode).toBe(401);
   });
-
   test('sould return an users list', async() => {
     const { statusCode, body } = await api.get('/api/v1/users/')
       .set({
@@ -71,7 +70,6 @@ describe('post /users', () => {
     expect(statusCode).toBe(400);
     expect(body.message).toMatch(/role/);
   });
-
   test('should return 400 bad request invalid email', async () => {
     const data = {
       email: 'testmail.com',
@@ -88,7 +86,6 @@ describe('post /users', () => {
     expect(statusCode).toBe(400);
     expect(body.message).toMatch(/email/);
   });
-
   test('should return 400 bad request invalid password', async () => {
     const data = {
       email: 'test@gmail.com',
@@ -105,7 +102,6 @@ describe('post /users', () => {
     expect(statusCode).toBe(400);
     expect(body.message).toMatch(/password/);
   });
-
   test('should return a new user', async () => {
     const newUserData = {
       email: 'ivan.robles@ivanrobles.pro',
@@ -171,3 +167,27 @@ describe('patch /users/{id}', () => {
     expect(body.changes.email).toBe(updateData.email);
   });
 })
+
+describe('delete /users/{id}', () => {
+  test('should return 401 unauthorized', async () =>{
+    const { statusCode } = await api.delete(`/api/v1/users/${userId}`);
+    expect(statusCode).toBe(401);
+  });
+  test('should should return 204 no content', async () => {
+    const newUserData = {
+      email: 'new.robles@ivanrobles.pro',
+      password: 'myawesomepassword',
+      role: 'user',
+    };
+    const { body } = await api.post('/api/v1/users/')
+      .send(newUserData)
+      .set({
+        'Authorization': `Bearer ${accessToken}`
+      });
+    const { statusCode } = await api.delete(`/api/v1/users/${body.id}`)
+      .set({
+        'Authorization': `Bearer ${accessToken}`
+      });
+    expect(statusCode).toBe(204);
+  });
+});
