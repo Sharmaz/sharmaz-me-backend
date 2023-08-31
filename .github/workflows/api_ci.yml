@@ -25,14 +25,14 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16.x
-      - run: mysql --host mysql-e2e --port 3306 -u root -e "SHOW DATABASES LIKE 'e2e_test';"
-      - run: mysql --host mysql-e2e --port 3306 -u root -e "CREATE DATABASE IF NOT EXISTS e2e_test;"
+      - run: mysql --host 127.0.0.1 --port 3306 -u root -e "SHOW DATABASES LIKE 'e2e_test';"
+      - run: mysql --host 127.0.0.1 --port 3306 -u root -e "CREATE DATABASE IF NOT EXISTS e2e_test;"
       - run: npm ci
       - run: npm run test:e2e:ci
         env:
           DB_USER: root
           DB_PASSWORD: ""
-          DB_HOST: mysql-e2e
+          DB_HOST: 127.0.0.1
           DB_NAME: e2e_test
           DB_PORT: 3306
           DOMAIN_1: ${{secrets.DOMAIN_1}}
