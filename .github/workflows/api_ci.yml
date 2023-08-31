@@ -30,7 +30,7 @@ jobs:
         env:
           DB_USER: root
           DB_PASSWORD: Dd83@hSCjkmfT^NW
-          DB_HOST: mysql-e2e
+          DB_HOST: 127.0.0.1
           DB_NAME: e2e_test
           DB_PORT: 3306
           DOMAIN_1: ${{secrets.DOMAIN_1}}

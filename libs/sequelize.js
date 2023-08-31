@@ -8,7 +8,7 @@ const getURI = (dialect) => `${dialect}://${USER}:${PASSWORD}@${config.dbHost}:$
 
 let sequelize;
 
-if (config.isProd) {
+if (config.isProd || config.isEnd2End || config.isCi) {
   const dialect = 'mysql';
   sequelize = new Sequelize(getURI(dialect), {
     dialect,
