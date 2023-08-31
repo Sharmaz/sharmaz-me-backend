@@ -11,6 +11,8 @@ let api;
 let server;
 let accessToken;
 
+const userId = '2bc34306-d83f-481a-b37d-b6967872ea36';
+
 beforeAll(async () => {
   app = createApp();
 
@@ -35,6 +37,22 @@ beforeAll(async () => {
 afterAll(async () => {
   await downSeed();
   server.close();
+});
+
+describe('get /users', () => {
+  test('should return 401 unauthorized by bearer token', async() => {
+    const { statusCode } = await api.get('/api/v1/users/');
+    expect(statusCode).toBe(401);
+  });
+
+  test('sould return an users list', async() => {
+    const { statusCode, body } = await api.get('/api/v1/users/')
+      .set({
+        'Authorization': `Bearer ${accessToken}`
+      });
+    expect(statusCode).toBe(200);
+    expect(Array.isArray(body)).toBe(true);
+  })
 });
 
 describe('post /users', () => {
@@ -108,13 +126,11 @@ describe('post /users', () => {
 
 describe('get /users/{id}', () => {
   test('should return 401 unauthorized by api key', async() => {
-    const userId = '2bc34306-d83f-481a-b37d-b6967872ea36';
     const user = await models.User.findByPk(userId);
     const { statusCode } = await api.get(`/api/v1/users/${user.id}`)
     expect(statusCode).toBe(401);
   });
   test('should return an user', async() => {
-    const userId = '2bc34306-d83f-481a-b37d-b6967872ea36';
     const user = await models.User.findByPk(userId);
     const { statusCode, body } = await api.get(`/api/v1/users/${user.id}`)
       .set({
@@ -125,18 +141,33 @@ describe('get /users/{id}', () => {
   });
 });
 
-describe('get /users', () => {
-  test('should return 401 unauthorized by bearer token', async() => {
-    const { statusCode } = await api.get('/api/v1/users/');
+describe('patch /users/{id}', () => {
+  const updateData = {
+    email: 'test@example.com',
+  };
+  test('should return 401 unauthorized', async () => {
+    const { statusCode } = await api.patch(`/api/v1/users/${userId}`)
+      .send(updateData);
+
     expect(statusCode).toBe(401);
   });
-
-  test('sould return an users list', async() => {
-    const { statusCode, body } = await api.get('/api/v1/users/')
+  test('should return 400 bad request', async () => {
+    const failData = 'test.example.com'
+    const { statusCode, body } = await api.patch(`/api/v1/users/${userId}`)
+      .send(failData)
+      .set({
+        'Authorization': `Bearer ${accessToken}`
+      });
+    expect(statusCode).toBe(400);
+    expect(body.message).toMatch(/not allowed/);
+  });
+  test('should return updated user', async() => {
+    const { statusCode, body } = await api.patch(`/api/v1/users/${userId}`)
+      .send(updateData)
       .set({
         'Authorization': `Bearer ${accessToken}`
       });
     expect(statusCode).toBe(200);
-    expect(Array.isArray(body)).toBe(true);
-  })
-});
+    expect(body.changes.email).toBe(updateData.email);
+  });
+})

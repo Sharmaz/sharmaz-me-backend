@@ -1,7 +1,10 @@
 const { USER_TABLE } = require('../models/user.model');
 
 module.exports = {
-  async up ({ context: queryInterface }) {
+  async up (queryInterface) {
+    if (queryInterface.context) {
+      queryInterface = queryInterface.context;
+    }
     return queryInterface.bulkInsert(USER_TABLE, [{
       id: "2bc34306-d83f-481a-b37d-b6967872ea36",
       email: "example@example.com",
@@ -11,7 +14,10 @@ module.exports = {
     }]);
   },
 
-  async down ({ context: queryInterface }) {
+  async down (queryInterface) {
+    if (queryInterface.context) {
+      queryInterface = queryInterface.context;
+    }
     return queryInterface.bulkDelete(USER_TABLE, null, {});
   }
 };
