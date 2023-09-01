@@ -1,7 +1,10 @@
 /** Utils */
 function getTokenFromCookie(cookie) {
-  const token = cookie.split('=');
-  return token[1];
+  const regex = /^[\w-]+\.[\w-]+\.[\w-]+$/;
+  const cookies = cookie.split('=');
+  const token = cookies.find((cookieSplited) => cookieSplited.match(regex));
+
+  return token;
 }
 
 const isProd = document.querySelector('meta[name="environment"]').content;
