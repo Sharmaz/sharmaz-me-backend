@@ -221,3 +221,27 @@ describe('patch /profiles/{id}', () => {
     expect(userProfile.resume).toBe(updateData.resume);
   });
 });
+
+describe('delete /profiles/{id}', () => {
+  test('should return 401 unauthorized', async () => {
+    const { body } = await api.get('/api/v1/profiles/')
+      .set({
+        'Authorization': `Bearer ${accessToken}`
+      });
+    const [ profile ] = body;
+    const { statusCode } = await api.delete(`/api/v1/profiles/${profile.id}`);
+    expect(statusCode).toBe(401);
+  });
+  test('should should return 204 no content', async () => {
+    const { body } = await api.get('/api/v1/profiles/')
+      .set({
+        'Authorization': `Bearer ${accessToken}`
+      });
+    const [ profile ] = body;
+    const { statusCode } = await api.delete(`/api/v1/profiles/${profile.id}`)
+      .set({
+        'Authorization': `Bearer ${accessToken}`
+      });
+    expect(statusCode).toBe(204);
+  });
+});
