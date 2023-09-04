@@ -113,7 +113,7 @@ describe('post /profiles', () => {
       github: 'https://github.com/',
       linkedIn: 'https://linkedin.com/',
       twitter: 'https://twitter.com/elSharmaz',
-      resume: 'resume_link',
+      resume: 'https://ivanrobles.pro/some_folder/resume.pdf',
     };
     const { statusCode, body } = await api.post('/api/v1/profiles/')
       .send(data)
@@ -162,5 +162,62 @@ describe('post /profiles', () => {
     expect(statusCode).toBe(201);
     expect(profile.name).toEqual(profileData.name);
     expect(profile.about).toEqual(profileData.about);
+  });
+});
+
+describe('patch /profiles/{id}', () => {
+  test('should return 401 unauthorized', async () => {
+    const updateData = {
+      twitter: 'https://twitter.com/nacosuke',
+      resume: 'resume_link'
+    };
+    const { body } = await api.get('/api/v1/profiles/')
+      .set({
+        'Authorization': `Bearer ${accessToken}`
+      });
+    const [ profile ] = body;
+    const { statusCode } = await api.patch(`/api/v1/profiles/${profile.id}`)
+      .send(updateData);
+
+    expect(statusCode).toBe(401);
+  });
+  test('should return 400 bad request, resume should be a valid uri', async () => {
+    const updateData = {
+      twitter: 'https://twitter.com/nacosuke',
+      resume: 'resume_link'
+    };
+    const { body } = await api.get('/api/v1/profiles/')
+      .set({
+        'Authorization': `Bearer ${accessToken}`
+      });
+    const [ profile ] = body;
+    const { statusCode, body: response } = await api.patch(`/api/v1/profiles/${profile.id}`)
+      .send(updateData)
+      .set({
+        'Authorization': `Bearer ${accessToken}`
+      });
+
+    expect(statusCode).toBe(400);
+    expect(response.message).toMatch(/resume/);
+  });
+  test('should return updated profile', async() => {
+    const updateData = {
+      twitter: 'https://twitter.com/nacosuke',
+      resume: 'https://ivanrobles.pro/some_folder/resume.pdf'
+    };
+    const { body } = await api.get('/api/v1/profiles/')
+      .set({
+        'Authorization': `Bearer ${accessToken}`
+      });
+    const [ profile ] = body;
+    const { statusCode, body: response } = await api.patch(`/api/v1/profiles/${profile.id}`)
+      .send(updateData)
+      .set({
+        'Authorization': `Bearer ${accessToken}`
+      });
+    const userProfile = await models.Profile.findByPk(response.profileId);
+
+    expect(statusCode).toBe(200);
+    expect(userProfile.resume).toBe(updateData.resume);
   });
 });
