@@ -1,14 +1,14 @@
 const Joi = require('joi');
 
 const id = Joi.string().uuid();
-const name = Joi.string();
+const name = Joi.string().min(2);
 const profilePic = Joi.string().uri();
 const about = Joi.string();
-const blog = Joi.string();
-const github = Joi.string();
-const linkedIn = Joi.string();
-const twitter = Joi.string();
-const resume = Joi.string();
+const blog = Joi.string().uri();
+const github = Joi.string().uri();
+const linkedIn = Joi.string().uri();
+const twitter = Joi.string().uri();
+const resume = Joi.string().uri();
 
 const createProfileSchema = Joi.object({
   name: name.required(),

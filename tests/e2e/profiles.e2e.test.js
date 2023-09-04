@@ -9,6 +9,7 @@ let app;
 let api;
 let server;
 let accessToken;
+let accessTokenUser;
 
 beforeAll(async () => {
   app = createApp();
@@ -27,8 +28,33 @@ beforeAll(async () => {
     .set({
       'Content-Type': 'application/json'
     });
-  
+
   accessToken = loginResponse.body.token;
+
+  const newUserData = {
+    email: 'ivan.robles@ivanrobles.pro',
+    password: 'myawesomepassword',
+    role: 'user',
+  };
+
+  await api.post('/api/v1/users/')
+    .send(newUserData)
+    .set({
+      'Authorization': `Bearer ${accessToken}`
+    });
+
+  const loginUserData = {
+    email: newUserData.email,
+    password: newUserData.password,
+  };
+
+  const loginUserResponse = await api.post('/api/v1/auth/login')
+    .send(loginUserData)
+    .set({
+      'Content-Type': 'application/json'
+    });
+
+  accessTokenUser = loginUserResponse.body.token;
 });
 
 afterAll(async () => {
@@ -74,5 +100,67 @@ describe('get /profiles/{id}', () => {
     });
     expect(response.statusCode).toBe(200);
     expect(response.body.name).toBe(dbProfile.name);
+  });
+});
+
+describe('post /profiles', () => {
+  test('should return 400 bad request, invalid name, at least 2 characters long', async () => {
+    const data = {
+      name: '',
+      profilePic: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Albert_Einstein_Head.jpg',
+      about: 'The greatest and most influential scientists of all time',
+      blog: 'https://wordpress.com/',
+      github: 'https://github.com/',
+      linkedIn: 'https://linkedin.com/',
+      twitter: 'https://twitter.com/elSharmaz',
+      resume: 'resume_link',
+    };
+    const { statusCode, body } = await api.post('/api/v1/profiles/')
+      .send(data)
+      .set({
+        'Authorization': `Bearer ${accessToken}`
+      });
+    expect(statusCode).toBe(400);
+    expect(body.message).toMatch(/name/);
+  });
+  test('should return 400, profilePic, blog, github, linkedIn, twitter, resume must be a valid uri', async () => {
+    const profileData = {
+      name: 'Albert',
+      profilePic: 'profile_pic',
+      about: 'The greatest and most influential scientists of all time',
+      blog: 'wordpress',
+      github: 'github.com/',
+      linkedIn: 'linkedin',
+      twitter: 'twitter',
+      resume: 'resume_link',
+    };
+    const { statusCode, body } = await api.post('/api/v1/profiles/')
+      .send(profileData)
+      .set({
+        'Authorization': `Bearer ${accessTokenUser}`
+      });
+    expect(statusCode).toBe(400);
+    expect(body.message).toMatch(/must be a valid uri/);
+  });
+  test('should return a new profile', async () => {
+    const profileData = {
+      name: 'Albert',
+      profilePic: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Albert_Einstein_Head.jpg',
+      about: 'The greatest and most influential scientists of all time',
+      blog: 'https://wordpress.com/',
+      github: 'https://github.com/',
+      linkedIn: 'https://linkedin.com/',
+      twitter: 'https://twitter.com/',
+      resume: 'https://ivanrobles.pro/some_folder/resume.pdf',
+    };
+    const { statusCode, body } = await api.post('/api/v1/profiles/')
+      .send(profileData)
+      .set({
+        'Authorization': `Bearer ${accessTokenUser}`
+      });
+    const profile = await models.Profile.findByPk(body.id);
+    expect(statusCode).toBe(201);
+    expect(profile.name).toEqual(profileData.name);
+    expect(profile.about).toEqual(profileData.about);
   });
 });
