@@ -232,7 +232,7 @@ describe('delete /profiles/{id}', () => {
     const { statusCode } = await api.delete(`/api/v1/profiles/${profile.id}`);
     expect(statusCode).toBe(401);
   });
-  test('should should return 204 no content', async () => {
+  test('should return 204 no content', async () => {
     const { body } = await api.get('/api/v1/profiles/')
       .set({
         'Authorization': `Bearer ${accessToken}`
