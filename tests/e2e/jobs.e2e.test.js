@@ -9,6 +9,7 @@ let app;
 let api;
 let server;
 let accessToken;
+let jobElement
 
 beforeAll(async () => {
   app = createApp();
@@ -29,6 +30,12 @@ beforeAll(async () => {
     });
   
   accessToken = loginResponse.body.token;
+
+  const { body: jobsList } = await api.get('/api/v1/jobs/')
+      .set({
+        'Authorization': `Bearer ${accessToken}`
+      });
+  [ jobElement ] = jobsList;
 });
 
 afterAll(async () => {
@@ -53,20 +60,10 @@ describe('get /jobs', () => {
 
 describe('get /jobs/{id}', () => {
   test('should return 401 unauthorized by api key', async() => {
-    const { body: jobsList } = await api.get('/api/v1/jobs/')
-      .set({
-        'Authorization': `Bearer ${accessToken}`
-      });
-    const [ jobElement ] = jobsList;
     const { statusCode } = await api.get(`/api/v1/jobs/${jobElement.id}`);
     expect(statusCode).toBe(401);
   });
   test('should return a job', async() => {
-    const { body: jobsList } = await api.get('/api/v1/jobs/')
-      .set({
-        'Authorization': `Bearer ${accessToken}`
-      });
-    const [ jobElement ] = jobsList;
     const jobdb = await models.Job.findByPk(jobElement.id);
     const { statusCode, body } = await api.get(`/api/v1/jobs/${jobElement.id}`)
       .set({
@@ -134,11 +131,6 @@ describe('patch /jobs/{id}', () => {
     name: 'ivanrobles.pro',
   };
   test('should return 400 bad request, name not allowed to be empty', async () => {
-    const { body: jobsList } = await api.get('/api/v1/jobs/')
-      .set({
-        'Authorization': `Bearer ${accessToken}`
-      });
-    const [ jobElement ] = jobsList;
     const failData = {
       name: ''
     };
@@ -151,21 +143,11 @@ describe('patch /jobs/{id}', () => {
     expect(body.message).toMatch(/not allowed/);
   });
   test('should return 401 unauthorized', async () => {
-    const { body: jobsList } = await api.get('/api/v1/jobs/')
-      .set({
-        'Authorization': `Bearer ${accessToken}`
-      });
-    const [ jobElement ] = jobsList;
     const { statusCode } = await api.patch(`/api/v1/jobs/${jobElement.id}`)
       .send(updateData);
     expect(statusCode).toBe(401);
   });
   test('should return an updated job', async() => {
-    const { body: jobsList } = await api.get('/api/v1/jobs/')
-      .set({
-        'Authorization': `Bearer ${accessToken}`
-      });
-    const [ jobElement ] = jobsList;
     const { statusCode, body } = await api.patch(`/api/v1/jobs/${jobElement.id}`)
       .send(updateData)
       .set({
@@ -179,20 +161,10 @@ describe('patch /jobs/{id}', () => {
 
 describe('delete /jobs/{id}', () => {
   test('should return 401 unauthorized', async () => {
-    const { body: jobsList } = await api.get('/api/v1/jobs/')
-      .set({
-        'Authorization': `Bearer ${accessToken}`
-      });
-    const [ jobElement ] = jobsList;
     const { statusCode } = await api.delete(`/api/v1/jobs/${jobElement.id}`);
     expect(statusCode).toBe(401);
   });
   test('should return 204 no content', async () => {
-    const { body: jobsList } = await api.get('/api/v1/jobs/')
-      .set({
-        'Authorization': `Bearer ${accessToken}`
-      });
-    const [ jobElement ] = jobsList;
     const { statusCode } = await api.delete(`/api/v1/jobs/${jobElement.id}`)
       .set({
         'Authorization': `Bearer ${accessToken}`
