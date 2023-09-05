@@ -109,14 +109,12 @@ describe('post /jobs', () => {
       .set({
         'Authorization': `Bearer ${accessToken}`
       });
-
     expect(statusCode).toBe(400);
     expect(body.message).toMatch(/name/);
   });
   test('should return 401 unauthorized', async () => {
     const { statusCode } = await api.post('/api/v1/jobs/')
       .send(newJobData);
-
     expect(statusCode).toBe(401);
   });
   test('should return a new job', async () => {
@@ -126,8 +124,55 @@ describe('post /jobs', () => {
         'Authorization': `Bearer ${accessToken}`
       });
     const jobdb = await models.Job.findByPk(body.id);
-
     expect(statusCode).toBe(201);
     expect(jobdb.name).toBe(body.name);
+  });
+});
+
+describe('patch /jobs/{id}', () => {
+  const updateData = {
+    name: 'ivanrobles.pro',
+  };
+  test('should return 400 bad request, name not allowed to be empty', async () => {
+    const { body: jobsList } = await api.get('/api/v1/jobs/')
+      .set({
+        'Authorization': `Bearer ${accessToken}`
+      });
+    const [ jobElement ] = jobsList;
+    const failData = {
+      name: ''
+    };
+    const { statusCode, body } = await api.patch(`/api/v1/jobs/${jobElement.id}`)
+      .send(failData)
+      .set({
+        'Authorization': `Bearer ${accessToken}`
+      });
+    expect(statusCode).toBe(400);
+    expect(body.message).toMatch(/not allowed/);
+  });
+  test('should return 401 unauthorized', async () => {
+    const { body: jobsList } = await api.get('/api/v1/jobs/')
+      .set({
+        'Authorization': `Bearer ${accessToken}`
+      });
+    const [ jobElement ] = jobsList;
+    const { statusCode } = await api.patch(`/api/v1/jobs/${jobElement.id}`)
+      .send(updateData);
+    expect(statusCode).toBe(401);
+  });
+  test('should return an updated job', async() => {
+    const { body: jobsList } = await api.get('/api/v1/jobs/')
+      .set({
+        'Authorization': `Bearer ${accessToken}`
+      });
+    const [ jobElement ] = jobsList;
+    const { statusCode, body } = await api.patch(`/api/v1/jobs/${jobElement.id}`)
+      .send(updateData)
+      .set({
+        'Authorization': `Bearer ${accessToken}`
+      });
+    const jobdb = await models.Job.findByPk(jobElement.id);
+    expect(statusCode).toBe(200);
+    expect(body.changes.name).toBe(jobdb.name);
   });
 });
