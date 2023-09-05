@@ -169,11 +169,11 @@ describe('patch /users/{id}', () => {
 })
 
 describe('delete /users/{id}', () => {
-  test('should return 401 unauthorized', async () =>{
+  test('should return 401 unauthorized', async () => {
     const { statusCode } = await api.delete(`/api/v1/users/${userId}`);
     expect(statusCode).toBe(401);
   });
-  test('should should return 204 no content', async () => {
+  test('should return 204 no content', async () => {
     const newUserData = {
       email: 'new.robles@ivanrobles.pro',
       password: 'myawesomepassword',

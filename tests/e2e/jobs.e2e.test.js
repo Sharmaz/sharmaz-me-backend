@@ -176,3 +176,27 @@ describe('patch /jobs/{id}', () => {
     expect(body.changes.name).toBe(jobdb.name);
   });
 });
+
+describe('delete /jobs/{id}', () => {
+  test('should return 401 unauthorized', async () => {
+    const { body: jobsList } = await api.get('/api/v1/jobs/')
+      .set({
+        'Authorization': `Bearer ${accessToken}`
+      });
+    const [ jobElement ] = jobsList;
+    const { statusCode } = await api.delete(`/api/v1/jobs/${jobElement.id}`);
+    expect(statusCode).toBe(401);
+  });
+  test('should return 204 no content', async () => {
+    const { body: jobsList } = await api.get('/api/v1/jobs/')
+      .set({
+        'Authorization': `Bearer ${accessToken}`
+      });
+    const [ jobElement ] = jobsList;
+    const { statusCode } = await api.delete(`/api/v1/jobs/${jobElement.id}`)
+      .set({
+        'Authorization': `Bearer ${accessToken}`
+      });
+    expect(statusCode).toBe(204);
+  });
+});
