@@ -9,7 +9,7 @@ let app;
 let api;
 let server;
 let accessToken;
-let jobElement;
+let projectElement;
 
 beforeAll(async () => {
   app = createApp();
@@ -31,11 +31,11 @@ beforeAll(async () => {
   
   accessToken = loginResponse.body.token;
 
-  const { body: jobsList } = await api.get('/api/v1/jobs/')
+  const { body: projectList } = await api.get('/api/v1/projects/')
       .set({
         'Authorization': `Bearer ${accessToken}`
       });
-  [ jobElement ] = jobsList;
+  [ projectElement ] = projectList;
 });
 
 afterAll(async () => {
@@ -43,13 +43,13 @@ afterAll(async () => {
   server.close();
 });
 
-describe('get /jobs', () => {
+describe('get /projects', () => {
   test('should return 401 unauthorized by bearer token', async() => {
-    const { statusCode } = await api.get('/api/v1/jobs/');
+    const { statusCode } = await api.get('/api/v1/projects/');
     expect(statusCode).toBe(401);
   });
-  test('should return a jobs list', async() => {
-    const { statusCode, body } = await api.get('/api/v1/jobs/')
+  test('should return a projects list', async() => {
+    const { statusCode, body } = await api.get('/api/v1/projects/')
       .set({
         'Authorization': `Bearer ${accessToken}`
       });
@@ -58,41 +58,42 @@ describe('get /jobs', () => {
   });
 });
 
-describe('get /jobs/{id}', () => {
+describe('get /projects/{id}', () => {
   test('should return 401 unauthorized by bearer token', async() => {
-    const { statusCode } = await api.get(`/api/v1/jobs/${jobElement.id}`);
+    const { statusCode } = await api.get(`/api/v1/projects/${projectElement.id}`);
     expect(statusCode).toBe(401);
   });
-  test('should return a job', async() => {
-    const jobdb = await models.Job.findByPk(jobElement.id);
-    const { statusCode, body } = await api.get(`/api/v1/jobs/${jobElement.id}`)
+  test('should return a project', async() => {
+    const projectdb = await models.Project.findByPk(projectElement.id);
+    const { statusCode, body } = await api.get(`/api/v1/projects/${projectElement.id}`)
       .set({
         'Authorization': `Bearer ${accessToken}`
       });
     expect(statusCode).toBe(200);
-    expect(body.name).toBe(jobdb.name);
+    expect(body.name).toBe(projectdb.name);
   });
 });
 
-describe('post /jobs', () => {
-  const newJobData = {
-    name: 'uplift',
-    dateStarted: '2020-07-01',
-    dateEnded: '2021-10-01',
-    description: 'It is a payment method oriented to travel agencies.',
-    role: 'Software Engineer',
-    details: {
-      list: [
-      'Added features with react with context API as a state handler. I used Bootstrap and CSS for the styles.',
-      'Adapting features. In another part of the project, I worked with ClojureScript and Reagent to use React in ClojureScript. This section was stylized with LESS.',
-      'Bug fixing.'
-    ]}
+describe('post /projects', () => {
+  const newProjectData = {
+    name: 'Meh VR',
+    description: 'VR Experience',
+    githubLink: 'https://github.com/Sharmaz/WebDungeonVR',
+    demoLink: 'https://sharmaz.github.io/WebDungeonVR/',
+    tags: {
+      'list': [
+      'VR',
+      'Web',
+      'Javascript',
+      'A-frame'
+      ],
+    },
   };
   test('should return 400 bad request, invalid name', async () => {
-    const jobData = {...newJobData};
-    delete jobData.name;
-    const { statusCode, body } = await api.post('/api/v1/jobs/')
-      .send(jobData)
+    const projectData = {...newProjectData};
+    delete projectData.name;
+    const { statusCode, body } = await api.post('/api/v1/projects/')
+      .send(projectData)
       .set({
         'Authorization': `Bearer ${accessToken}`
       });
@@ -100,31 +101,31 @@ describe('post /jobs', () => {
     expect(body.message).toMatch(/name/);
   });
   test('should return 401 unauthorized', async () => {
-    const { statusCode } = await api.post('/api/v1/jobs/')
-      .send(newJobData);
+    const { statusCode } = await api.post('/api/v1/projects/')
+      .send(newProjectData);
     expect(statusCode).toBe(401);
   });
-  test('should return a new job', async () => {
-    const { statusCode, body } = await api.post('/api/v1/jobs/')
-      .send(newJobData)
+  test('should return a new project', async () => {
+    const { statusCode, body } = await api.post('/api/v1/projects/')
+      .send(newProjectData)
       .set({
         'Authorization': `Bearer ${accessToken}`
       });
-    const jobdb = await models.Job.findByPk(body.id);
+    const projectdb = await models.Project.findByPk(body.id);
     expect(statusCode).toBe(201);
-    expect(jobdb.name).toBe(body.name);
+    expect(projectdb.name).toBe(body.name);
   });
 });
 
-describe('patch /jobs/{id}', () => {
+describe('patch /projects/{id}', () => {
   const updateData = {
-    name: 'ivanrobles.pro',
+    name: 'Space Dungeon VR',
   };
   test('should return 400 bad request, name not allowed to be empty', async () => {
     const failData = {
       name: ''
     };
-    const { statusCode, body } = await api.patch(`/api/v1/jobs/${jobElement.id}`)
+    const { statusCode, body } = await api.patch(`/api/v1/projects/${projectElement.id}`)
       .send(failData)
       .set({
         'Authorization': `Bearer ${accessToken}`
@@ -133,29 +134,30 @@ describe('patch /jobs/{id}', () => {
     expect(body.message).toMatch(/not allowed/);
   });
   test('should return 401 unauthorized', async () => {
-    const { statusCode } = await api.patch(`/api/v1/jobs/${jobElement.id}`)
+    const { statusCode } = await api.patch(`/api/v1/projects/${projectElement.id}`)
       .send(updateData);
     expect(statusCode).toBe(401);
   });
-  test('should return an updated job', async() => {
-    const { statusCode, body } = await api.patch(`/api/v1/jobs/${jobElement.id}`)
+  test('should return an updated project', async() => {
+    const { statusCode, body } = await api.patch(`/api/v1/projects/${projectElement.id}`)
       .send(updateData)
       .set({
         'Authorization': `Bearer ${accessToken}`
       });
-    const jobdb = await models.Job.findByPk(jobElement.id);
+    const projectdb = await models.Project.findByPk(projectElement.id);
     expect(statusCode).toBe(200);
-    expect(body.changes.name).toBe(jobdb.name);
+    expect(body.changes.name).toBe(projectdb.name);
   });
 });
 
-describe('delete /jobs/{id}', () => {
+
+describe('delete /projects/{id}', () => {
   test('should return 401 unauthorized', async () => {
-    const { statusCode } = await api.delete(`/api/v1/jobs/${jobElement.id}`);
+    const { statusCode } = await api.delete(`/api/v1/projects/${projectElement.id}`);
     expect(statusCode).toBe(401);
   });
   test('should return 204 no content', async () => {
-    const { statusCode } = await api.delete(`/api/v1/jobs/${jobElement.id}`)
+    const { statusCode } = await api.delete(`/api/v1/projects/${projectElement.id}`)
       .set({
         'Authorization': `Bearer ${accessToken}`
       });
