@@ -149,3 +149,18 @@ describe('patch /projects/{id}', () => {
     expect(body.changes.name).toBe(projectdb.name);
   });
 });
+
+
+describe('delete /projects/{id}', () => {
+  test('should return 401 unauthorized', async () => {
+    const { statusCode } = await api.delete(`/api/v1/projects/${projectElement.id}`);
+    expect(statusCode).toBe(401);
+  });
+  test('should return 204 no content', async () => {
+    const { statusCode } = await api.delete(`/api/v1/projects/${projectElement.id}`)
+      .set({
+        'Authorization': `Bearer ${accessToken}`
+      });
+    expect(statusCode).toBe(204);
+  });
+});
