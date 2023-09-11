@@ -73,3 +73,46 @@ describe('get /projects/{id}', () => {
     expect(body.name).toBe(projectdb.name);
   });
 });
+
+describe('post /projects', () => {
+  const newProjectData = {
+    name: 'Meh VR',
+    description: 'VR Experience',
+    githubLink: 'https://github.com/Sharmaz/WebDungeonVR',
+    demoLink: 'https://sharmaz.github.io/WebDungeonVR/',
+    tags: {
+      'list': [
+      'VR',
+      'Web',
+      'Javascript',
+      'A-frame'
+      ],
+    },
+  };
+  test('should return 400 bad request, invalid name', async () => {
+    const projectData = {...newProjectData};
+    delete projectData.name;
+    const { statusCode, body } = await api.post('/api/v1/projects/')
+      .send(projectData)
+      .set({
+        'Authorization': `Bearer ${accessToken}`
+      });
+    expect(statusCode).toBe(400);
+    expect(body.message).toMatch(/name/);
+  });
+  test('should return 401 unauthorized', async () => {
+    const { statusCode } = await api.post('/api/v1/projects/')
+      .send(newProjectData);
+    expect(statusCode).toBe(401);
+  });
+  test('should return a new project', async () => {
+    const { statusCode, body } = await api.post('/api/v1/projects/')
+      .send(newProjectData)
+      .set({
+        'Authorization': `Bearer ${accessToken}`
+      });
+    const projectdb = await models.Project.findByPk(body.id);
+    expect(statusCode).toBe(201);
+    expect(projectdb.name).toBe(body.name);
+  });
+});

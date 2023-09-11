@@ -89,18 +89,8 @@ describe('post /jobs', () => {
     ]}
   };
   test('should return 400 bad request, invalid name', async () => {
-    const jobData = {
-      dateStarted: '2020-07-01',
-      dateEnded: '2021-10-01',
-      description: 'It is a payment method oriented to travel agencies.',
-      role: 'Software Engineer',
-      details: {
-        list: [
-        'Added features with react with context API as a state handler. I used Bootstrap and CSS for the styles.',
-        'Adapting features. In another part of the project, I worked with ClojureScript and Reagent to use React in ClojureScript. This section was stylized with LESS.',
-        'Bug fixing.'
-      ]}
-    };
+    const jobData = {...newJobData};
+    delete jobData.name;
     const { statusCode, body } = await api.post('/api/v1/jobs/')
       .send(jobData)
       .set({
