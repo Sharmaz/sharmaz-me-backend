@@ -9,7 +9,7 @@ let app;
 let api;
 let server;
 let accessToken;
-let jobElement
+let jobElement;
 
 beforeAll(async () => {
   app = createApp();
@@ -48,7 +48,7 @@ describe('get /jobs', () => {
     const { statusCode } = await api.get('/api/v1/jobs/');
     expect(statusCode).toBe(401);
   });
-  test('sould return a jobs list', async() => {
+  test('should return a jobs list', async() => {
     const { statusCode, body } = await api.get('/api/v1/jobs/')
       .set({
         'Authorization': `Bearer ${accessToken}`
@@ -59,7 +59,7 @@ describe('get /jobs', () => {
 });
 
 describe('get /jobs/{id}', () => {
-  test('should return 401 unauthorized by api key', async() => {
+  test('should return 401 unauthorized by bearer token', async() => {
     const { statusCode } = await api.get(`/api/v1/jobs/${jobElement.id}`);
     expect(statusCode).toBe(401);
   });
