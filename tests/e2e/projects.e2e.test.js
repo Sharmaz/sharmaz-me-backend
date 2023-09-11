@@ -116,3 +116,36 @@ describe('post /projects', () => {
     expect(projectdb.name).toBe(body.name);
   });
 });
+
+describe('patch /projects/{id}', () => {
+  const updateData = {
+    name: 'Space Dungeon VR',
+  };
+  test('should return 400 bad request, name not allowed to be empty', async () => {
+    const failData = {
+      name: ''
+    };
+    const { statusCode, body } = await api.patch(`/api/v1/projects/${projectElement.id}`)
+      .send(failData)
+      .set({
+        'Authorization': `Bearer ${accessToken}`
+      });
+    expect(statusCode).toBe(400);
+    expect(body.message).toMatch(/not allowed/);
+  });
+  test('should return 401 unauthorized', async () => {
+    const { statusCode } = await api.patch(`/api/v1/projects/${projectElement.id}`)
+      .send(updateData);
+    expect(statusCode).toBe(401);
+  });
+  test('should return an updated project', async() => {
+    const { statusCode, body } = await api.patch(`/api/v1/projects/${projectElement.id}`)
+      .send(updateData)
+      .set({
+        'Authorization': `Bearer ${accessToken}`
+      });
+    const projectdb = await models.Project.findByPk(projectElement.id);
+    expect(statusCode).toBe(200);
+    expect(body.changes.name).toBe(projectdb.name);
+  });
+});
