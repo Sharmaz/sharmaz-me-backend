@@ -64,7 +64,9 @@ router.get('/logout',
 );
 
 router.get('*', (req, res) => {
-  res.render('pages/404', { page: { title: '404 Not Found' }})
+  res
+    .status(404)
+    .render('pages/404', { page: { title: '404 Not Found' }});
 });
 
 module.exports = router;
