@@ -10,6 +10,8 @@
         <input class="input-text mt-20" type="text" name="github_link" id="github_link" value="{{project.githubLink}}">
         <label class="input-label mt-20" for="demo_link">Demo Link</label>
         <input class="input-text mt-20" type="text" name="demo_link" id="demo_link" value="{{project.demoLink}}">
+        <label class="input-label mt-20" for="image_link">Image Link</label>
+        <input class="input-text mt-20" type="text" name="image_link" id="image_link" value="{{project.imageLink}}">
         <label class="input-label mt-20" for="tags">Project Tags</label>
         {{#if project.tags }}
           {{#each project.tags.list as | tag | }}
