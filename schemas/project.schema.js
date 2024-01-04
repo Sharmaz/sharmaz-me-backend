@@ -5,6 +5,7 @@ const name = Joi.string();
 const description = Joi.string();
 const githubLink = Joi.string().uri();
 const demoLink = Joi.string().uri();
+const imageLink = Joi.string().uri();
 const tags = Joi.object({
   list: Joi.array().items(Joi.string()),
 });
@@ -14,6 +15,7 @@ const createProjectSchema = Joi.object({
   description,
   githubLink,
   demoLink,
+  imageLink,
   tags,
 });
 
@@ -22,6 +24,7 @@ const updateProjectSchema = Joi.object({
   description,
   githubLink,
   demoLink,
+  imageLink,
   tags,
 });
 

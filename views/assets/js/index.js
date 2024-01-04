@@ -388,6 +388,7 @@ if (addProjectButton) {
       description: createProjectForm.project_description.value,
       githubLink: createProjectForm.github_link.value,
       demoLink: createProjectForm.demo_link.value,
+      imageLink: createJobForm.image_link.value,
       tags: {
         list: tagList,
       },
@@ -423,6 +424,7 @@ if (updateProjectButtons) {
         description: updateProjectForm[index].project_description.value,
         githubLink: updateProjectForm[index].github_link.value,
         demoLink: updateProjectForm[index].demo_link.value,
+        imageLink: updateProjectForm[index].image_link.value,
         tags: {
           list: tagList,
         },

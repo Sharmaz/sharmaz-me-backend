@@ -40,6 +40,11 @@ const ProjectSchema = {
     field: 'demo_link',
     type: DataTypes.STRING,
   },
+  imageLink: {
+    allowNull: true,
+    field: 'image_link',
+    type: DataTypes.STRING,
+  },
   tags: {
     allowNull: true,
     type: DataTypes.JSON,
