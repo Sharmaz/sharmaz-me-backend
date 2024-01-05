@@ -388,7 +388,7 @@ if (addProjectButton) {
       description: createProjectForm.project_description.value,
       githubLink: createProjectForm.github_link.value,
       demoLink: createProjectForm.demo_link.value,
-      imageLink: createJobForm.image_link.value,
+      imageLink: createProjectForm.image_link.value,
       tags: {
         list: tagList,
       },
