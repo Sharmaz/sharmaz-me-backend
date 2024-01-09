@@ -195,12 +195,19 @@ a {
 }
 
 /* 404 Not Found Page */
+
+.not-found-container {
+  border-radius: 25px;
+  padding: 3px;
+}
 .not-found-card {
-  background-color: var(--metallic-blue);
-  border-radius: 20px;
+  background-color: var(--main-bg-color);
+  border-radius: 25px;
   font-size: 40px;
-  height: 60%;
-  width: 60%;
+  padding: 50px;
+}
+.not-found-title {
+  margin: 60px 40px;
 }
 
 /* Menu */
