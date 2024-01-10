@@ -6,8 +6,12 @@
   <form class="relative" action="update-account" id="update-account" data-user="{{user.id}}">
     <div class="account-email flex flex-col">
       <label class="input-label" for="email">Email</label>
-      <input class="input-text mt-20" type="email" name="email" id="email" value="{{user.email}}">
+      <div class="input-border orange-gradient mt-20">
+        <input class="input-text" type="email" name="email" id="email" value="{{user.email}}">
+      </div>
     </div>
-    <button id="account-button" class="save-button button absolute">Save</button>
+    <div class="button-border purple-gradient absolute save-button">
+      <button id="account-button" class="button">Save</button>
+    </div>
   </form>
 </div>
