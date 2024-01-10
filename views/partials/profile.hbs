@@ -3,7 +3,9 @@
   {{#if user.profile}}
     {{> profile-update-form}}
     {{else}}
-    <button id="create-profile-button" class="button absolute">Create Profile</button>
+    <div class="button-border purple-gradient absolute">
+      <button id="create-profile-button" class="button">Create Profile</button>
+    </div>
   {{/if}}
   {{> profile-create-form}}
 </div>

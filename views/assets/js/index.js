@@ -91,7 +91,7 @@ const createProfileForm = document.getElementById('create-profile-form');
 if (createProfileButton) {
   createProfileButton.addEventListener('click', () => {
     createProfileForm.classList.remove('d-none');
-    createProfileButton.classList.add('d-none');
+    createProfileButton.parentElement.classList.add('d-none');
   });
 }
 
