@@ -1,5 +1,5 @@
 {{#if user.jobs }}
-  <table class="mb-40">
+  <table class="mb-40 ft-24">
     <tr>
       <th>Job</th>
       <th>Date Started</th>
@@ -13,9 +13,13 @@
         <td>{{job.dateStarted}}</td>
         <td>{{job.dateEnded}}</td>
         <td>{{job.role}}</td>
-        <td>
-          <button class="button small-button edit-button edit-job-button">Edit</button>
-          <button class="button small-button delete-button delete-job-button" data-job="{{job.id}}">Delete</button>
+        <td class="flex">
+          <div class="button-border orange-gradient">
+            <button class="button edit-job-button small-button">Edit</button>
+          </div>
+          <div class="button-border red-gradient">
+            <button class="button delete-job-button small-button" data-job="{{job.id}}">Delete</button>
+          </div>
         </td>
       </tr>
     {{/each}}

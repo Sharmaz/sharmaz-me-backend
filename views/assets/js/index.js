@@ -194,7 +194,7 @@ const createJobForm = document.getElementById('create-job-form');
 if (addNewJobButton) {
   addNewJobButton.addEventListener('click', () => {
     createJobForm.classList.remove('d-none');
-    addNewJobButton.classList.add('d-none');
+    addNewJobButton.parentElement.classList.add('d-none');
   });
 }
 
@@ -208,7 +208,7 @@ if (editButtons) {
       editJobForms.forEach((form) => {
         form.classList.add('d-none');
       });
-      addNewJobButton.classList.add('d-none');
+      addNewJobButton.parentElement.classList.add('d-none');
       createJobForm.classList.add('d-none');
       editJobForms[index].classList.remove('d-none');
     });
@@ -222,11 +222,18 @@ if (addDetailButtons) {
   addDetailButtons.forEach((button) => {
     button.addEventListener('click', (event) => {
       event.preventDefault();
+
       const detailField = document.createElement('input');
       detailField.setAttribute('type', 'text');
       detailField.setAttribute('name', 'detail');
-      detailField.setAttribute('class', 'input-text mt-20 job-detail');
-      button.insertAdjacentElement('beforebegin', detailField);
+      detailField.setAttribute('class', 'input-text job-detail');
+
+      const detailFieldContainer = document.createElement('div');
+      detailFieldContainer.setAttribute('class', 'input-border orange-gradient mt-20');
+
+      detailFieldContainer.appendChild(detailField);
+
+      button.parentElement.insertAdjacentElement('beforebegin', detailFieldContainer);
     });
   });
 }

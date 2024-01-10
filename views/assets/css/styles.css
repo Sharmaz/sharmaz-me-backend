@@ -20,18 +20,42 @@ body {
   padding: 0;
 }
 table {
-  background-color: var(--metallic-blue);
+  background-color: var(--main-bg-color);
   font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 100%;
 }
 td, th {
-  border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;
 }
-tr:nth-child(even) {
-  background-color: var(--light-cobalt);
+tr {
+  position: relative;
+}
+tr:nth-child(odd)::after {
+  background: linear-gradient(to right, var(--heliotrope), var(--dark-orchid), var(--metallic-blue));
+  border-radius: 5px;
+  content: '';
+  display: block;
+  height: 4px;
+  left: 0;
+  top: 54px;
+  position: absolute;
+  width: 100%;
+}
+tr:nth-child(even)::after {
+  background: linear-gradient(to right, var(--organge-peel), var(--vivid-cerise), var(--heliotrope));
+  border-radius: 5px;
+  content: '';
+  display: block;
+  height: 4px;
+  left: 0;
+  top: 54px;
+  position: absolute;
+  width: 100%;
+}
+tr:first-child::after {
+  top: 40px;
 }
 a {
   color: var(--primary);
@@ -72,6 +96,9 @@ a {
 .ft-28 {
   font-size: 28px;
 }
+.ft-24 {
+  font-size: 24px;
+}
 .ft-18 {
   font-size: 18px;
 }
@@ -96,11 +123,17 @@ a {
 .pb-40 {
   padding-bottom: 40px;
 }
+.pb-60 {
+  padding-bottom: 60px;
+}
 .w-100 {
   width: 100%;
 }
 .w-40 {
   width: 40%;
+}
+.w-fit {
+  width: fit-content;
 }
 .input-label {
   font-size: 24px;
@@ -150,6 +183,7 @@ a {
 .small-button {
   font-size: 16px;
   min-width: 60px;
+  padding: 8px 16px;
 }
 .medium-button {
   width: 180px;
@@ -168,6 +202,12 @@ a {
 }
 .right-0 {
   right: 0;
+}
+.bottom-0 {
+  bottom: 0;
+}
+.left-0 {
+  left: 0;
 }
 .cell-link {
   max-width: 200px;
