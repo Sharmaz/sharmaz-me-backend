@@ -2,7 +2,9 @@
   {{#isAdmin user.role}}
     <h1 class="admin-title ft-38">Users</h1>
     {{> users-table}}
-    <button id="add-new-user" class="button absolute">Add New User</button>
+    <div class="button-border purple-gradient absolute">
+      <button id="add-new-user" class="button">Add New User</button>
+    </div>
     {{> users-create-form}}
     {{> users-update-form}}
   {{/isAdmin}}

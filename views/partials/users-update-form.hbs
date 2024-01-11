@@ -3,15 +3,21 @@
     <form class="relative edit-user-form d-none" action="" data-user="{{user.id}}">
       <div class="flex flex-col">
         <label class="input-label mt-20" for="email">Email</label>
-        <input class="input-text mt-20" type="email" name="email" id="email" value="{{user.email}}">
+        <div class="input-border orange-gradient mt-20">
+          <input class="input-text" type="email" name="email" id="email" value="{{user.email}}">
+        </div>
         <label class="input-label mt-20" for="role">Role</label>
-        <select class="input-text select-role mt-20" name="role" id="role">
-          <option value="{{user.role}}">Choose an option</option>
-          <option value="user">User</option>
-          <option value="admin">Admin</option>
-        </select>
+        <div class="input-border orange-gradient mt-20">
+          <select class="input-select select-role" name="role" id="role">
+            <option value="{{user.role}}">Choose an option</option>
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
       </div>
-      <button class="button absolute top-0 right-0 update-user-button">Save</button>
+      <div class="button-border purple-gradient absolute top-0 right-0">
+        <button class="button update-user-button">Save</button>
+      </div>
     </form>
   {{/each}}
 {{/if}}

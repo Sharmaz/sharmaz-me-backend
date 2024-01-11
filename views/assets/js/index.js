@@ -91,7 +91,7 @@ const createProfileForm = document.getElementById('create-profile-form');
 if (createProfileButton) {
   createProfileButton.addEventListener('click', () => {
     createProfileForm.classList.remove('d-none');
-    createProfileButton.classList.add('d-none');
+    createProfileButton.parentElement.classList.add('d-none');
   });
 }
 
@@ -194,7 +194,7 @@ const createJobForm = document.getElementById('create-job-form');
 if (addNewJobButton) {
   addNewJobButton.addEventListener('click', () => {
     createJobForm.classList.remove('d-none');
-    addNewJobButton.classList.add('d-none');
+    addNewJobButton.parentElement.classList.add('d-none');
   });
 }
 
@@ -208,7 +208,7 @@ if (editButtons) {
       editJobForms.forEach((form) => {
         form.classList.add('d-none');
       });
-      addNewJobButton.classList.add('d-none');
+      addNewJobButton.parentElement.classList.add('d-none');
       createJobForm.classList.add('d-none');
       editJobForms[index].classList.remove('d-none');
     });
@@ -222,11 +222,18 @@ if (addDetailButtons) {
   addDetailButtons.forEach((button) => {
     button.addEventListener('click', (event) => {
       event.preventDefault();
+
       const detailField = document.createElement('input');
       detailField.setAttribute('type', 'text');
       detailField.setAttribute('name', 'detail');
-      detailField.setAttribute('class', 'input-text mt-20 job-detail');
-      button.insertAdjacentElement('beforebegin', detailField);
+      detailField.setAttribute('class', 'input-text job-detail');
+
+      const detailFieldContainer = document.createElement('div');
+      detailFieldContainer.setAttribute('class', 'input-border orange-gradient mt-20');
+
+      detailFieldContainer.appendChild(detailField);
+
+      button.parentElement.insertAdjacentElement('beforebegin', detailFieldContainer);
     });
   });
 }
@@ -336,7 +343,7 @@ const createProjectForm = document.getElementById('create-project-form');
 if (addNewProjectButton) {
   addNewProjectButton.addEventListener('click', () => {
     createProjectForm.classList.remove('d-none');
-    addNewProjectButton.classList.add('d-none');
+    addNewProjectButton.parentElement.classList.add('d-none');
   });
 }
 
@@ -350,7 +357,7 @@ if (editProjectButtons) {
       editProjectForms.forEach((form) => {
         form.classList.add('d-none');
       });
-      addNewProjectButton.classList.add('d-none');
+      addNewProjectButton.parentElement.classList.add('d-none');
       createProjectForm.classList.add('d-none');
       editProjectForms[index].classList.remove('d-none');
     });
@@ -367,8 +374,14 @@ if (addTagButtons) {
       const tagField = document.createElement('input');
       tagField.setAttribute('type', 'text');
       tagField.setAttribute('name', 'tag');
-      tagField.setAttribute('class', 'input-text mt-20 project-tag');
-      button.insertAdjacentElement('beforebegin', tagField);
+      tagField.setAttribute('class', 'input-text project-tag');
+
+      const tagFieldContainer = document.createElement('div');
+      tagFieldContainer.setAttribute('class', 'input-border orange-gradient mt-20');
+
+      tagFieldContainer.appendChild(tagField);
+
+      button.parentElement.insertAdjacentElement('beforebegin', tagFieldContainer);
     });
   });
 }
@@ -480,7 +493,7 @@ const createUserForm = document.getElementById('create-user-form');
 if (addNewUserButton) {
   addNewUserButton.addEventListener('click', () => {
     createUserForm.classList.remove('d-none');
-    addNewUserButton.classList.add('d-none');
+    addNewUserButton.parentElement.classList.add('d-none');
   });
 }
 
@@ -494,7 +507,7 @@ if (editUserButtons) {
       editUserForms.forEach((form) => {
         form.classList.add('d-none');
       });
-      addNewUserButton.classList.add('d-none');
+      addNewUserButton.parentElement.classList.add('d-none');
       createUserForm.classList.add('d-none');
       editUserForms[index].classList.remove('d-none');
     });

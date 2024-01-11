@@ -1,5 +1,5 @@
 {{#if users }}
-  <table class="mb-40">
+  <table class="mb-40 ft-24">
     <tr>
       <th>Email</th>
       <th>Role</th>
@@ -10,8 +10,12 @@
         <td class="users-email">{{user.email}}</td>
         <td class="users-role">{{user.role}}</td>
         <td class="flex between">
-          <button class="button small-button edit-button edit-user-button">Edit</button>
-          <button class="button small-button delete-button delete-user-button" data-user="{{user.id}}">Delete</button>
+          <div class="button-border orange-gradient">
+            <button class="button small-button edit-user-button">Edit</button>
+          </div>
+          <div class="button-border red-gradient">
+            <button class="button small-button delete-user-button" data-user="{{user.id}}">Delete</button>
+          </div>
         </td>
       </tr>
     {{/each}}
