@@ -213,7 +213,11 @@ a {
   max-width: 200px;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: var(--primary);
+}
+.cell-link a {
+  color: var(--text-slate-300);
+  font-size: 16px;
+  white-space: nowrap;
 }
 
 /* Gradients */

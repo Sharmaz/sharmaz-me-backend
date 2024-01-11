@@ -3,24 +3,40 @@
     <form class="relative edit-project-form d-none" action="" data-project="{{project.id}}">
       <div class="flex flex-col">
         <label class="input-label" for="name">Project Name</label>
-        <input class="input-text mt-20" type="text" name="name" id="name" value="{{project.name}}">
+        <div class="input-border orange-gradient mt-20">
+          <input class="input-text" type="text" name="name" id="name" value="{{project.name}}">
+        </div>
         <label class="input-label mt-20" for="project_description">Job Description</label>
-        <textarea class="mt-20 ft-18" name="project_description" id="project_description" cols="30" rows="10">{{project.description}}</textarea>
+        <div class="text-area-border orange-gradient mt-20">
+          <textarea class="text-area ft-18" name="project_description" id="project_description" cols="30" rows="10">{{project.description}}</textarea>
+        </div>
         <label class="input-label mt-20" for="github_link">Github Link</label>
-        <input class="input-text mt-20" type="text" name="github_link" id="github_link" value="{{project.githubLink}}">
+        <div class="input-border orange-gradient mt-20">
+          <input class="input-text" type="text" name="github_link" id="github_link" value="{{project.githubLink}}">
+        </div>
         <label class="input-label mt-20" for="demo_link">Demo Link</label>
-        <input class="input-text mt-20" type="text" name="demo_link" id="demo_link" value="{{project.demoLink}}">
+        <div class="input-border orange-gradient mt-20">
+          <input class="input-text" type="text" name="demo_link" id="demo_link" value="{{project.demoLink}}">
+        </div>
         <label class="input-label mt-20" for="image_link">Image Link</label>
-        <input class="input-text mt-20" type="text" name="image_link" id="image_link" value="{{project.imageLink}}">
+        <div class="input-border orange-gradient mt-20">
+          <input class="input-text" type="text" name="image_link" id="image_link" value="{{project.imageLink}}">
+        </div>
         <label class="input-label mt-20" for="tags">Project Tags</label>
         {{#if project.tags }}
           {{#each project.tags.list as | tag | }}
-            <input class="input-text mt-20 project-tag" type="text" name="tag" value="{{tag}}">
+            <div class="input-border orange-gradient mt-20">
+              <input class="input-text project-tag" type="text" name="tag" value="{{tag}}">
+            </div>
           {{/each }}
         {{/if }}
-        <button class="button medium-button mt-20 add-project-tag">add tag</button>
+        <div class="button-border purple-gradient mt-20 w-fit">
+          <button class="button add-project-tag">add tag</button>
+        </div>
       </div>
-      <button class="save-button button absolute update-project-button">Save</button>
+      <div class="button-border purple-gradient save-button absolute">
+        <button class="button update-project-button">Save</button>
+      </div>
     </form>
   {{/each}}
 {{/if }}

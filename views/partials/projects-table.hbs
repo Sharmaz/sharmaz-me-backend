@@ -1,5 +1,5 @@
 {{#if user.projects }}
-  <table class="mb-40">
+  <table class="mb-40 ft-24">
     <tr>
       <th>Project</th>
       <th>Github Link</th>
@@ -11,9 +11,13 @@
       <td>{{project.name}}</td>
       <td class="cell-link"><a href="{{project.githubLink}}">{{project.githubLink}}</a></td>
       <td class="cell-link"><a href="{{project.demoLink}}">{{project.demoLink}}</a></td>
-      <td>
-        <button class="button small-button edit-button edit-project-button">Edit</button>
-        <button class="button small-button delete-button delete-project-button" data-project="{{project.id}}">Delete</button>
+      <td class="flex">
+        <div class="button-border orange-gradient">
+          <button class="button small-button edit-project-button">Edit</button>
+        </div>
+        <div class="button-border red-gradient">
+          <button class="button small-button delete-project-button" data-project="{{project.id}}">Delete</button>
+        </div>
       </td>
     </tr>
     {{/each}}

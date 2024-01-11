@@ -1,18 +1,34 @@
 <form id="create-project-form" class="relative d-none" action="">
   <div class="flex flex-col">
     <label class="input-label" for="name">Project Name</label>
-    <input class="input-text mt-20" type="text" name="name" id="name" value="Your awesome project">
+    <div class="input-border orange-gradient mt-20">
+      <input class="input-text" type="text" name="name" id="name" value="Your awesome project">
+    </div>
     <label class="input-label mt-20" for="project_description">Job Description</label>
-    <textarea class="mt-20 ft-18" name="project_description" id="project_description" cols="30" rows="10">Project awesome description goes here...</textarea>
+    <div class="text-area-border orange-gradient mt-20">
+      <textarea class="text-area ft-18" name="project_description" id="project_description" cols="30" rows="10">Project awesome description goes here...</textarea>
+    </div>
     <label class="input-label mt-20" for="github_link">Github Link</label>
-    <input class="input-text mt-20" type="text" name="github_link" id="github_link" value="https://awesome.github.com/your-project">
+    <div class="input-border orange-gradient mt-20">
+      <input class="input-text" type="text" name="github_link" id="github_link" value="https://awesome.github.com/your-project">
+    </div>
     <label class="input-label mt-20" for="demo_link">Demo Link</label>
-    <input class="input-text mt-20" type="text" name="demo_link" id="demo_link" value="https://demo.com/your-project">
+    <div class="input-border orange-gradient mt-20">
+      <input class="input-text" type="text" name="demo_link" id="demo_link" value="https://demo.com/your-project">
+    </div>
     <label class="input-label mt-20" for="image_link">Image Link</label>
-    <input class="input-text mt-20" type="text" name="image_link" id="image_link" value="https://demo.com/your-project-image.jpg">
+    <div class="input-border orange-gradient mt-20">
+      <input class="input-text" type="text" name="image_link" id="image_link" value="https://demo.com/your-project-image.jpg">
+    </div>
     <label class="input-label mt-20" for="tags">Project Tags</label>
-    <input class="input-text mt-20 project-tag" type="text" name="tag" value="React">
-    <button class="button medium-button mt-20 add-project-tag">add tag</button>
+    <div class="input-border orange-gradient mt-20">
+      <input class="input-text project-tag" type="text" name="tag" value="React">
+    </div>
+    <div class="button-border purple-gradient mt-20 w-fit">
+      <button class="button add-project-tag">add tag</button>
+    </div>
   </div>
-  <button id="create-project" class="save-button button absolute">Add Project</button>
+  <div class="button-border purple-gradient save-button absolute">
+    <button id="create-project" class="button">Add Project</button>
+  </div>
 </form>

@@ -343,7 +343,7 @@ const createProjectForm = document.getElementById('create-project-form');
 if (addNewProjectButton) {
   addNewProjectButton.addEventListener('click', () => {
     createProjectForm.classList.remove('d-none');
-    addNewProjectButton.classList.add('d-none');
+    addNewProjectButton.parentElement.classList.add('d-none');
   });
 }
 
@@ -357,7 +357,7 @@ if (editProjectButtons) {
       editProjectForms.forEach((form) => {
         form.classList.add('d-none');
       });
-      addNewProjectButton.classList.add('d-none');
+      addNewProjectButton.parentElement.classList.add('d-none');
       createProjectForm.classList.add('d-none');
       editProjectForms[index].classList.remove('d-none');
     });
@@ -374,8 +374,14 @@ if (addTagButtons) {
       const tagField = document.createElement('input');
       tagField.setAttribute('type', 'text');
       tagField.setAttribute('name', 'tag');
-      tagField.setAttribute('class', 'input-text mt-20 project-tag');
-      button.insertAdjacentElement('beforebegin', tagField);
+      tagField.setAttribute('class', 'input-text project-tag');
+
+      const tagFieldContainer = document.createElement('div');
+      tagFieldContainer.setAttribute('class', 'input-border orange-gradient mt-20');
+
+      tagFieldContainer.appendChild(tagField);
+
+      button.parentElement.insertAdjacentElement('beforebegin', tagFieldContainer);
     });
   });
 }
