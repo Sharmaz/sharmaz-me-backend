@@ -1,15 +1,23 @@
 <form class="relative d-none" action="" id="create-user-form">
   <div class="flex flex-col">
     <label class="input-label mt-20" for="email">Email</label>
-    <input class="input-text mt-20" type="email" name="email" id="email">
+    <div class="input-border orange-gradient mt-20">
+      <input class="input-text" type="email" name="email" id="email">
+    </div>
     <label class="input-label mt-20" for="role">Role</label>
-    <select class="input-text select-role mt-20" name="role" id="role">
-      <option value="">Choose an option</option>
-      <option value="user">User</option>
-      <option value="admin">Admin</option>
-    </select>
+    <div class="input-border orange-gradient mt-20">
+      <select class="input-select select-role" name="role" id="role">
+        <option value="">Choose an option</option>
+        <option value="user">User</option>
+        <option value="admin">Admin</option>
+      </select>
+    </div>
     <label class="input-label mt-20" for="password">Password</label>
-    <input class="input-text mt-20" type="password" name="password" id="password">
+    <div class="input-border orange-gradient mt-20">
+      <input class="input-text" type="password" name="password" id="password">
+    </div>
   </div>
-  <button id="user-create-button" class="button absolute top-0 right-0">Create User</button>
+  <div class="button-border purple-gradient absolute top-0 right-0">
+   <button id="user-create-button" class="button">Create User</button>
+  </div>
 </form>

@@ -162,6 +162,15 @@ a {
   resize: none;
   width: 560px;
 }
+.input-select {
+  background: var(--main-bg-color);
+  border: 0;
+  border-radius: 10px;
+  color: whitesmoke;
+  padding: 10px 20px;
+  font-size: 18px;
+  width: 300px;
+}
 .text-area-border {
   border-radius: 10px;
   padding: 2px;

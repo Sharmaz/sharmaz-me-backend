@@ -493,7 +493,7 @@ const createUserForm = document.getElementById('create-user-form');
 if (addNewUserButton) {
   addNewUserButton.addEventListener('click', () => {
     createUserForm.classList.remove('d-none');
-    addNewUserButton.classList.add('d-none');
+    addNewUserButton.parentElement.classList.add('d-none');
   });
 }
 
@@ -507,7 +507,7 @@ if (editUserButtons) {
       editUserForms.forEach((form) => {
         form.classList.add('d-none');
       });
-      addNewUserButton.classList.add('d-none');
+      addNewUserButton.parentElement.classList.add('d-none');
       createUserForm.classList.add('d-none');
       editUserForms[index].classList.remove('d-none');
     });
