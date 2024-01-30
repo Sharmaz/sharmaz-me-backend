@@ -4,8 +4,8 @@
   "description": "API for portfolio/resume at https://sharmaz.github.io/me/",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
-    "start": "node index.js",
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js",
     "test": "npm-run-all --aggregate-output cov:clean -p cov:unit cov:integration -s cov:summary-preset cov:report",
     "test:integration": "npm-run-all cov:clean cov:integration",
     "test:unit": "npm-run-all cov:clean cov:unit",

@@ -1,10 +1,10 @@
 const request = require('supertest');
 const { describe, expect } = require('@jest/globals');
-const { models } = require('../../libs/sequelize');
-const config = require('../../config/config');
+const { models } = require('../../src/libs/sequelize');
+const config = require('../../src/config/config');
 const { upSeed, downSeed } = require('./utils/umzug');
 
-const createApp = require('../../app');
+const createApp = require('../../src/app');
 
 let app;
 let api;

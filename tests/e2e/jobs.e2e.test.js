@@ -1,9 +1,9 @@
 const request = require('supertest');
 const { describe, expect } = require('@jest/globals');
-const { models } = require('../../libs/sequelize');
+const { models } = require('../../src/libs/sequelize');
 const { upSeed, downSeed } = require('./utils/umzug');
 
-const createApp = require('../../app');
+const createApp = require('../../src/app');
 
 let app;
 let api;
