@@ -30,14 +30,14 @@ const createApp = () => {
 
   app.engine('.hbs', engine({extname: 'hbs'}));
   app.set('view engine', '.hbs');
-  app.set('views', './views');
+  app.set('views', './src/views');
 
   const publicPath = path.join(__dirname, './views');
 
   app.use(cors(options));
 
   // eslint-disable-next-line global-require
-  require('./utils/auth');
+  require('./auth');
 
   app.use('/', express.static(publicPath));
 

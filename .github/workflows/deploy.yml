@@ -37,7 +37,7 @@ jobs:
               if [[ migrations -lt $(find /var/www/sharmaz-me-backend/db/migrations | wc -l) ]]; then
                 npm run migrations:run
               fi
-              pm2 start index.js --name sharmaz-me
+              pm2 start ./src/index.js --name sharmaz-me
             else
               echo "Directory not found"
               git clone git@github.com:Sharmaz/sharmaz-me-backend.git
@@ -50,5 +50,5 @@ jobs:
               DOMAIN_1=${{secrets.DOMAIN_1}}\nDOMAIN_2=${{secrets.DOMAIN_2}}\nDOMAIN_3=${{secrets.DOMAIN_3}}" >.env
               npm run migrations:run
               npm run migrations:run:seed
-              pm2 start index.js --name sharmaz-me
+              pm2 start ./src/index.js --name sharmaz-me
             fi
