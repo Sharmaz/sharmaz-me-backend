@@ -13,16 +13,16 @@ const LocalStrategy = new Strategy({
     try {
       const user = await userService.findByEmail(email);
       if (!user) {
-        done(boom.unauthorized(), false);
+        return done(boom.unauthorized(), false);
       }
       const isMatch = await compare(password, user.password);
       if (!isMatch) {
-        done(boom.unauthorized(), false);
+        return done(boom.unauthorized(), false);
       }
-      delete user.dataValues.password;
-      done(null, user);
+      const { password: _, ...userData } = user.toJSON();
+      return done(null, userData);
     } catch(error) {
-      done(error, false);
+      return done(error, false);
     }
   }
 );
