@@ -7,10 +7,9 @@ const PASSWORD = encodeURIComponent(config.dbPassword);
 const getURI = (dialect) => `${dialect}://${USER}:${PASSWORD}@${config.dbHost}:${config.dbPort}/${config.dbName}`;
 
 const dialect = 'mysql';
-// eslint-disable-next-line no-console
 const sequelize = new Sequelize(getURI(dialect), {
   dialect,
-  logging: config.isProd ? false : console.log,
+  logging: config.isProd ? false : console.log, // eslint-disable-line no-console
 });
 
 setupModels(sequelize);
