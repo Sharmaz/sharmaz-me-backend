@@ -1,4 +1,4 @@
-const  { v4 } = require('uuid');
+const { randomUUID } = require('crypto');
 const boom = require('@hapi/boom');
 
 const { models } = require('../libs/sequelize');
@@ -7,7 +7,7 @@ class ProjectsService {
 
   async create(userId, data) {
     const newProject = await models.Project.create({
-      id: v4(),
+      id: randomUUID(),
       userId,
       ...data
     });
