@@ -7,6 +7,6 @@ RUN npm ci --only=production
 
 COPY src/ ./src/
 
-EXPOSE 8080
+EXPOSE ${PORT:-3000}
 
 CMD ["node", "src/index.js"]
