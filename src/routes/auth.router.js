@@ -26,12 +26,14 @@ router.post('/login',
         sub: user.id,
         role: user.role,
       };
-      const token = jwt.sign(payload, config.jwtSecret);
+      const token = jwt.sign(payload, config.jwtSecret, { expiresIn: '24h' });
       res
         .cookie('access_token', token,
           {
+            httpOnly: true,
+            secure: config.isProd,
             sameSite: true,
-            maxAge : (1000 * 60 * 60 *24),
+            maxAge: 1000 * 60 * 60 * 24,
           }
         )
         .json({
