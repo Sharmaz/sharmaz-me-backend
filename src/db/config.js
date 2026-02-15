@@ -12,10 +12,5 @@ module.exports = {
   production: {
     url: getURI('mysql'),
     dialect: 'mysql',
-    dialectOptions: {
-      ssl: {
-        rejectUnauthorized: false,
-      },
-    },
   },
 };

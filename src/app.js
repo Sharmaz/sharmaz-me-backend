@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-const bodyParser = require('body-parser');
+const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const { engine } = require('express-handlebars');
 const config = require('./config/config');
@@ -11,9 +11,9 @@ const { logErrors, boomErrorHandler } = require('./middlewares/error.handler');
 const createApp = () => {
   const app = express();
 
+  app.use(helmet());
   app.use(express.json());
-  app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());
 
   const whitelist = config.allowedList;
