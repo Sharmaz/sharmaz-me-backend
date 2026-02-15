@@ -6,8 +6,8 @@ const getURI = (dialect) => `${dialect}://${USER}:${PASSWORD}@${config.dbHost}:$
 
 module.exports = {
   development: {
-    url: getURI('postgres'),
-    dialect: 'postgres',
+    url: getURI('mysql'),
+    dialect: 'mysql',
   },
   production: {
     url: getURI('mysql'),
