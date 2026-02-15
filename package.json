@@ -26,7 +26,10 @@
     "migrations:seed:generate": "sequelize-cli seed:generate --name",
     "migrations:run:seed": "sequelize-cli db:seed:all",
     "migrations:seed:revert": "sequelize-cli db:seed:undo",
-    "migrations:seed:delete": "sequelize-cli db:seed:undo:all"
+    "migrations:seed:delete": "sequelize-cli db:seed:undo:all",
+    "client:install": "cd client && npm install",
+    "client:dev": "cd client && npm run dev",
+    "client:build": "cd client && npm run build"
   },
   "repository": {
     "type": "git",
