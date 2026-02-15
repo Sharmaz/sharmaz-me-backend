@@ -14,7 +14,7 @@ jobs:
       mysql-e2e:
         image: mysql:8.0.29
         env:
-          MYSQL_ROOT_PASSWORD: Dd83@hSCjkmfT^NW
+          MYSQL_ROOT_PASSWORD: ${{secrets.MYSQL_E2E_PASSWORD}}
           MYSQL_DATABASE: e2e_test
         ports:
           - "3306:3306"
@@ -29,7 +29,7 @@ jobs:
       - run: npm run test:e2e:ci
         env:
           DB_USER: root
-          DB_PASSWORD: Dd83@hSCjkmfT^NW
+          DB_PASSWORD: ${{secrets.MYSQL_E2E_PASSWORD}}
           DB_HOST: 127.0.0.1
           DB_NAME: e2e_test
           DB_PORT: 3306
