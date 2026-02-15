@@ -38,6 +38,9 @@
     "url": "https://github.com/Sharmaz/sharmaz-me-backend/issues"
   },
   "homepage": "https://github.com/Sharmaz/sharmaz-me-backend#readme",
+  "engines": {
+    "node": ">=24.0.0"
+  },
   "devDependencies": {
     "@jest/globals": "^29.6.0",
     "eslint": "^8.44.0",

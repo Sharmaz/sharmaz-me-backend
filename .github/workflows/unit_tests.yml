@@ -1,19 +1,19 @@
 name: Unit Tests
 on:
   pull_request:
-    branches: []
+    branches: [main]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: ['16']
+        node: ['24']
     steps:
-      - uses: actions/checkout@v3
-      - name: Setup Node 16
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - name: Setup Node 24
+        uses: actions/setup-node@v4
         with:
-          node-version: 16.x
+          node-version: 24.x
       - run: npm install
       - run: npm run test:unit
