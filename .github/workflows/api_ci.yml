@@ -1,35 +1,35 @@
 name: API CI
 on:
   pull_request:
-    branches: []
+    branches: [main]
 
 jobs:
   e2e:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: ['16']
+        node: ['24']
 
     services:
       mysql-e2e:
         image: mysql:8.0.29
         env:
-          MYSQL_ROOT_PASSWORD: Dd83@hSCjkmfT^NW
+          MYSQL_ROOT_PASSWORD: ${{secrets.MYSQL_E2E_PASSWORD}}
           MYSQL_DATABASE: e2e_test
         ports:
           - "3306:3306"
 
     steps:
-      - uses: actions/checkout@v3
-      - name: Setup Node 16
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - name: Setup Node 24
+        uses: actions/setup-node@v4
         with:
-          node-version: 16.x
+          node-version: 24.x
       - run: npm ci
       - run: npm run test:e2e:ci
         env:
           DB_USER: root
-          DB_PASSWORD: Dd83@hSCjkmfT^NW
+          DB_PASSWORD: ${{secrets.MYSQL_E2E_PASSWORD}}
           DB_HOST: 127.0.0.1
           DB_NAME: e2e_test
           DB_PORT: 3306

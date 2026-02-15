@@ -1,4 +1,4 @@
-const  { v4 } = require('uuid');
+const { randomUUID } = require('crypto');
 const boom = require('@hapi/boom');
 
 const { models } = require('../libs/sequelize');
@@ -8,7 +8,7 @@ class ProfilesService {
   async create(data, userId) {
 
     const newProfile = await models.Profile.create({
-      id: v4(),
+      id: randomUUID(),
       userId,
       ...data,
     })

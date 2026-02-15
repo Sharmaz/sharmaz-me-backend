@@ -18,7 +18,7 @@ function checkRoles(...roles) {
     if (roles.includes(user.role)) {
       next();
     } else {
-      next(boom.unauthorized());
+      next(boom.forbidden());
     }
   }
 }
@@ -29,28 +29,27 @@ function checkUserIds(req, res, next) {
   if (user.sub === id || user.role !== 'user') {
     next();
   } else {
-    next(boom.unauthorized());
+    next(boom.forbidden());
   }
 }
 
 function checkIsCookie(req, res, next) {
   const accessToken = req.cookies.access_token;
   if (accessToken) {
-    res.redirect('/');
+    return res.redirect('/');
   }
-  next();
+  return next();
 }
 
 function checkCookieAuth(req, res, next) {
   const accessToken = req.cookies.access_token;
 
-  jwt.verify(accessToken, config.jwtSecret, async (err, data) => {
+  jwt.verify(accessToken, config.jwtSecret, (err, data) => {
     if(err) {
-      res.redirect('/login');
-    } else if (data) {
-      req.user = data;
-      next();
+      return res.redirect('/login');
     }
+    req.user = data;
+    return next();
   });
 }
 

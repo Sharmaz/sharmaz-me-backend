@@ -1,4 +1,4 @@
-const  { v4 } = require('uuid');
+const { randomUUID } = require('crypto');
 const boom = require('@hapi/boom');
 
 const { models } = require('../libs/sequelize');
@@ -7,7 +7,7 @@ class JobsService {
 
   async create(userId, data) {
     const newJob = await models.Job.create({
-      id: v4(),
+      id: randomUUID(),
       userId,
       ...data
     });

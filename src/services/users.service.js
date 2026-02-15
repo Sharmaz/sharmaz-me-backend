@@ -1,4 +1,4 @@
-const  { v4 } = require('uuid');
+const { randomUUID } = require('crypto');
 const boom = require('@hapi/boom');
 const { hash } = require('bcrypt');
 
@@ -9,13 +9,15 @@ class UsersService {
   async create(data) {
     const encryptedPassword = await hash(data.password, 10);
     const newUser = await models.User.create({
-      id: v4(),
+      id: randomUUID(),
       ...data,
       password: encryptedPassword,
       createdAt: new Date(),
     });
-    delete newUser.dataValues.password;
-    return newUser;
+    const createdUser = await models.User.findByPk(newUser.id, {
+      attributes: { exclude: ['password'] },
+    });
+    return createdUser;
   }
 
   async find() {
@@ -37,12 +39,12 @@ class UsersService {
 
   async findOne(userId) {
     const user = await models.User.findByPk(userId, {
+      attributes: { exclude: ['password'] },
       include: ['profile', 'jobs', 'projects'],
     });
     if (!user) {
       throw boom.notFound('User not found');
     }
-    delete user.dataValues.password;
     return user;
   }
 

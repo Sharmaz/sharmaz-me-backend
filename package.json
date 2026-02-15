@@ -38,6 +38,9 @@
     "url": "https://github.com/Sharmaz/sharmaz-me-backend/issues"
   },
   "homepage": "https://github.com/Sharmaz/sharmaz-me-backend#readme",
+  "engines": {
+    "node": ">=24.0.0"
+  },
   "devDependencies": {
     "@jest/globals": "^29.6.0",
     "eslint": "^8.44.0",
@@ -46,32 +49,30 @@
     "eslint-plugin-import": "^2.27.5",
     "jest": "^29.6.0",
     "nodemon": "^2.0.22",
-    "npm-run-all": "^4.1.5",
+    "npm-run-all2": "^8.0.4",
     "nyc": "^15.1.0",
     "prettier": "^2.8.8",
     "sequelize-cli": "^6.6.1",
-    "sequelize-mock": "^0.10.2",
     "supertest": "^6.3.3"
   },
   "dependencies": {
     "@hapi/boom": "^10.0.1",
     "bcrypt": "^5.1.0",
-    "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-handlebars": "^7.1.0",
+    "express-rate-limit": "^8.2.1",
+    "helmet": "^8.1.0",
     "joi": "^17.9.2",
     "jsonwebtoken": "^9.0.1",
+    "morgan": "^1.10.1",
     "mysql2": "^3.6.0",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
-    "pg": "^8.11.1",
-    "pg-hstore": "^2.3.4",
     "sequelize": "^6.32.1",
-    "umzug": "^3.3.1",
-    "uuid": "^9.0.0"
+    "umzug": "^3.3.1"
   }
 }

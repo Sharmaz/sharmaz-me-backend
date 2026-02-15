@@ -1,5 +1,5 @@
 name: Deploy
-on: 
+on:
   pull_request:
     branches:
       - main
@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy NodeJS
-        uses: appleboy/ssh-action@v1.0.0
+        uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{secrets.SSH_HOST}}
           key: ${{secrets.SSH_KEY}}
@@ -21,34 +21,36 @@ jobs:
 
           script: |
             cd /var/www || exit
-            if [[ -d "/var/www/sharmaz-me-backend" ]]; then
-              migrations=$(find /var/www/sharmaz-me-backend/db/migrations | wc -l)
-              echo "Directory sharmaz-me-backend exists"
-              pm2 stop sharmaz-me
-              pm2 delete sharmaz-me
-              cd sharmaz-me-backend || exit
-              git pull origin main
-              echo "Deployment succesful"
-              npm install
-              echo -e "NODE_ENV=${{secrets.NODE_ENV}}\nPORT=${{secrets.PORT}}
-              DB_USER=${{secrets.DB_USER}}\nDB_PASSWORD=${{secrets.DB_PASSWORD}}\nDB_HOST=${{secrets.DB_HOST}}\nDB_NAME=${{secrets.DB_NAME}}\nDB_PORT=${{secrets.DB_PORT}}
-              API_KEY=${{secrets.API_KEY}}\nJWT_SECRET=${{secrets.JWT_SECRET}}
-              \nDOMAIN_1=${{secrets.DOMAIN_1}}\nDOMAIN_2=${{secrets.DOMAIN_2}}\nDOMAIN_3=${{secrets.DOMAIN_3}}" >.env
-              if [[ migrations -lt $(find /var/www/sharmaz-me-backend/db/migrations | wc -l) ]]; then
-                npm run migrations:run
-              fi
-              pm2 start ./src/index.js --name sharmaz-me
-            else
-              echo "Directory not found"
+
+            if [[ ! -d "/var/www/sharmaz-me-backend" ]]; then
+              echo "Cloning repository..."
               git clone git@github.com:Sharmaz/sharmaz-me-backend.git
-              echo "Deployment succesful"
-              cd sharmaz-me-backend || exit
-              npm install
-              echo -e "NODE_ENV=${{secrets.NODE_ENV}}\nPORT=${{secrets.PORT}}
-              DB_USER=${{secrets.DB_USER}}\nDB_PASSWORD=${{secrets.DB_PASSWORD}}\nDB_HOST=${{secrets.DB_HOST}}\nDB_NAME=${{secrets.DB_NAME}}\nDB_PORT=${{secrets.DB_PORT}}
-              API_KEY=${{secrets.API_KEY}}\nJWT_SECRET=${{secrets.JWT_SECRET}}
-              DOMAIN_1=${{secrets.DOMAIN_1}}\nDOMAIN_2=${{secrets.DOMAIN_2}}\nDOMAIN_3=${{secrets.DOMAIN_3}}" >.env
-              npm run migrations:run
-              npm run migrations:run:seed
-              pm2 start ./src/index.js --name sharmaz-me
             fi
+
+            cd sharmaz-me-backend || exit
+
+            pm2 stop sharmaz-me || true
+            pm2 delete sharmaz-me || true
+
+            git pull origin main
+            npm install
+
+            cat > .env << EOF
+            NODE_ENV=${{secrets.NODE_ENV}}
+            PORT=${{secrets.PORT}}
+            DB_USER=${{secrets.DB_USER}}
+            DB_PASSWORD=${{secrets.DB_PASSWORD}}
+            DB_HOST=${{secrets.DB_HOST}}
+            DB_NAME=${{secrets.DB_NAME}}
+            DB_PORT=${{secrets.DB_PORT}}
+            API_KEY=${{secrets.API_KEY}}
+            JWT_SECRET=${{secrets.JWT_SECRET}}
+            DOMAIN_1=${{secrets.DOMAIN_1}}
+            DOMAIN_2=${{secrets.DOMAIN_2}}
+            DOMAIN_3=${{secrets.DOMAIN_3}}
+            EOF
+
+            npm run migrations:run
+
+            pm2 start ./src/index.js --name sharmaz-me
+            echo "Deployment successful"
