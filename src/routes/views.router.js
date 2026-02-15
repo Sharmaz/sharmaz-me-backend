@@ -11,15 +11,13 @@ router.get('/',
   async (req, res, next) => {
     try {
       const { sub } = req.user;
-      const userRaw = await usersService.findOne(sub);
-      const userString = JSON.stringify(userRaw);
-      const user = JSON.parse(userString);
+      const userModel = await usersService.findOne(sub);
+      const user = userModel.get({ plain: true });
       let users;
 
       if (user.role === 'admin') {
-        const usersRaw = await usersService.find();
-        const usersString = JSON.stringify(usersRaw);
-        users = JSON.parse(usersString);
+        const usersModels = await usersService.find();
+        users = usersModels.map((u) => u.get({ plain: true }));
       }
 
       res.render('pages/index', {
