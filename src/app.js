@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 const { engine } = require('express-handlebars');
 const config = require('./config/config');
 const { routerApi, routerViews } = require('./routes');
-const { logErrors, boomErrorHandler } = require('./middlewares/error.handler');
+const { logErrors, boomErrorHandler, genericErrorHandler } = require('./middlewares/error.handler');
 
 const createApp = () => {
   const app = express();
@@ -46,6 +46,7 @@ const createApp = () => {
 
   app.use(logErrors);
   app.use(boomErrorHandler);
+  app.use(genericErrorHandler);
 
   return app;
 }
