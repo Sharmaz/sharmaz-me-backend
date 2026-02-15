@@ -7,8 +7,21 @@ function getTokenFromCookie(cookie) {
   return token;
 }
 
-const isProd = document.querySelector('meta[name="environment"]').content;
-const baseUri = isProd === 'true' ? 'https://admin.ivanrobles.pro' : 'http://localhost:3000';
+// eslint-disable-next-line no-alert
+async function safeFetch(url, options) {
+  try {
+    const response = await fetch(url, options);
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({}));
+      alert(error.message || 'An error occurred'); // eslint-disable-line no-alert
+    }
+    return response;
+  } catch (err) {
+    alert('Network error. Please try again.'); // eslint-disable-line no-alert
+    return null;
+  }
+}
+
 
 /** Log In */
 
@@ -24,7 +37,7 @@ if (loginButton) {
       password: loginForm.password.value,
     }
 
-    await fetch(`${baseUri}/api/v1/auth/login`, {
+    await safeFetch(`/api/v1/auth/login`, {
       method: 'POST',
       mode: 'cors',
       credentials: 'same-origin',
@@ -69,14 +82,14 @@ if (accountForm && accountButton) {
     const documentCookie = document.cookie;
     const accessToken = getTokenFromCookie(documentCookie);
 
-    await fetch(`${baseUri}/api/v1/users/${userId}`, {
+    await safeFetch(`/api/v1/users/${userId}`, {
       method: 'PATCH',
       mode: 'cors',
       credentials: 'same-origin',
       body: JSON.stringify(formData),
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `bearer ${accessToken}`,
+        "Authorization": `Bearer ${accessToken}`,
       }
     });
     window.location.href = '/';
@@ -114,14 +127,14 @@ if (addProfileButton) {
       resume: createProfileForm.resume_url.value,
     };
 
-    await fetch(`${baseUri}/api/v1/profiles/`, {
+    await safeFetch(`/api/v1/profiles/`, {
       method: 'POST',
       mode: 'cors',
       credentials: 'same-origin',
       body: JSON.stringify(formData),
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `bearer ${accessToken}`,
+        "Authorization": `Bearer ${accessToken}`,
       },
     });
     window.location.href = '/';
@@ -150,14 +163,14 @@ if (profileForm && profileButton) {
     const documentCookie = document.cookie;
     const accessToken = getTokenFromCookie(documentCookie);
 
-    await fetch(`${baseUri}/api/v1/profiles/${profileId}`, {
+    await safeFetch(`/api/v1/profiles/${profileId}`, {
       method: 'PATCH',
       mode: 'cors',
       credentials: 'same-origin',
       body: JSON.stringify(formData),
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `bearer ${accessToken}`,
+        "Authorization": `Bearer ${accessToken}`,
       }
     });
     window.location.href = '/';
@@ -173,13 +186,13 @@ if (profileDeleteButton) {
     const documentCookie = document.cookie;
     const accessToken = getTokenFromCookie(documentCookie);
 
-    await fetch(`${baseUri}/api/v1/profiles/${profileId}`, {
+    await safeFetch(`/api/v1/profiles/${profileId}`, {
     method: 'DELETE',
     mode: 'cors',
     credentials: 'same-origin',
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `bearer ${accessToken}`,
+      "Authorization": `Bearer ${accessToken}`,
     }
   });
     window.location.href = '/';
@@ -259,14 +272,14 @@ if (addJobButton) {
       },
     };
 
-    await fetch(`${baseUri}/api/v1/jobs/`, {
+    await safeFetch(`/api/v1/jobs/`, {
       method: 'POST',
       mode: 'cors',
       credentials: 'same-origin',
       body: JSON.stringify(formData),
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `bearer ${accessToken}`,
+        "Authorization": `Bearer ${accessToken}`,
       },
     });
     window.location.href = '/';
@@ -297,14 +310,14 @@ if (updateJobButtons) {
       const documentCookie = document.cookie;
       const accessToken = getTokenFromCookie(documentCookie);
 
-      await fetch(`${baseUri}/api/v1/jobs/${jobId}`, {
+      await safeFetch(`/api/v1/jobs/${jobId}`, {
         method: 'PATCH',
         mode: 'cors',
         credentials: 'same-origin',
         body: JSON.stringify(formData),
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `bearer ${accessToken}`,
+          "Authorization": `Bearer ${accessToken}`,
         },
       });
       window.location.href = '/';
@@ -321,13 +334,13 @@ if (deleteButtons) {
       const documentCookie = document.cookie;
       const accessToken = getTokenFromCookie(documentCookie);
 
-      await fetch(`${baseUri}/api/v1/jobs/${jobId}`, {
+      await safeFetch(`/api/v1/jobs/${jobId}`, {
       method: 'DELETE',
       mode: 'cors',
       credentials: 'same-origin',
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `bearer ${accessToken}`,
+        "Authorization": `Bearer ${accessToken}`,
       }
     });
       button.closest('tr') .remove();
@@ -407,14 +420,14 @@ if (addProjectButton) {
       },
     };
 
-    await fetch(`${baseUri}/api/v1/projects/`, {
+    await safeFetch(`/api/v1/projects/`, {
       method: 'POST',
       mode: 'cors',
       credentials: 'same-origin',
       body: JSON.stringify(formData),
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `bearer ${accessToken}`,
+        "Authorization": `Bearer ${accessToken}`,
       },
     });
     window.location.href = '/';
@@ -446,14 +459,14 @@ if (updateProjectButtons) {
       const documentCookie = document.cookie;
       const accessToken = getTokenFromCookie(documentCookie);
 
-      await fetch(`${baseUri}/api/v1/projects/${projectId}`, {
+      await safeFetch(`/api/v1/projects/${projectId}`, {
         method: 'PATCH',
         mode: 'cors',
         credentials: 'same-origin',
         body: JSON.stringify(formData),
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `bearer ${accessToken}`,
+          "Authorization": `Bearer ${accessToken}`,
         },
       });
       window.location.href = '/';
@@ -471,13 +484,13 @@ if (deleteProjectButtons) {
       const documentCookie = document.cookie;
       const accessToken = getTokenFromCookie(documentCookie);
 
-      await fetch(`${baseUri}/api/v1/projects/${projectId}`, {
+      await safeFetch(`/api/v1/projects/${projectId}`, {
       method: 'DELETE',
       mode: 'cors',
       credentials: 'same-origin',
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `bearer ${accessToken}`,
+        "Authorization": `Bearer ${accessToken}`,
       }
     });
       button.closest('tr') .remove();
@@ -528,14 +541,14 @@ if (addUserButton) {
       role: createUserForm.role.value,
     };
 
-    await fetch(`${baseUri}/api/v1/users/`, {
+    await safeFetch(`/api/v1/users/`, {
       method: 'POST',
       mode: 'cors',
       credentials: 'same-origin',
       body: JSON.stringify(formData),
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `bearer ${accessToken}`,
+        "Authorization": `Bearer ${accessToken}`,
       },
     });
     window.location.href = '/';
@@ -559,14 +572,14 @@ if (updateUsersButtons) {
         role: updateUserForm[index].role.value,
       };
 
-      await fetch(`${baseUri}/api/v1/users/${userId}`, {
+      await safeFetch(`/api/v1/users/${userId}`, {
         method: 'PATCH',
         mode: 'cors',
         credentials: 'same-origin',
         body: JSON.stringify(formData),
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `bearer ${accessToken}`,
+          "Authorization": `Bearer ${accessToken}`,
         },
       });
       window.location.href = '/';
@@ -584,13 +597,13 @@ if (deleteUserButtons) {
       const documentCookie = document.cookie;
       const accessToken = getTokenFromCookie(documentCookie);
 
-      await fetch(`${baseUri}/api/v1/users/${userId}`, {
+      await safeFetch(`/api/v1/users/${userId}`, {
       method: 'DELETE',
       mode: 'cors',
       credentials: 'same-origin',
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `bearer ${accessToken}`,
+        "Authorization": `Bearer ${accessToken}`,
         }
       });
       button.closest('tr') .remove();
