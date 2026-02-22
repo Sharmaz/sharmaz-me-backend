@@ -26,7 +26,12 @@
     "migrations:seed:generate": "sequelize-cli seed:generate --name",
     "migrations:run:seed": "sequelize-cli db:seed:all",
     "migrations:seed:revert": "sequelize-cli db:seed:undo",
-    "migrations:seed:delete": "sequelize-cli db:seed:undo:all"
+    "migrations:seed:delete": "sequelize-cli db:seed:undo:all",
+    "client:install": "cd client && npm install",
+    "client:dev": "cd client && npm run dev",
+    "client:build": "cd client && npm run build",
+    "client:lint": "cd client && npm run lint",
+    "client:lint-fix": "cd client && npm run lint-fix"
   },
   "repository": {
     "type": "git",
@@ -62,7 +67,6 @@
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "express-handlebars": "^7.1.0",
     "express-rate-limit": "^8.2.1",
     "helmet": "^8.1.0",
     "joi": "^17.9.2",

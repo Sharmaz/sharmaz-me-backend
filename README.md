@@ -24,11 +24,17 @@ npm run migrations:run:seed
 npm run dev
 ```
 
-4. Open `http://localhost:<PORT>` in your browser
+4. In another terminal, install client dependencies and run the React dev server:
+```bash
+npm run client:install
+npm run client:dev
+```
+
+5. Open `http://localhost:5173` in your browser
 
 ### Running everything in Docker
 ```bash
 docker compose up --build
 ```
 
-This starts both MySQL and the API in containers. The API waits for MySQL to be healthy before starting.
+This starts both MySQL and the API in containers. The React client is built automatically as part of the Docker image. The API waits for MySQL to be healthy before starting.
