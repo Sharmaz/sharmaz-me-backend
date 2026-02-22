@@ -73,16 +73,19 @@ export default function UsersSection() {
 
   return (
     <div>
-      <div className="flex between">
-        <h2>Users</h2>
-        {!showForm && (
-          <div className="button-border purple-gradient">
-            <button className="button" onClick={handleCreate}>Add New User</button>
-          </div>
-        )}
-      </div>
+      <h1 className="ft-38">Users</h1>
 
       {error && <p className="error-message">{error}</p>}
+
+      {users.length > 0 && (
+        <DataTable columns={columns} data={users} onEdit={handleEdit} onDelete={handleDelete} />
+      )}
+
+      {!showForm && (
+        <div className="button-border purple-gradient mt-20">
+          <button className="button" onClick={handleCreate}>Add New User</button>
+        </div>
+      )}
 
       {showForm && (
         <form onSubmit={handleSubmit} className="mb-40">
@@ -119,16 +122,18 @@ export default function UsersSection() {
           )}
           <div className="form-group">
             <label className="input-label" htmlFor="user-role">Role</label>
-            <select
-              id="user-role"
-              className="input-select"
-              name="role"
-              value={form.role}
-              onChange={handleChange}
-            >
-              <option value="user">User</option>
-              <option value="admin">Admin</option>
-            </select>
+            <div className="input-border orange-gradient">
+              <select
+                id="user-role"
+                className="input-select"
+                name="role"
+                value={form.role}
+                onChange={handleChange}
+              >
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
           </div>
           <div className="flex mt-20">
             <div className="button-border purple-gradient">
@@ -141,9 +146,6 @@ export default function UsersSection() {
         </form>
       )}
 
-      {users.length > 0 && (
-        <DataTable columns={columns} data={users} onEdit={handleEdit} onDelete={handleDelete} />
-      )}
     </div>
   );
 }

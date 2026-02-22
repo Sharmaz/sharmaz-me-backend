@@ -1,6 +1,6 @@
 export default function DataTable({ columns, data, onEdit, onDelete }) {
   return (
-    <table>
+    <table className="mb-40 ft-24">
       <thead>
         <tr>
           {columns.map((col) => (

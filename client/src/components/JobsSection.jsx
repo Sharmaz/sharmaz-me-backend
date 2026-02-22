@@ -8,10 +8,10 @@ const EMPTY_JOB = {
 };
 
 const columns = [
-  { key: 'name', label: 'Company' },
+  { key: 'name', label: 'Job' },
+  { key: 'dateStarted', label: 'Date Started' },
+  { key: 'dateEnded', label: 'Date Ended' },
   { key: 'role', label: 'Role' },
-  { key: 'dateStarted', label: 'Started' },
-  { key: 'dateEnded', label: 'Ended' },
 ];
 
 export default function JobsSection() {
@@ -89,16 +89,19 @@ export default function JobsSection() {
 
   return (
     <div>
-      <div className="flex between">
-        <h2>Jobs</h2>
-        {!showForm && (
-          <div className="button-border purple-gradient">
-            <button className="button" onClick={handleCreate}>Add New Job</button>
-          </div>
-        )}
-      </div>
+      <h1 className="ft-38">Jobs</h1>
 
       {error && <p className="error-message">{error}</p>}
+
+      {jobs.length > 0 && (
+        <DataTable columns={columns} data={jobs} onEdit={handleEdit} onDelete={handleDelete} />
+      )}
+
+      {!showForm && (
+        <div className="button-border purple-gradient mt-20">
+          <button className="button" onClick={handleCreate}>Add New Job</button>
+        </div>
+      )}
 
       {showForm && (
         <form onSubmit={handleSubmit} className="mb-40">
@@ -144,9 +147,6 @@ export default function JobsSection() {
         </form>
       )}
 
-      {jobs.length > 0 && (
-        <DataTable columns={columns} data={jobs} onEdit={handleEdit} onDelete={handleDelete} />
-      )}
     </div>
   );
 }

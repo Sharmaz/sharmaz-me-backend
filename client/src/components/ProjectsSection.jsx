@@ -98,16 +98,19 @@ export default function ProjectsSection() {
 
   return (
     <div>
-      <div className="flex between">
-        <h2>Projects</h2>
-        {!showForm && (
-          <div className="button-border purple-gradient">
-            <button className="button" onClick={handleCreate}>Add New Project</button>
-          </div>
-        )}
-      </div>
+      <h1 className="ft-38">Projects</h1>
 
       {error && <p className="error-message">{error}</p>}
+
+      {projects.length > 0 && (
+        <DataTable columns={columns} data={projects} onEdit={handleEdit} onDelete={handleDelete} />
+      )}
+
+      {!showForm && (
+        <div className="button-border purple-gradient mt-20">
+          <button className="button" onClick={handleCreate}>Add New Project</button>
+        </div>
+      )}
 
       {showForm && (
         <form onSubmit={handleSubmit} className="mb-40">
@@ -153,9 +156,6 @@ export default function ProjectsSection() {
         </form>
       )}
 
-      {projects.length > 0 && (
-        <DataTable columns={columns} data={projects} onEdit={handleEdit} onDelete={handleDelete} />
-      )}
     </div>
   );
 }

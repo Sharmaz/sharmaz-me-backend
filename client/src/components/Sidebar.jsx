@@ -1,7 +1,6 @@
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/useAuth';
 
 const TABS = [
-  { key: 'account', label: 'Account' },
   { key: 'profile', label: 'Profile' },
   { key: 'jobs', label: 'Jobs' },
   { key: 'projects', label: 'Projects' },
@@ -17,9 +16,17 @@ export default function Sidebar({ activeTab, onTabChange }) {
   const tabs = isAdmin ? [...TABS, ...ADMIN_TABS] : TABS;
 
   return (
-    <nav className="menu">
-      <p className="menu-user">{user?.name || user?.email}</p>
-      <ul className="menu-list">
+    <nav className="menu flex flex-col">
+      <div className="my-20 align-self-center">
+        <img src="/logo.png" alt="logo" width="100" height="100" />
+      </div>
+      <p
+        className={`menu-user ft-28${activeTab === 'account' ? ' active' : ''}`}
+        onClick={() => onTabChange('account')}
+      >
+        {user?.profile?.name || user?.email}
+      </p>
+      <ul className="menu-list m-0 p-0 ft-28">
         {tabs.map((tab) => (
           <li
             key={tab.key}
@@ -29,10 +36,8 @@ export default function Sidebar({ activeTab, onTabChange }) {
             {tab.label}
           </li>
         ))}
+        <li onClick={logout}>Log Out</li>
       </ul>
-      <button className="logout-button" onClick={logout}>
-        Logout
-      </button>
     </nav>
   );
 }

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/useAuth';
 import { usersService } from '../services/users';
 
 export default function AccountSection() {
@@ -20,12 +20,15 @@ export default function AccountSection() {
 
   return (
     <div>
-      <h2>Account</h2>
+      <div className="admin-titles flex">
+        <h1 className="ft-38">Account</h1>
+        <h2 className="ml-40 ft-18">{user?.role}</h2>
+      </div>
       {error && <p className="error-message">{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
+      <form className="relative" onSubmit={handleSubmit}>
+        <div className="flex flex-col">
           <label className="input-label" htmlFor="account-email">Email</label>
-          <div className="input-border purple-gradient">
+          <div className="input-border orange-gradient mt-20">
             <input
               id="account-email"
               className="input-text"
@@ -36,7 +39,7 @@ export default function AccountSection() {
             />
           </div>
         </div>
-        <div className="button-border purple-gradient mt-20">
+        <div className="button-border purple-gradient absolute save-button">
           <button className="button" type="submit">Save</button>
         </div>
       </form>

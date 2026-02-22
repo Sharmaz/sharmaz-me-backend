@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useAuth } from '../context/AuthContext';
 import { profilesService } from '../services/profiles';
 
 const EMPTY_PROFILE = {
@@ -8,7 +7,6 @@ const EMPTY_PROFILE = {
 };
 
 export default function ProfileSection() {
-  const { user } = useAuth();
   const [profile, setProfile] = useState(null);
   const [form, setForm] = useState(EMPTY_PROFILE);
   const [editing, setEditing] = useState(false);
@@ -61,20 +59,22 @@ export default function ProfileSection() {
     }
   };
 
+  const URL_FIELDS = ['blog', 'github', 'linkedIn', 'twitter', 'resume'];
+
   const fields = [
     { name: 'name', label: 'Name', type: 'text' },
     { name: 'profilePic', label: 'Profile Pic URL', type: 'text' },
+    { name: 'resume', label: 'Resume URL', type: 'text' },
     { name: 'blog', label: 'Blog URL', type: 'text' },
     { name: 'github', label: 'Github URL', type: 'text' },
     { name: 'linkedIn', label: 'LinkedIn URL', type: 'text' },
     { name: 'twitter', label: 'Twitter URL', type: 'text' },
-    { name: 'resume', label: 'Resume URL', type: 'text' },
   ];
 
   if (!editing && !profile) {
     return (
       <div>
-        <h2>Profile</h2>
+        <h1 className="ft-38">Profile</h1>
         <p>No profile yet.</p>
         <div className="button-border purple-gradient">
           <button className="button" onClick={() => setEditing(true)}>Create Profile</button>
@@ -86,12 +86,21 @@ export default function ProfileSection() {
   if (!editing && profile) {
     return (
       <div>
-        <h2>Profile</h2>
-        {fields.map((f) => (
-          <p key={f.name}><strong>{f.label}:</strong> {profile[f.name]}</p>
-        ))}
-        <p><strong>About:</strong> {profile.about}</p>
-        <div className="flex">
+        <h1 className="ft-38">Profile</h1>
+        {profile.profilePic && (
+          <img className="profile-pic" src={profile.profilePic} alt={profile.name} />
+        )}
+        {profile.name && <p><strong>Name:</strong> {profile.name}</p>}
+        {profile.about && <p><strong>About:</strong> {profile.about}</p>}
+        {URL_FIELDS.map((key) => profile[key] ? (
+          <p key={key}>
+            <strong>{fields.find((f) => f.name === key)?.label}:</strong>{' '}
+            <a className="profile-link" href={profile[key]} target="_blank" rel="noopener noreferrer">
+              {profile[key]}
+            </a>
+          </p>
+        ) : null)}
+        <div className="flex mt-20">
           <div className="button-border orange-gradient">
             <button className="button" onClick={() => setEditing(true)}>Edit</button>
           </div>
@@ -105,13 +114,39 @@ export default function ProfileSection() {
 
   return (
     <div>
-      <h2>{profile ? 'Edit Profile' : 'Create Profile'}</h2>
+      <h1 className="ft-38">Profile</h1>
       {error && <p className="error-message">{error}</p>}
       <form onSubmit={handleSubmit}>
-        {fields.map((f) => (
+        <div className="form-group">
+          <label className="input-label" htmlFor="name">Name</label>
+          <div className="input-border orange-gradient">
+            <input
+              id="name"
+              className="input-text"
+              name="name"
+              type="text"
+              value={form.name || ''}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        <div className="form-group">
+          <label className="input-label mt-20" htmlFor="about">About</label>
+          <div className="text-area-border orange-gradient mt-20">
+            <textarea
+              id="about"
+              className="text-area ft-18"
+              name="about"
+              rows="10"
+              value={form.about || ''}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        {fields.slice(1).map((f) => (
           <div className="form-group" key={f.name}>
-            <label className="input-label" htmlFor={f.name}>{f.label}</label>
-            <div className="input-border purple-gradient">
+            <label className="input-label mt-20" htmlFor={f.name}>{f.label}</label>
+            <div className="input-border orange-gradient mt-20">
               <input
                 id={f.name}
                 className="input-text"
@@ -123,18 +158,6 @@ export default function ProfileSection() {
             </div>
           </div>
         ))}
-        <div className="form-group">
-          <label className="input-label" htmlFor="about">About</label>
-          <div className="text-area-border purple-gradient">
-            <textarea
-              id="about"
-              className="text-area"
-              name="about"
-              value={form.about || ''}
-              onChange={handleChange}
-            />
-          </div>
-        </div>
         <div className="flex mt-20">
           <div className="button-border purple-gradient">
             <button className="button" type="submit">Save</button>
