@@ -4,9 +4,8 @@ const path = require('path');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
-const { engine } = require('express-handlebars');
 const config = require('./config/config');
-const { routerApi, routerViews } = require('./routes');
+const { routerApi } = require('./routes');
 const { logErrors, boomErrorHandler, genericErrorHandler } = require('./middlewares/error.handler');
 
 const createApp = () => {
@@ -30,10 +29,6 @@ const createApp = () => {
     }
   }
 
-  app.engine('.hbs', engine({extname: 'hbs'}));
-  app.set('view engine', '.hbs');
-  app.set('views', './src/views');
-
   const reactBuildPath = path.join(__dirname, '../public');
 
   app.use(cors(options));
@@ -44,7 +39,6 @@ const createApp = () => {
   app.use(express.static(reactBuildPath));
 
   routerApi(app);
-  routerViews(app);
 
   app.get('*', (req, res) => {
     res.sendFile(path.join(reactBuildPath, 'index.html'));
