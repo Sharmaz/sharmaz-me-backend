@@ -34,6 +34,7 @@ jobs:
 
             git pull origin main
             npm install
+            npm run client:install && npm run client:build
 
             cat > .env << EOF
             NODE_ENV=${{secrets.NODE_ENV}}

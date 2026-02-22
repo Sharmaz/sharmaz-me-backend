@@ -34,17 +34,21 @@ const createApp = () => {
   app.set('view engine', '.hbs');
   app.set('views', './src/views');
 
-  const publicPath = path.join(__dirname, './views');
+  const reactBuildPath = path.join(__dirname, '../public');
 
   app.use(cors(options));
 
   // eslint-disable-next-line global-require
   require('./auth');
 
-  app.use('/', express.static(publicPath));
+  app.use(express.static(reactBuildPath));
 
   routerApi(app);
   routerViews(app);
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(reactBuildPath, 'index.html'));
+  });
 
   app.use(logErrors);
   app.use(boomErrorHandler);
