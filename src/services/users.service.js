@@ -33,6 +33,7 @@ class UsersService {
   async findByEmail(email) {
     const user = await models.User.findOne({
       where: { email },
+      include: ['profile'],
     });
     return user;
   }
