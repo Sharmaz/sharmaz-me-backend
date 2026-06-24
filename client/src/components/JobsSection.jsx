@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { jobsService } from '../services/jobs';
+import { excludeIdentifierFields, saveEntity } from '../utils/entityForm';
 import DataTable from './DataTable';
 
 const EMPTY_JOB = {
@@ -64,18 +65,18 @@ export default function JobsSection() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    const data = { ...form, details: { list: detailInputs.filter(Boolean) } };
-    try {
-      if (editing) {
-        await jobsService.update(editing, data);
-      } else {
-        await jobsService.create(data);
-      }
-      setShowForm(false);
-      await loadJobs();
-    } catch (err) {
-      setError(err.message);
-    }
+    const jobFields = excludeIdentifierFields(form);
+    const jobPayload = { ...jobFields, details: { list: detailInputs.filter(Boolean) } };
+    await saveEntity({
+      service: jobsService,
+      entityId: editing,
+      fields: jobPayload,
+      onSuccess: async () => {
+        setShowForm(false);
+        await loadJobs();
+      },
+      onError: setError,
+    });
   };
 
   const handleDelete = async (id) => {

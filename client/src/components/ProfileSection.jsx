@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { profilesService } from '../services/profiles';
+import { excludeIdentifierFields, saveEntity } from '../utils/entityForm';
 
 const EMPTY_PROFILE = {
   name: '', profilePic: '', about: '', blog: '',
@@ -35,17 +36,16 @@ export default function ProfileSection() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    try {
-      if (profile) {
-        await profilesService.update(profile.id, form);
-      } else {
-        await profilesService.create(form);
-      }
-      await loadProfile();
-      setEditing(false);
-    } catch (err) {
-      setError(err.message);
-    }
+    await saveEntity({
+      service: profilesService,
+      entityId: profile?.id,
+      fields: excludeIdentifierFields(form),
+      onSuccess: async () => {
+        await loadProfile();
+        setEditing(false);
+      },
+      onError: setError,
+    });
   };
 
   const handleDelete = async () => {

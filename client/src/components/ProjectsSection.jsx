@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { projectsService } from '../services/projects';
+import { excludeIdentifierFields, saveEntity } from '../utils/entityForm';
 import DataTable from './DataTable';
 
 const EMPTY_PROJECT = {
@@ -73,18 +74,18 @@ export default function ProjectsSection() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    const data = { ...form, tags: { list: tagInputs.filter(Boolean) } };
-    try {
-      if (editing) {
-        await projectsService.update(editing, data);
-      } else {
-        await projectsService.create(data);
-      }
-      setShowForm(false);
-      await loadProjects();
-    } catch (err) {
-      setError(err.message);
-    }
+    const projectFields = excludeIdentifierFields(form);
+    const projectPayload = { ...projectFields, tags: { list: tagInputs.filter(Boolean) } };
+    await saveEntity({
+      service: projectsService,
+      entityId: editing,
+      fields: projectPayload,
+      onSuccess: async () => {
+        setShowForm(false);
+        await loadProjects();
+      },
+      onError: setError,
+    });
   };
 
   const handleDelete = async (id) => {
