@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { profilesService } from '../services/profiles';
+import { excludeIdentifierFields, saveEntity } from '../utils/entityForm';
 
 const EMPTY_PROFILE = {
   name: '', profilePic: '', about: '', blog: '',
@@ -35,17 +36,16 @@ export default function ProfileSection() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    try {
-      if (profile) {
-        await profilesService.update(profile.id, form);
-      } else {
-        await profilesService.create(form);
-      }
-      await loadProfile();
-      setEditing(false);
-    } catch (err) {
-      setError(err.message);
-    }
+    await saveEntity({
+      service: profilesService,
+      entityId: profile?.id,
+      fields: excludeIdentifierFields(form),
+      onSuccess: async () => {
+        await loadProfile();
+        setEditing(false);
+      },
+      onError: setError,
+    });
   };
 
   const handleDelete = async () => {
@@ -63,12 +63,12 @@ export default function ProfileSection() {
 
   const fields = [
     { name: 'name', label: 'Name', type: 'text' },
-    { name: 'profilePic', label: 'Profile Pic URL', type: 'text' },
-    { name: 'resume', label: 'Resume URL', type: 'text' },
-    { name: 'blog', label: 'Blog URL', type: 'text' },
-    { name: 'github', label: 'Github URL', type: 'text' },
-    { name: 'linkedIn', label: 'LinkedIn URL', type: 'text' },
-    { name: 'twitter', label: 'Twitter URL', type: 'text' },
+    { name: 'profilePic', label: 'Profile Pic URL', type: 'url' },
+    { name: 'resume', label: 'Resume URL', type: 'url' },
+    { name: 'blog', label: 'Blog URL', type: 'url' },
+    { name: 'github', label: 'Github URL', type: 'url' },
+    { name: 'linkedIn', label: 'LinkedIn URL', type: 'url' },
+    { name: 'twitter', label: 'Twitter URL', type: 'url' },
   ];
 
   if (!editing && !profile) {
@@ -127,6 +127,8 @@ export default function ProfileSection() {
               type="text"
               value={form.name || ''}
               onChange={handleChange}
+              required
+              minLength={2}
             />
           </div>
         </div>

@@ -7,6 +7,7 @@ function validatorHandler(schema, property) {
 
     if(error) {
       next(boom.badRequest(error));
+      return;
     }
     next();
   }

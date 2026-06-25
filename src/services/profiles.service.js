@@ -40,7 +40,7 @@ class ProfilesService {
   async update(profileId, changes, user) {
     const profile = await this.findOne(profileId, user);
     await profile.update(changes);
-    return { profileId, changes };
+    return profile;
   }
 
   async delete(profileId, user) {

@@ -12,7 +12,9 @@ const createApp = () => {
   const app = express();
 
   app.use(helmet());
-  app.use(morgan(config.isProd ? 'combined' : 'dev'));
+  if (!config.isEnd2End && !config.isCi) {
+    app.use(morgan(config.isProd ? 'combined' : 'dev'));
+  }
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());

@@ -36,7 +36,6 @@ const JobSchema = {
     allowNull: true,
     type: DataTypes.DATEONLY,
     field: 'date_ended',
-    defaultValue: DataTypes.NOW,
   },
   description: {
     allowNull: true,

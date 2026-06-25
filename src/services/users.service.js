@@ -52,7 +52,7 @@ class UsersService {
   async update(userId, changes) {
     const user = await this.findOne(userId);
     await user.update(changes);
-    return { userId, changes };
+    return user;
   }
 
   async delete(userId) {

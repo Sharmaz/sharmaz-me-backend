@@ -38,7 +38,7 @@ class ProjectsService {
   async update(projectId, changes, user) {
     const project = await this.findOne(projectId, user);
     await project.update(changes);
-    return { projectId, changes };
+    return project;
   }
 
   async delete(projectId, user) {

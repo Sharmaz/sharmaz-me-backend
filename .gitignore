@@ -134,4 +134,6 @@ dist
 /public
 
 # AI Agents Files
+claude
 CLAUDE.md
+*PLAN.md
