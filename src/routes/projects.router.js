@@ -23,9 +23,9 @@ router.get('/',
 );
 
 router.post('/',
-  validatorHandler(createProjectSchema, 'body'),
   passport.authenticate('jwt', { session: false }),
   checkRoles('admin', 'user'),
+  validatorHandler(createProjectSchema, 'body'),
   async (req, res, next) => {
     try {
       const id = req.user.sub;

@@ -118,6 +118,7 @@ export default function JobsSection() {
                   type={field.startsWith('date') ? 'date' : 'text'}
                   value={form[field] || ''}
                   onChange={handleChange}
+                  required={field === 'name'}
                 />
               </div>
             </div>

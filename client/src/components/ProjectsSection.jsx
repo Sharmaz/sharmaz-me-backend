@@ -124,9 +124,10 @@ export default function ProjectsSection() {
                   id={field}
                   className="input-text"
                   name={field}
-                  type="text"
+                  type={field.endsWith('Link') ? 'url' : 'text'}
                   value={form[field] || ''}
                   onChange={handleChange}
+                  required={field === 'name'}
                 />
               </div>
             </div>
