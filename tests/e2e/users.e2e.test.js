@@ -164,7 +164,7 @@ describe('patch /users/{id}', () => {
         'Authorization': `Bearer ${accessToken}`
       });
     expect(statusCode).toBe(200);
-    expect(body.changes.email).toBe(updateData.email);
+    expect(body.email).toBe(updateData.email);
   });
 })
 

@@ -8,6 +8,10 @@
   },
   "extends": ["airbnb-base", "prettier"],
   "overrides": [
+    {
+      "files": ["src/libs/sequelize.js"],
+      "rules": { "no-console": "off" }
+    }
   ],
   "parserOptions": {
     "ecmaVersion": "latest"

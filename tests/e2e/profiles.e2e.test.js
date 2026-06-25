@@ -215,7 +215,7 @@ describe('patch /profiles/{id}', () => {
       .set({
         'Authorization': `Bearer ${accessToken}`
       });
-    const userProfile = await models.Profile.findByPk(response.profileId);
+    const userProfile = await models.Profile.findByPk(response.id);
 
     expect(statusCode).toBe(200);
     expect(userProfile.resume).toBe(updateData.resume);

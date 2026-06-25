@@ -9,7 +9,7 @@ const getURI = (dialect) => `${dialect}://${USER}:${PASSWORD}@${config.dbHost}:$
 const dialect = 'mysql';
 const sequelize = new Sequelize(getURI(dialect), {
   dialect,
-  logging: config.isProd ? false : console.log, // eslint-disable-line no-console
+  logging: (config.isProd || config.isEnd2End || config.isCi) ? false : console.log,
 });
 
 setupModels(sequelize);

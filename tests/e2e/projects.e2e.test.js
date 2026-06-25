@@ -146,7 +146,7 @@ describe('patch /projects/{id}', () => {
       });
     const projectdb = await models.Project.findByPk(projectElement.id);
     expect(statusCode).toBe(200);
-    expect(body.changes.name).toBe(projectdb.name);
+    expect(body.name).toBe(projectdb.name);
   });
 });
 

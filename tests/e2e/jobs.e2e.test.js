@@ -145,7 +145,7 @@ describe('patch /jobs/{id}', () => {
       });
     const jobdb = await models.Job.findByPk(jobElement.id);
     expect(statusCode).toBe(200);
-    expect(body.changes.name).toBe(jobdb.name);
+    expect(body.name).toBe(jobdb.name);
   });
 });
 
