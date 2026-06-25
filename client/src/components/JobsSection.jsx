@@ -66,7 +66,12 @@ export default function JobsSection() {
     e.preventDefault();
     setError('');
     const jobFields = excludeIdentifierFields(form);
-    const jobPayload = { ...jobFields, details: { list: detailInputs.filter(Boolean) } };
+    const jobPayload = {
+      ...jobFields,
+      dateStarted: jobFields.dateStarted || null,
+      dateEnded: jobFields.dateEnded || null,
+      details: { list: detailInputs.filter(Boolean) },
+    };
     await saveEntity({
       service: jobsService,
       entityId: editing,

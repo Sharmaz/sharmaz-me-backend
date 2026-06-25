@@ -2,10 +2,10 @@ const Joi = require('joi');
 
 const id = Joi.string().uuid();
 const name = Joi.string();
-const description = Joi.string();
-const githubLink = Joi.string().uri();
-const demoLink = Joi.string().uri();
-const imageLink = Joi.string().uri();
+const description = Joi.string().allow(null, '');
+const githubLink = Joi.string().uri().allow(null, '');
+const demoLink = Joi.string().uri().allow(null, '');
+const imageLink = Joi.string().uri().allow(null, '');
 const tags = Joi.object({
   list: Joi.array().items(Joi.string()),
 });

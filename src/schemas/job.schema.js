@@ -2,10 +2,10 @@ const Joi = require('joi');
 
 const id = Joi.string().uuid();
 const name = Joi.string();
-const dateStarted = Joi.date();
-const dateEnded = Joi.date();
-const description = Joi.string();
-const role = Joi.string();
+const dateStarted = Joi.date().allow(null);
+const dateEnded = Joi.date().allow(null);
+const description = Joi.string().allow(null, '');
+const role = Joi.string().allow(null, '');
 const details = Joi.object({
   list: Joi.array().items(Joi.string()),
 });
