@@ -38,7 +38,7 @@ class JobsService {
   async update(jobId, changes, user) {
     const job = await this.findOne(jobId, user);
     await job.update(changes);
-    return { jobId, changes };
+    return job;
   }
 
   async delete(jobId, user) {
