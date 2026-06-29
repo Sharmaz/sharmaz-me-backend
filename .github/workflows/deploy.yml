@@ -6,13 +6,15 @@ on:
     types:
       - closed
 
+permissions: {}
+
 jobs:
   deploy:
     if: github.event.pull_request.merged
     runs-on: ubuntu-latest
     steps:
       - name: Deploy NodeJS
-        uses: appleboy/ssh-action@v1.2.0
+        uses: appleboy/ssh-action@7eaf76671a0d7eec5d98ee897acda4f968735a17 # v1.2.0
         with:
           host: ${{secrets.SSH_HOST}}
           key: ${{secrets.SSH_KEY}}
@@ -33,8 +35,9 @@ jobs:
             pm2 delete sharmaz-me || true
 
             git pull origin main
-            npm install
-            npm run client:install && npm run client:build
+            npm ci
+            (cd client && npm ci)
+            npm run client:build
 
             cat > .env << EOF
             NODE_ENV=${{secrets.NODE_ENV}}
