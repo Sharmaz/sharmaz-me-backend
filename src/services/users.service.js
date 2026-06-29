@@ -1,6 +1,6 @@
 const { randomUUID } = require('crypto');
 const boom = require('@hapi/boom');
-const { hash } = require('bcrypt');
+const { hash } = require('bcryptjs');
 
 const { models } = require('../libs/sequelize');
 
