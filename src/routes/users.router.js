@@ -1,5 +1,6 @@
 const express = require('express');
 const passport = require('passport');
+const boom = require('@hapi/boom');
 
 const UsersService = require('../services/users.service');
 const validatorHandler = require('../middlewares/validator.handler');
@@ -44,6 +45,9 @@ router.get('/:id',
     try {
       const { id } = req.params;
       const user = await usersService.findOne(id);
+      if (user.role !== 'admin') {
+        throw boom.forbidden();
+      }
       res.json(user);
     } catch(error) {
       next(error);
