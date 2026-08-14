@@ -3,7 +3,6 @@ const cors = require('cors');
 const path = require('path');
 const helmet = require('helmet');
 const morgan = require('morgan');
-const cookieParser = require('cookie-parser');
 const config = require('./config/config');
 const { routerApi } = require('./routes');
 const { logErrors, boomErrorHandler, genericErrorHandler } = require('./middlewares/error.handler');
@@ -17,7 +16,6 @@ const createApp = () => {
   }
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
-  app.use(cookieParser());
 
   const whitelist = config.allowedList;
 
