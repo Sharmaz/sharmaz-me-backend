@@ -18,9 +18,6 @@ class JobsService {
     const jobs = await models.Job.findAll({
       where: { userId }
     });
-    if(!jobs || jobs.length < 1) {
-      throw boom.notFound('Jobs not found');
-    }
     return jobs;
   }
 

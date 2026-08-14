@@ -19,10 +19,6 @@ class ProfilesService {
     const profile = await models.Profile.findAll({
       where: { userId }
     });
-
-    if(!profile || profile.length < 1) {
-      throw boom.notFound('Profile not found');
-    }
     return profile;
   }
 
