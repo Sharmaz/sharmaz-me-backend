@@ -1,7 +1,5 @@
-const config = require('../config/config');
-
 function logErrors (err, req, res, next) {
-  if (config.env === 'dev') {
+  if (!err.isBoom) {
     // eslint-disable-next-line no-console
     console.error(err);
   }
