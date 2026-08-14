@@ -18,9 +18,6 @@ class ProjectsService {
     const projects = await models.Project.findAll({
       where: { userId }
     });
-    if (!projects || projects.length < 1) {
-      throw boom.notFound('Projects not found');
-    }
     return projects;
   }
 
