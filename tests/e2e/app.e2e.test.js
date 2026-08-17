@@ -1,5 +1,4 @@
 const request = require('supertest');
-const { expect, beforeEach, afterEach } = require('@jest/globals');
 
 const createApp = require('../../src/app');
 
