@@ -57,6 +57,8 @@ export default function ProjectsSection() {
 
   const addTag = () => setTagInputs([...tagInputs, '']);
 
+  const removeTag = (index) => setTagInputs(tagInputs.filter((_, i) => i !== index));
+
   const handleEdit = (project) => {
     setForm(project);
     setTagInputs(project.tags?.list || ['']);
@@ -135,12 +137,19 @@ export default function ProjectsSection() {
           <div className="form-group">
             <label className="input-label">Tags</label>
             {tagInputs.map((tag, i) => (
-              <div className="input-border orange-gradient mt-20" key={i}>
-                <input
-                  className="input-text"
-                  value={tag}
-                  onChange={(e) => handleTagChange(i, e.target.value)}
-                />
+              <div className="flex mt-20" key={i}>
+                <div className="input-border orange-gradient">
+                  <input
+                    className="input-text"
+                    value={tag}
+                    onChange={(e) => handleTagChange(i, e.target.value)}
+                  />
+                </div>
+                <div className="button-border red-gradient">
+                  <button className="button small-button" type="button" onClick={() => removeTag(i)}>
+                    Remove
+                  </button>
+                </div>
               </div>
             ))}
             <div className="button-border orange-gradient mt-20">
