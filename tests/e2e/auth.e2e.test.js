@@ -1,5 +1,4 @@
 const request = require('supertest');
-const { describe, expect, test } = require('@jest/globals');
 const { models } = require('../../src/libs/sequelize');
 const { upSeed, downSeed } = require('./utils/umzug');
 
