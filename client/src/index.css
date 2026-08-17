@@ -346,6 +346,10 @@ a {
   color: var(--vivid-cerise);
   margin: 0 0 16px;
 }
+.info-message {
+  color: var(--light-cobalt);
+  margin: 0 0 16px;
+}
 
 /* Profile */
 .profile-pic {

@@ -7,6 +7,7 @@ export function AuthProvider({ children }) {
     const stored = localStorage.getItem('user');
     return stored ? JSON.parse(stored) : null;
   });
+  const [logoutMessage, setLogoutMessage] = useState('');
 
   const login = async (email, password) => {
     const data = await authService.login(email, password);
@@ -15,10 +16,11 @@ export function AuthProvider({ children }) {
     setUser(data.user);
   };
 
-  const logout = () => {
+  const logout = (message = '') => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     setUser(null);
+    setLogoutMessage(message);
   };
 
   const value = useMemo(() => ({
@@ -27,7 +29,8 @@ export function AuthProvider({ children }) {
     isAdmin: user?.role === 'admin',
     login,
     logout,
-  }), [user]);
+    logoutMessage,
+  }), [user, logoutMessage]);
 
   return (
     <AuthContext.Provider value={value}>

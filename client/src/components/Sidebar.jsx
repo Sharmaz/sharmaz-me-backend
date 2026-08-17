@@ -36,7 +36,7 @@ export default function Sidebar({ activeTab, onTabChange }) {
             {tab.label}
           </li>
         ))}
-        <li onClick={logout}>Log Out</li>
+        <li onClick={() => logout()}>Log Out</li>
       </ul>
     </nav>
   );

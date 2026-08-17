@@ -48,6 +48,8 @@ export default function JobsSection() {
 
   const addDetail = () => setDetailInputs([...detailInputs, '']);
 
+  const removeDetail = (index) => setDetailInputs(detailInputs.filter((_, i) => i !== index));
+
   const handleEdit = (job) => {
     setForm(job);
     setDetailInputs(job.details?.list || ['']);
@@ -131,12 +133,19 @@ export default function JobsSection() {
           <div className="form-group">
             <label className="input-label">Details</label>
             {detailInputs.map((detail, i) => (
-              <div className="input-border orange-gradient mt-20" key={i}>
-                <input
-                  className="input-text"
-                  value={detail}
-                  onChange={(e) => handleDetailChange(i, e.target.value)}
-                />
+              <div className="flex mt-20" key={i}>
+                <div className="input-border orange-gradient">
+                  <input
+                    className="input-text"
+                    value={detail}
+                    onChange={(e) => handleDetailChange(i, e.target.value)}
+                  />
+                </div>
+                <div className="button-border red-gradient">
+                  <button className="button small-button" type="button" onClick={() => removeDetail(i)}>
+                    Remove
+                  </button>
+                </div>
               </div>
             ))}
             <div className="button-border orange-gradient mt-20">

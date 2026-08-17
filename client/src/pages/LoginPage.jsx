@@ -7,7 +7,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const { login, isAuthenticated } = useAuth();
+  const { login, isAuthenticated, logoutMessage } = useAuth();
   const navigate = useNavigate();
 
   if (isAuthenticated) {
@@ -34,6 +34,7 @@ export default function LoginPage() {
         <h2 className="flex align-center ft-28">Log in to your account</h2>
         <div className="login-container red-gradient">
           <div className="login-form-content flex justify-center wrap">
+            {logoutMessage && <p className="info-message w-100">{logoutMessage}</p>}
             {error && <p className="error-message w-100">{error}</p>}
             <div className="login-email flex between">
               <label className="input-label" htmlFor="email">Email</label>
