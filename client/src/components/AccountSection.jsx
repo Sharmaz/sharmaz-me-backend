@@ -12,7 +12,7 @@ export default function AccountSection() {
     setError('');
     try {
       await usersService.update(user.id, { email });
-      logout();
+      logout('Email updated. Please log in again with your new email.');
     } catch (err) {
       setError(err.message);
     }
